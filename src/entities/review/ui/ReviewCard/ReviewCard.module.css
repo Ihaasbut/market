@@ -1,22 +1,73 @@
 .review-card {
-          width: 100%;
-          border: 1px solid var(--color-grey-border);
+    width: 100%;
+    border: 1px solid var(--color-grey-border);
 }
 
 .header {
-          padding: 16px;
-          border-bottom: 1px solid var(--color-grey-border);
-          display: flex;
-          justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--color-grey-border);
+    display: flex;
+    align-items: center;
+}
+
+.text-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .content {
-          padding: 16px 24px 24px 24px;
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
+    padding: 16px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.stars-review {
+    margin-left: auto;
 }
 
 .data-person {
-          text-transform: capitalize;
+    text-transform: capitalize;
+}
+
+.date {
+    color: var(--color-text-black-secondary);
+    margin: 0 auto;
+}
+
+.actions {
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 1023px) {
+    .header {
+        padding: 16px;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .text-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date {
+        margin: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .stars-review {
+        margin: 0;
+    }
 }

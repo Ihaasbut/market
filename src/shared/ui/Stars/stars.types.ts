@@ -1,3 +1,3 @@
 export type StarsI = {
-          rating: number;
+          rating:  number;
 };

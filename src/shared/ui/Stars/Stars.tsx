@@ -1,19 +1,57 @@
-import StarFill from "@/shared/assets/icon/StarFill";
 import styles from "./Stars.module.css";
 import type { StarsI } from "./stars.types";
-import StarOutside from "@/shared/assets/icon/StarOutside";
+import starsOutside from "@/shared/assets/images/starsOutside.png";
+import starsFill from "@/shared/assets/images/starsFill.png";
+import type React from "react";
 
 export function Stars({ rating }: StarsI) {
-    const ratingMax = 5;
-    return (
-        <div className={styles["stars"]}>
-            {Array.from({ length: rating }).map((_, index) => (
-                <StarFill key={index} />
-            ))}
+    const STAR_SIZE = 20;
+    const STAR_GAP = 6;
+    const FULL_WIDTH = 124;
+    const STAR_STEP = STAR_SIZE + STAR_GAP;
 
-            {Array.from({ length: ratingMax - rating }).map((_, index) => (
-                <StarOutside key={index} />
-            ))}
+    const isInteger = rating % 1 === 0;
+
+    let sumPixelForStar;
+
+    if (isInteger) {
+        if (rating === 5) {
+            sumPixelForStar = FULL_WIDTH;
+        }
+        sumPixelForStar = rating * STAR_STEP;
+    } else {
+        const rounded = Math.floor(rating);
+        const difference = Number((rating - rounded).toFixed(1));
+
+        if (difference * 10 > 8) {
+            sumPixelForStar =
+                rounded * STAR_STEP + difference * (STAR_SIZE - STAR_GAP);
+            console.log(sumPixelForStar);
+        } else if (difference * 10 <= 3) {
+            sumPixelForStar =
+                rounded * STAR_STEP + difference * (STAR_SIZE + STAR_GAP);
+            console.log(sumPixelForStar);
+        } else {
+            sumPixelForStar = rounded * STAR_STEP + difference * STAR_SIZE;
+            console.log(sumPixelForStar);
+        }
+    }
+
+    return (
+        <div
+            className={styles["stars"]}
+            style={
+                {
+                    "--stars-bg": `url(${starsFill})`,
+                    "--current-rating": `${sumPixelForStar}px`,
+                } as React.CSSProperties
+            }
+        >
+            <img
+                src={starsOutside}
+                alt="Звезды рейтинга"
+                className={styles["stars-default"]}
+            />
         </div>
     );
 }

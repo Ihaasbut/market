@@ -1,0 +1,24 @@
+.action {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    color: var(--color-text-black-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.action path {
+    transition: fill 0.3s ease;
+}
+
+@media (hover: hover) {
+    .action:hover {
+        color: var(--color-text-black);
+    }
+
+    .action:hover path {
+        fill: var(--color-primary-blue);
+    }
+}
