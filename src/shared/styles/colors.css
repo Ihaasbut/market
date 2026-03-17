@@ -1,0 +1,10 @@
+:root {
+          --color-text-black: rgba(22, 28, 36, 1);
+          --color-text-black-secondary: rgba(69, 79, 91, 1);
+          --color-primary-blue: rgba(66, 149, 228, 1);
+          --color-text-white: rgba(255, 255, 255, 1);
+          --color-grey: #EAEFF6;
+          --color-grey-border: #EAEAEA;
+          --color-light-blue: rgba(242, 248, 255, 1);
+
+}
