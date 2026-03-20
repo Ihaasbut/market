@@ -1,0 +1,10 @@
+.form {
+    display: flex;
+    gap: 24px;
+}
+
+@media (max-width: 676px) {
+    .form {
+        flex-wrap: wrap;
+    }
+}

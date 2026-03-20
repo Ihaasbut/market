@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 a,
 button,
 svg {
@@ -17,6 +21,24 @@ body {
 }
 
 .container {
-  padding: 0 130px;
-  width: 100%;
+  padding: 0 40px;
+}
+
+input:focus,
+textarea:focus,
+button:focus,
+select:focus {
+    outline: none;
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 535px) {
+  .container {
+    padding: 0 10px;
+  }
 }

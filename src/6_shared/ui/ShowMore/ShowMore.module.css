@@ -1,0 +1,8 @@
+.show-more-button {
+    width: 100%;
+    background: var(--color-primary-blue);
+    border: none;
+    color: #fff;
+    padding: 20px 0;
+    cursor: pointer;
+}

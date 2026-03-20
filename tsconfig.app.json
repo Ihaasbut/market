@@ -2,7 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/app/*" :["src/1_app/*"],
+      "@/pages/*" :["src/2_pages/*"],
+      "@/widgets/*" :["src/3_widgets/*"],
+      "@/features/*" :["src/4_features/*"],
+      "@/entities/*" :["src/5_entities/*"],
+      "@/shared/*" :["src/6_shared/*"],
+      // "@/*": ["src/*"]
     },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2023",

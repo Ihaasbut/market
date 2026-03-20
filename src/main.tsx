@@ -1,10 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import "./shared/styles/colors.css";
-import "./shared/styles/fonts.css";
+import "./6_shared/styles/colors.css";
+import "./6_shared/styles/fonts.css";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./app/router/router";
+import { router } from "./1_app/router/router";
+
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
