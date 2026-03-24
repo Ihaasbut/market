@@ -11,6 +11,7 @@
 .body-l {
     font-size: 24px;
     font-weight: 500;
+    line-height: 1.4;
 }
 
 .body-s {
@@ -28,6 +29,12 @@
     color: var(--color-text-black);
 }
 
+.h4 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.1875;
+}
+
 .h5 {
     font-size: 18px;
     font-weight: 500;
@@ -35,6 +42,9 @@
 }
 
 @media (max-width: 767px) {
+    .h4 {
+        font-size: 24px;
+    }
     .h5 {
         font-size: 16px;
     }
@@ -44,10 +54,20 @@
     .h2 {
         font-size: 30px;
     }
+
+    .body-l {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 535px) {
     .h2 {
         font-size: 22px;
+    }
+}
+
+@media (max-width: 375px) {
+    .h2 {
+        font-size: 20px;
     }
 }

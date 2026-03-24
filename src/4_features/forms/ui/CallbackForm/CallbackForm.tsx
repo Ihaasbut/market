@@ -14,14 +14,17 @@ export function CallbackForm() {
         onChangeValueName,
         onChangeValueEmail,
         onSubmit,
+        setSend,
     } = useCallbackForm();
+
+    
 
     return (
         <>
             <form action="/" className={styles.form} onSubmit={onSubmit}>
                 <Input
                     name="name"
-                    placeholder="Ваше имя"
+                    placeholder="Your name"
                     value={valueName}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         onChangeValueName(e.currentTarget.value)
@@ -29,17 +32,23 @@ export function CallbackForm() {
                 />
                 <Input
                     name="email"
-                    placeholder="Ваш email"
+                    placeholder="Your email"
                     value={valueEmail}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         onChangeValueEmail(e.currentTarget.value)
                     }
                 />
 
-                <Button variant="fill">Отправить</Button>
+                <Button variant="fill">Send</Button>
             </form>
 
-            {send && <Success text="Porttitor vitae ornare aliquet euismod nunc, tincidunt. In non elementum, ornare elementum nisi egestas vel ut. " title="Ваша заявка успешно принята" />}
+            {send && (
+                <Success
+                    title="Your request has been submitted"
+                    text="Your request has been successfully received. We will review it and get back to you as soon as possible."
+                    onclick={() => setSend(!send)}
+                />
+            )}
         </>
     );
 }

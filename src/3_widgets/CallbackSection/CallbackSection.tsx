@@ -8,10 +8,9 @@ export function CallbackSection() {
         <section className={styles["section-wrapper"]}>
             <div className="container">
                 <div className={styles["inner"]}>
-                    <TitleSection>Мы Вам перезвоним</TitleSection>
+                    <TitleSection>We'll call you back.</TitleSection>
                     <Typography variant="body-s" className={styles["text"]}>
-                        Если у вас возникли какие-то вопросы или проблемы,
-                        заполните форму и мы Вам перезвоним.
+                    If you have any questions or problems, please fill out the form and we'll call you back.
                     </Typography>
                     <CallbackForm />
                 </div>

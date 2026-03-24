@@ -1,9 +1,21 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
 export function useCallbackForm() {
     const [valueName, setValueName] = useState<string>("");
     const [valueEmail, setValueEmail] = useState<string>("");
     const [send, setSend] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (send) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [send]);
 
     const onChangeValueName = (value: string) => {
         setValueName(value);
@@ -21,6 +33,7 @@ export function useCallbackForm() {
     return {
         valueName,
         valueEmail,
+        setSend,
         send,
         onChangeValueName,
         onChangeValueEmail,

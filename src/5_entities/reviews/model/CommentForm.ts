@@ -18,7 +18,7 @@ export function useCommentForm(replyTo?: ReplyToTheUser) {
 
     const onSubmitForm = (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(userInput);
+  
     };
 
     const onChangeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {

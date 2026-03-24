@@ -23,6 +23,8 @@
     font-size: 16px;
     border: 1px solid var(--color-primary-blue);
     list-style: none;
+    position: absolute;
+    background: #fff;
 }
 
 .option {
@@ -37,15 +39,34 @@
 
 .select-custom-cardFilter {
     width: 194px;
+    position: relative;
 }
 
 .select-custom-cardProduct,
 .select-custom-cartOrder {
     width: 288px;
+    position: relative;
+}
+
+.select-custom-cardFilter .options {
+    width: 194px;
+}
+
+.select-custom-cardProduct .options {
+    width: 288px;
+    z-index: 5;
+}
+
+.select-custom-cartOrder .options {
+    width: 288px;
+    z-index: 10;
 }
 
 @media (max-width: 676px) {
-    .select-custom-cardFilter,
+    .select-custom-cardFilter .options,
+    .select-custom-cardProduct .options,
+    .select-custom-cartOrder .options,
+    .select-custom-cardFilter ,
     .select-custom-cardProduct,
     .select-custom-cartOrder {
         width: 100%;

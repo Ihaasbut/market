@@ -26,14 +26,14 @@ export function Stars({ rating }: StarsI) {
         if (difference * 10 > 8) {
             sumPixelForStar =
                 rounded * STAR_STEP + difference * (STAR_SIZE - STAR_GAP);
-            console.log(sumPixelForStar);
+         
         } else if (difference * 10 <= 3) {
             sumPixelForStar =
                 rounded * STAR_STEP + difference * (STAR_SIZE + STAR_GAP);
-            console.log(sumPixelForStar);
+        
         } else {
             sumPixelForStar = rounded * STAR_STEP + difference * STAR_SIZE;
-            console.log(sumPixelForStar);
+       
         }
     }
 

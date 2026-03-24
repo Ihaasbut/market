@@ -1,0 +1,40 @@
+.section-stats {
+    background: var(--color-callback-section-blue);
+}
+
+.list {
+    display: flex;
+    gap: 82px;
+    justify-content: center;
+    width: 100%;
+    padding: 40px 0;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+}
+
+.number {
+}
+
+@media (max-width: 1023px) {
+          .list{
+                    gap: 40px;
+          }
+}
+
+@media (max-width: 767px) {
+          .list {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    
+                    gap: 24px 10px;
+          }
+}
+
+@media (max-width: 767px) {
+
+}

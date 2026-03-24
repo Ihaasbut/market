@@ -9,4 +9,7 @@ export default defineConfig({
         // Make `compilerOptions.baseUrl` + `compilerOptions.paths` work in Vite
         tsconfigPaths: true,
     },
+    server: {
+        allowedHosts: ["compatibly-prosperous-emperor.cloudpub.ru"],
+    },
 });

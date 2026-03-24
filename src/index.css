@@ -9,6 +9,10 @@ html {
   scrollbar-gutter: stable;
 }
 
+a {
+  text-decoration: none;
+}
+
 a,
 button,
 svg {
@@ -29,6 +33,18 @@ textarea:focus,
 button:focus,
 select:focus {
     outline: none;
+}
+
+.swiper-pagination {
+  display: flex;
+  gap: 6px;
+}
+
+.swiper-pagination-bullet {
+  display: block;
+  height: 6px;
+  width: 6px;
+  background: red;
 }
 
 @media (max-width: 767px) {
