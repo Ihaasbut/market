@@ -30,8 +30,8 @@ export function ProductSliderHero({ products }: ProductsResponse) {
                 slidesPerView={1}
                 slidesPerGroup={1}
                 navigation={{
-                    prevEl: ".arrow-left",
-                    nextEl: ".arrow-right",
+                    prevEl: ".arrow-left-slider-hero",
+                    nextEl: ".arrow-right-slider-hero",
                 }}
                 loop={true}
                 onSwiper={(swiper) => {
@@ -92,7 +92,7 @@ export function ProductSliderHero({ products }: ProductsResponse) {
                 })}
             </Swiper>
             <div className={styles["btn-navigation"]}>
-                <button className={cn(styles["arrow-slider"], "arrow-left")}>
+                <button className={cn(styles["arrow-slider"], "arrow-left-slider-hero")}>
                     <ArrowSliderLeft />
                 </button>
                 <div className={styles["pagination"]}>
@@ -111,7 +111,7 @@ export function ProductSliderHero({ products }: ProductsResponse) {
                         />
                     ))}
                 </div>
-                <button className={cn(styles["arrow-slider"], "arrow-right")}>
+                <button className={cn(styles["arrow-slider"], "arrow-right-slider-hero")}>
                     <ArrowSliderRight />
                 </button>
             </div>

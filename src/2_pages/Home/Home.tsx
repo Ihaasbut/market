@@ -1,17 +1,15 @@
 import { useMemo } from "react";
 import { CallbackSection } from "@/widgets/CallbackSection";
 import { CompanyStats, type CompanyStatsProps } from "@/widgets/CompanyStats ";
-import { ProductSliderHero } from "@/entities/products/ProductSliderHero";
-import { ProductSliderPopular } from "@/entities/products/ProductSliderPopular";
 import {
     ProductCategories,
     type ProductCategoriesProps,
-} from "@/entities/products/ui/ProductCategories";
-
-
+} from "@/entities/products/ProductCategories";
+import { ProductSliderHero } from "@/entities/products/ProductSliderHero";
+import { ProductSliderPopular } from "@/entities/products/ProductSliderPopular";
 
 import {
-    useGetCategoriesQuery,
+    useGetCategoriesHomeQuery,
     useGetPopularProductsQuery,
 } from "@/shared/api/api";
 
@@ -25,7 +23,7 @@ export function Home() {
         data: categories,
         isLoading: categoriesLoading,
         isError: categoriesError,
-    } = useGetCategoriesQuery();
+    } = useGetCategoriesHomeQuery();
 
     const heroProducts = useMemo(
         () => popular?.products.slice(9, 12) ?? [],
@@ -74,7 +72,7 @@ export function Home() {
                     isHome={categories.isHome}
                     categories={categoriesData.categories}
                 />
-                <ProductSliderPopular products={popular.products} />{" "}
+                <ProductSliderPopular products={popular.products} />
             </div>
             <CallbackSection />
         </>

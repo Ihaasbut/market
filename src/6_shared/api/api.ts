@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { ProductCardProps } from "@/entities/products/ui/ProductCard";
+import type { ProductCardProps } from "@/entities/products/ProductCard";
 import type {
     ProductCategoriesProps,
     ProductCategoryProps,
-} from "@/entities/products/ui/ProductCategories";
+} from "@/entities/products/ProductCategories";
 
-import type { ProductListProps } from "@/entities/products/ui/ProductList";
+import type { ProductListProps } from "@/entities/products/ProductList";
 
 export type ProductsResponse = {
     products: ProductCardProps[];
@@ -18,7 +18,7 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "https://dummyjson.com",
     }),
-    keepUnusedDataFor: 300, 
+    keepUnusedDataFor: 300,
     refetchOnFocus: false,
     refetchOnReconnect: false,
     endpoints: (builder) => ({
@@ -41,7 +41,7 @@ export const api = createApi({
             }),
         }),
 
-        getCategories: builder.query<ProductCategoriesProps, void>({
+        getCategoriesHome: builder.query<ProductCategoriesProps, void>({
             query: () => "/products/categories",
             transformResponse: (
                 response: CategoriesResponse,
@@ -50,7 +50,16 @@ export const api = createApi({
                 isHome: true,
             }),
         }),
+        getCategoriesAll: builder.query<ProductCategoriesProps, void>({
+            query: () => "/products/categories",
+            transformResponse: (
+                response: CategoriesResponse,
+            ): ProductCategoriesProps => ({
+                categories: response.slice(0, 7),
+                isHome: true,
+            }),
+        }),
     }),
 });
 
-export const { useGetPopularProductsQuery, useGetCategoriesQuery } = api;
+export const { useGetPopularProductsQuery, useGetCategoriesHomeQuery,  useGetCategoriesAllQuery} = api;

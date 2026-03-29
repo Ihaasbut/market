@@ -1,1 +1,1 @@
-export { ProductSliderPopular } from "./ProductSliderPopular";
+export { ProductSliderPopular } from "./ui/ProductSliderPopular";

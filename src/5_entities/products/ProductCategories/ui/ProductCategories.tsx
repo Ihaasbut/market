@@ -39,7 +39,7 @@ export function ProductCategories({ categories, isHome }: ProductCategoriesProps
                     const imgUrl = getCategoryImageUrl(category.slug);
                     return (
                         <Link
-                            to={`category/${category.slug}`}
+                            to={`/categories/${category.slug}`}
                             className={styles["category"]}
                             style={{
                               backgroundImage: imgUrl ? `url("${imgUrl}")` : "none",
@@ -53,7 +53,6 @@ export function ProductCategories({ categories, isHome }: ProductCategoriesProps
                                 {category.name}
                             </Typography>
 
-                            {/* <button className={styles["button-category"]}>Узнать подробнее</button> */}
                         </Link>
                     );
                 })}

@@ -8,7 +8,6 @@ export type ShowMoreProps = {
 function ShowMore({ onClick, count }: ShowMoreProps) {
     return (
         <button className={styles["show-more-button"]} onClick={onClick}>
-            {" "}
             Показать еще({count})
         </button>
     );

@@ -4,17 +4,14 @@ import { Header } from "@/widgets/header";
 
 import styles from "./MainLayout.module.css";
 
-
 export function MainLayout() {
     return (
         <div className={styles["root-layout"]}>
             <Header />
-
-            <Outlet />
-
+            <div className={styles["wrapper"]}>
+                <Outlet />
+            </div>
             <Footer />
         </div>
     );
 }
-
-

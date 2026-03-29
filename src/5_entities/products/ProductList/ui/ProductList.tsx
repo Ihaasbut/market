@@ -1,5 +1,4 @@
-
-import { ProductCard, type ProductCardProps } from "../ProductCard";
+import { ProductCard, type ProductCardProps } from "../../ProductCard";
 import styles from "./ProductList.module.css";
 
 export type ProductListProps = {

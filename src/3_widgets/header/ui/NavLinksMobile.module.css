@@ -1,0 +1,48 @@
+.nav-list-item-block {
+    max-height: max-content;
+    position: relative;
+    overflow: hidden;
+}
+
+.text-wrapper {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.nav-list {
+    padding-top: 100px;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    background: var(--color-white);
+}
+
+.nav-list-item-inner {
+    transition: max-height 0.3s ease;
+    max-height: 0;
+}
+
+.nav-list-item-inner.open {
+    max-height: 450px;
+}
+
+.nav-list-item-list {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+}
+
+.nav-list-item-list a {
+    color: var(--color-text-black-secondary);
+}
+
+.nav-list-item-list-item.active,
+.nav-list-item.active p {
+    color: var(--color-primary-blue);
+}

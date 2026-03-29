@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import Logo from "@/shared/assets/images/Logo.png";
 import styles from "./HeaderDesktop.module.css";
 import HeaderUserButton from "./HeaderUserButton";
-import NavLinks from "./NavLinks";
+import NavLinksDesktop from "./NavLinksDesktop";
+
 
 function HeaderDesktop() {
     return (
@@ -13,7 +14,7 @@ function HeaderDesktop() {
                         <Link to={"/"} className={styles["logo"]}>
                             <img src={Logo} alt="Logo" />
                         </Link>
-                        <NavLinks />
+                        <NavLinksDesktop/>
                         <HeaderUserButton />
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
     ProductCategories,
     type ProductCategoriesProps,
-} from "@/entities/products/ui/ProductCategories";
+} from "@/entities/products/ProductCategories";
 
 export function Categories() {
     const [categories, setCategories] = useState<ProductCategoriesProps | null>(

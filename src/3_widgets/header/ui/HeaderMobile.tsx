@@ -5,7 +5,7 @@ import BurgerButton from "./BurgerButton";
 
 import styles from "./HeaderMobile.module.css";
 import HeaderUserButton from "./HeaderUserButton";
-import NavLinks from "./NavLinks";
+import NavLinksMobile from "./NavLinksMobile";
 
 function HeaderMobile() {
     const { isMenuOpen, toggleMenu } = useHeaderState();
@@ -30,7 +30,7 @@ function HeaderMobile() {
                 })}
             >
                 <div className="container">
-                    <NavLinks />
+                    <NavLinksMobile onToggle={toggleMenu} />
                 </div>
             </div>
         </div>

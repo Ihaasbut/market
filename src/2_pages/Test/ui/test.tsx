@@ -3,18 +3,18 @@ import { useEffect, useState } from "react";
 
 import { CallbackSection } from "@/widgets/CallbackSection";
 import { CompanyStats, type CompanyStatsProps } from "@/widgets/CompanyStats ";
-import { ProductSliderHero } from "@/entities/products/ProductSliderHero";
-import { ProductSliderPopular } from "@/entities/products/ProductSliderPopular";
-
-import type { ProductCardProps } from "@/entities/products/ui/ProductCard";
+import type { ProductCardProps } from "@/entities/products/ProductCard";
 import {
     ProductCategories,
     type ProductCategoriesProps,
-} from "@/entities/products/ui/ProductCategories";
+} from "@/entities/products/ProductCategories";
 import {
     ProductList,
     type ProductListProps,
-} from "@/entities/products/ui/ProductList";
+} from "@/entities/products/ProductList";
+import { ProductSliderHero } from "@/entities/products/ProductSliderHero";
+import { ProductSliderPopular } from "@/entities/products/ProductSliderPopular";
+
 
 import { Button } from "@/shared/ui/Button";
 import { Select } from "@/shared/ui/Select";
