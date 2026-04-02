@@ -4,10 +4,7 @@ import { useEffect, useState } from "react";
 import { CallbackSection } from "@/widgets/CallbackSection";
 import { CompanyStats, type CompanyStatsProps } from "@/widgets/CompanyStats ";
 import type { ProductCardProps } from "@/entities/products/ProductCard";
-import {
-    ProductCategories,
-    type ProductCategoriesProps,
-} from "@/entities/products/ProductCategories";
+
 import {
     ProductList,
     type ProductListProps,
@@ -72,9 +69,7 @@ export function Test() {
     const [popular, setPopular] = useState<ProductListProps | null>(null);
     const [heroData, setHeroData] = useState<ProductListProps | null>(null);
 
-    const [categories, setCategories] = useState<ProductCategoriesProps | null>(
-        null,
-    );
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -109,16 +104,9 @@ export function Test() {
             setPopular(populars);
             setHeroData(heroSlider);
 
-            const resCategory = await fetch(
-                "https://dummyjson.com/products/categories",
-            );
-            const dataCategory = await resCategory.json();
-            const result = {
-                categories: dataCategory,
-                isHome: true,
-            };
 
-            setCategories(result);
+
+          
         };
 
         fetchData();
@@ -128,9 +116,7 @@ export function Test() {
         return;
     }
 
-    if (!categories) {
-        return;
-    }
+
 
     if (!heroData) {
         return;
@@ -202,10 +188,7 @@ export function Test() {
                 </div>
                 <ProductSliderPopular products={popular.products} />
 
-                <ProductCategories
-                    isHome={categories.isHome}
-                    categories={categories.categories}
-                />
+
             </div>
         </>
     );

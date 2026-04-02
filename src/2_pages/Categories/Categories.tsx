@@ -1,41 +1,28 @@
-import { useEffect, useState } from "react";
-
-import {
-    ProductCategories,
-    type ProductCategoriesProps,
-} from "@/entities/products/ProductCategories";
+import { ProductCategories } from "@/entities/products/ProductCategories";
+import { useGetCategoriesQuery } from "@/shared/api/api";
 
 export function Categories() {
-    const [categories, setCategories] = useState<ProductCategoriesProps | null>(
-        null,
-    );
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(
-                "https://dummyjson.com/products/categories",
-            );
-            const data = await res.json();
-
-            const result = {
-                categories: data,
-                isHome: false,
-            };
-            console.log(result);
-            setCategories(result);
-        };
-
-        fetchData();
-    }, []);
+    const {
+        data: categories,
+        isLoading: categoriesLoading,
+        isError: categoriesError,
+    } = useGetCategoriesQuery({isFull: false});
 
     if (!categories) {
         return;
+    }
+    if (categoriesLoading) {
+        return <div className="container">грузится</div>;
+    }
+
+    if (categoriesError || !categories) {
+        return null;
     }
     return (
         <div className="container">
             <ProductCategories
                 categories={categories.categories}
-                isHome={categories.isHome}
+                isFull={categories.isFull}
             />
         </div>
     );

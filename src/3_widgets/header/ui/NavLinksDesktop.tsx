@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { Link, NavLink } from "react-router-dom";
 
-import { useGetCategoriesAllQuery } from "@/shared/api/api";
+import { useGetCategoriesQuery } from "@/shared/api/api";
 import ArrowBottom from "@/shared/assets/icon/ArrowBottom";
 import laptops from "@/shared/assets/images/category/laptops.webp";
 import { Button } from "@/shared/ui/Button";
@@ -14,7 +14,7 @@ function NavLinksDesktop() {
         data: categories,
         isLoading: categoriesLoading,
         isError: categoriesError,
-    } = useGetCategoriesAllQuery();
+    } = useGetCategoriesQuery({isFull: false});
 
     const { onOpen, isOpenCatalog, catalogRef, NAV_LINKS } = useNavLinks({});
 
@@ -27,9 +27,10 @@ function NavLinksDesktop() {
 
     return (
         <div className={styles["nav-list"]}>
-            {NAV_LINKS.map((link) =>
+            {NAV_LINKS.map((link, index) =>
                 link.text !== "Catalog" ? (
                     <NavLink
+                        key={index + link.link}
                         to={link.link}
                         className={({ isActive }) =>
                             cn(
@@ -69,8 +70,8 @@ function NavLinksDesktop() {
                                 className={styles["nav-list-item-list"]}
                                 onClick={onOpen}
                             >
-                                {categories.categories.map((links) => (
-                                    <NavLink
+                                {categories.categories.slice(0,7).map((links, index) => (
+                                    <NavLink key={index + links.name}
                                         to={`/categories/${links.slug}`}
                                         className={({ isActive }) =>
                                             cn(

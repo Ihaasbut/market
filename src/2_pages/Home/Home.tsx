@@ -9,7 +9,8 @@ import { ProductSliderHero } from "@/entities/products/ProductSliderHero";
 import { ProductSliderPopular } from "@/entities/products/ProductSliderPopular";
 
 import {
-    useGetCategoriesHomeQuery,
+    useGetCategoriesQuery,
+    // useGetCategoriesHomeQuery,
     useGetPopularProductsQuery,
 } from "@/shared/api/api";
 
@@ -19,11 +20,18 @@ export function Home() {
         isLoading: popularLoading,
         isError: popularError,
     } = useGetPopularProductsQuery();
+    // const {
+    //     data: categories,
+    //     isLoading: categoriesLoading,
+    //     isError: categoriesError,
+    // } = useGetCategoriesHomeQuery();
+
+
     const {
         data: categories,
         isLoading: categoriesLoading,
         isError: categoriesError,
-    } = useGetCategoriesHomeQuery();
+    } = useGetCategoriesQuery({isFull: true});
 
     const heroProducts = useMemo(
         () => popular?.products.slice(9, 12) ?? [],
@@ -60,7 +68,7 @@ export function Home() {
 
     const categoriesData: ProductCategoriesProps = {
         categories: categories.categories,
-        isHome: categories.isHome,
+        isFull: categories.isFull,
     };
 
     return (
@@ -69,8 +77,8 @@ export function Home() {
             <CompanyStats stats={mockDataStats.stats} />
             <div className="container">
                 <ProductCategories
-                    isHome={categories.isHome}
-                    categories={categoriesData.categories}
+                    isFull={categories.isFull}
+                    categories={categoriesData.categories.slice(0,4)}
                 />
                 <ProductSliderPopular products={popular.products} />
             </div>

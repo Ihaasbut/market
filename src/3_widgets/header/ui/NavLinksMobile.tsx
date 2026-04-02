@@ -1,13 +1,13 @@
 import cn from "classnames";
 
 import { Link, NavLink } from "react-router-dom";
-
-import { useGetCategoriesAllQuery } from "@/shared/api/api";
+import { useGetCategoriesQuery } from "@/shared/api/api";
 import ArrowBottom from "@/shared/assets/icon/ArrowBottom";
 import { Button } from "@/shared/ui/Button";
 import { Typography } from "@/shared/ui/Typography";
 import { useNavLinks } from "../model/useNavLinks";
 import styles from "./NavLinksMobile.module.css";
+
 
 type NavLinksProps = {
     onToggle: () => void;
@@ -18,7 +18,7 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
         data: categories,
         isLoading: categoriesLoading,
         isError: categoriesError,
-    } = useGetCategoriesAllQuery();
+    } = useGetCategoriesQuery({isFull: false});
 
     const { isOpenCatalog, catalogRef, onOpen, handleLinkClick, NAV_LINKS } =
         useNavLinks({ onToggle });
@@ -31,9 +31,9 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
     }
     return (
         <div className={styles["nav-list"]}>
-            {NAV_LINKS.map((link) =>
+            {NAV_LINKS.map((link, index) =>
                 link.text !== "Catalog" ? (
-                    <NavLink
+                    <NavLink key={index+link.link}
                         to={link.link}
                         className={({ isActive }) =>
                             cn(
@@ -67,8 +67,8 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
                                 className={styles["nav-list-item-list"]}
                                 onClick={onOpen}
                             >
-                                {categories.categories.map((links) => (
-                                    <NavLink
+                                {categories.categories.slice(0,7).map((links, index) => (
+                                    <NavLink key={index+links.name}
                                         to={`/categories/${links.slug}`}
                                         className={({ isActive }) =>
                                             cn(

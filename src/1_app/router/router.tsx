@@ -3,8 +3,8 @@ import { MainLayout } from "@/app/layouts/MainLayout";
 import { Categories } from "@/pages/Categories";
 import { Home } from "@/pages/Home";
 
-import { ProductCategory } from "@/entities/products/ProductCategory";
-import { ProductDetail } from "@/entities/products/ProductDetail";
+import { ProductCategory } from "@/pages/ProductCategory";
+import { ProductDetail } from "@/pages/ProductDetail";
 
 
 

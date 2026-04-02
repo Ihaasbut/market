@@ -41,25 +41,59 @@ export const api = createApi({
             }),
         }),
 
-        getCategoriesHome: builder.query<ProductCategoriesProps, void>({
-            query: () => "/products/categories",
+        getProductsAll: builder.query<ProductListProps, void>({
+            query: () => "https://dummyjson.com/products?limit=0",
             transformResponse: (
-                response: CategoriesResponse,
-            ): ProductCategoriesProps => ({
-                categories: response.slice(0, 4),
-                isHome: true,
+                response: ProductsResponse,
+            ): ProductListProps => ({
+                products: response.products.map((product) => ({
+                    availabilityStatus: product.availabilityStatus,
+                    title: product.title,
+                    price: product.price,
+                    discountPercentage: product.discountPercentage,
+                    rating: product.rating,
+                    images: product.images,
+                    id: product.id,
+                    category: product.category,
+                    description: product.description,
+                })),
             }),
         }),
-        getCategoriesAll: builder.query<ProductCategoriesProps, void>({
-            query: () => "/products/categories",
+
+        // getCategoriesHome: builder.query<ProductCategoriesProps, void>({
+        //     query: () => "/products/categories",
+        //     transformResponse: (
+        //         response: CategoriesResponse,
+        //     ): ProductCategoriesProps => ({
+        //         categories: response.slice(0, 4),
+        //         isFull: true,
+        //     }),
+        // }),
+        // getCategoriesHeader: builder.query<ProductCategoriesProps, void>({
+        //     query: () => "/products/categories",
+        //     transformResponse: (
+        //         response: CategoriesResponse,
+        //     ): ProductCategoriesProps => ({
+        //         categories: response.slice(0, 7),
+        //         isFull: false,
+        //     }),
+        // }),
+        getCategories: builder.query<ProductCategoriesProps,{ isFull: boolean }>({
+            query: () => "/products/categories",  
             transformResponse: (
                 response: CategoriesResponse,
+                _meta: unknown,
+                arg: { isFull: boolean }  
             ): ProductCategoriesProps => ({
-                categories: response.slice(0, 7),
-                isHome: true,
+                categories: response,
+                isFull: arg.isFull,  
             }),
         }),
     }),
 });
 
-export const { useGetPopularProductsQuery, useGetCategoriesHomeQuery,  useGetCategoriesAllQuery} = api;
+export const {
+    useGetPopularProductsQuery,
+    useGetCategoriesQuery,
+    useGetProductsAllQuery,
+} = api;

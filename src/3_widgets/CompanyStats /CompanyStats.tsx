@@ -10,15 +10,16 @@ export type CompanyStatsProps = {
     stats: CompanyStat[];
 };
 
-
-
 export function CompanyStats({ stats }: CompanyStatsProps) {
     return (
         <section className={styles["section-stats"]}>
             <div className="container">
                 <div className={styles["list"]}>
-                    {stats.map((stat) => (
-                        <div className={styles["item"]}>
+                    {stats.map((stat, index) => (
+                        <div
+                            className={styles["item"]}
+                            key={index + stat.description}
+                        >
                             <Typography
                                 variant="h4"
                                 className={styles["number"]}

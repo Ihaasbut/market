@@ -14,10 +14,10 @@ export type ProductCategoryProps = {
 
 export type ProductCategoriesProps = {
     categories: ProductCategoryProps[];
-    isHome: boolean;
+    isFull: boolean;
 };
 
-export function ProductCategories({ categories, isHome }: ProductCategoriesProps) {
+export function ProductCategories({ categories, isFull }: ProductCategoriesProps) {
     const getCategoryImageUrl = (slug: string): string => {
         try {
             return new URL(
@@ -35,7 +35,7 @@ export function ProductCategories({ categories, isHome }: ProductCategoriesProps
         <section className={styles["section-categories"]}>
             <TitleSection className={styles["title"]}> Categories </TitleSection>
             <div className={styles["categories"]}>
-                {categories.map((category) => {
+                {categories.map((category, index) => {
                     const imgUrl = getCategoryImageUrl(category.slug);
                     return (
                         <Link
@@ -45,6 +45,7 @@ export function ProductCategories({ categories, isHome }: ProductCategoriesProps
                               backgroundImage: imgUrl ? `url("${imgUrl}")` : "none",
                             
                             }}
+                            key={index + category.name}
                         >
                             <Typography
                                 variant="body-l"
@@ -57,7 +58,7 @@ export function ProductCategories({ categories, isHome }: ProductCategoriesProps
                     );
                 })}
             </div>
-            {isHome && ( <Link to={"categories"}><Button variant="fill">View all categories</Button></Link> )} 
+            {isFull && ( <Link to={"categories"}><Button variant="fill">View all categories</Button></Link> )} 
             {/* тут будет Link */}
         </section>
     );

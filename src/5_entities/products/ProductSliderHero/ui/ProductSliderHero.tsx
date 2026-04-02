@@ -41,10 +41,10 @@ export function ProductSliderHero({ products }: ProductsResponse) {
                     setActiveIndex(swiper.realIndex);
                 }}
             >
-                {products.map((product) => {
+                {products.map((product, index) => {
                     const imgUrl = normalizeImageUrl(product.images[0]);
                     return (
-                        <SwiperSlide
+                        <SwiperSlide key={index+ product.title}
                             className={styles["swiper-slide"]}
                         >
                 
