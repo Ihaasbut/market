@@ -99,7 +99,7 @@ export function Test() {
             const heroSlider: ProductListProps = {
                 products: populars.products.slice(9, 12),
             };
-            console.log(heroSlider);
+   
 
             setPopular(populars);
             setHeroData(heroSlider);

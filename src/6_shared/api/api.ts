@@ -12,6 +12,9 @@ export type ProductsResponse = {
 };
 
 type CategoriesResponse = ProductCategoryProps[];
+type FilterResponse = {
+    brands: [{ id: number; brand: string }];
+};
 
 export const api = createApi({
     reducerPath: "api",
@@ -37,6 +40,8 @@ export const api = createApi({
                     id: product.id,
                     category: product.category,
                     description: product.description,
+                    brand: product.brand,
+                    sku: product.sku
                 })),
             }),
         }),
@@ -56,8 +61,15 @@ export const api = createApi({
                     id: product.id,
                     category: product.category,
                     description: product.description,
+                    brand: product.brand,
+                    reviews: product.reviews,
+                    sku: product.sku
                 })),
             }),
+        }),
+
+        getBrands: builder.query<FilterResponse, void>({
+            query: () => "https://dummyjson.com/c/b66a-5f5c-4e1e-ae07",
         }),
 
         // getCategoriesHome: builder.query<ProductCategoriesProps, void>({
@@ -78,15 +90,18 @@ export const api = createApi({
         //         isFull: false,
         //     }),
         // }),
-        getCategories: builder.query<ProductCategoriesProps,{ isFull: boolean }>({
-            query: () => "/products/categories",  
+        getCategories: builder.query<
+            ProductCategoriesProps,
+            { isFull: boolean }
+        >({
+            query: () => "/products/categories",
             transformResponse: (
                 response: CategoriesResponse,
                 _meta: unknown,
-                arg: { isFull: boolean }  
+                arg: { isFull: boolean },
             ): ProductCategoriesProps => ({
                 categories: response,
-                isFull: arg.isFull,  
+                isFull: arg.isFull,
             }),
         }),
     }),
@@ -96,4 +111,5 @@ export const {
     useGetPopularProductsQuery,
     useGetCategoriesQuery,
     useGetProductsAllQuery,
+    useGetBrandsQuery,
 } = api;

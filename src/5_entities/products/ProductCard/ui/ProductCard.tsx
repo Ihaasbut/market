@@ -17,6 +17,9 @@ export type ProductCardProps = {
     id: number;
     category: string;
     description?:string;
+    brand? : string
+    reviews?: [],
+    sku?: string,
 };
 
 export function ProductCard(props: ProductCardProps) {

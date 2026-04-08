@@ -28,7 +28,7 @@ export function ProductCategories({ categories, isFull }: ProductCategoriesProps
             return "";
         }
     };
-    console.log()
+
 
     
     return (

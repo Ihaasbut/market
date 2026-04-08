@@ -1,47 +1,67 @@
-import { useParams } from "react-router-dom";
 import { FilterProducts } from "@/features/filterProduct";
 import { ProductList } from "@/entities/products/ProductList";
-import { useGetProductsAllQuery } from "@/shared/api/api";
+import { Select } from "@/shared/ui/Select";
 import { Typography } from "@/shared/ui/Typography";
+import {
+    testsOptions,
+    useProductCategory,
+} from "../model/useProductCategory";
 import styles from "./ProductCategory.module.css";
 
-
-type ProductRouteParams = {
-    slug: string;
-};
-
 export function ProductCategory() {
-    const { slug } = useParams<ProductRouteParams>();
     const {
-        data: popular,
-        isLoading: popularLoading,
-        isError: popularError,
-    } = useGetProductsAllQuery();
+        activeOption,
+        productsLoading,
+        productsError,
+        hasProducts,
+        categoryProducts,
+        filteredProducts,
+        sortedProducts,
+        selectedBrands,
+        inStock,
+        handleChange,
+        handleToggleBrand,
+        handleToggleInStock,
+        handleResetFilters,
+    } = useProductCategory();
 
-    if (popularLoading) {
+    if (productsLoading) {
         return <div className="container">грузится</div>;
     }
 
-    if (popularError || !popular) {
+    if (productsError || !hasProducts) {
         return null;
     }
-    const categorySlug = popular.products.filter(
-        (product) => product.category === slug,
-    );
-    console.log(categorySlug);
 
     return (
         <div className="container">
             <div className="section-filter-product">
-                <Typography
-                    variant="body-xl"
-                    className={styles["title-category"]}
-                >
-                    {categorySlug[0].category} ({categorySlug.length})
-                </Typography>
+                <div className={styles["head-filter"]}>
+                    <Typography
+                        variant="body-xl"
+                        className={styles["title-category"]}
+                    >
+                        {categoryProducts[0]?.category} (
+                        {filteredProducts.length})
+                    </Typography>
+                    <Select
+                        activeOption={activeOption}
+                        onChange={handleChange}
+                        options={testsOptions}
+                        variant="cardFilter"
+                    />
+                </div>
+
                 <div className={styles["filter-product"]}>
-                    <FilterProducts />
-                    <ProductList products={categorySlug} />
+                    <FilterProducts
+                        products={categoryProducts}
+                        selectedBrands={selectedBrands}
+                        onToggleBrand={handleToggleBrand}
+                        inStock={inStock}
+                        onToggleInStock={handleToggleInStock}
+                        onResetFilters={handleResetFilters}
+                    />
+                    <ProductList products={sortedProducts} />
                 </div>
             </div>
         </div>

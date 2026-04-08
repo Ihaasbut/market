@@ -1,0 +1,15 @@
+.left-right {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 80px;
+}
+
+.right {
+          width: 50%;
+}
+
+.left {
+          flex: 1; 
+}
