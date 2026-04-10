@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
+import type {
+    ProductCardCategory,
+    ProductCard,
+} from "@/shared/api/api.types";
 import Availability from "@/shared/assets/icon/Availability";
+
 import AvailabilityNot from "@/shared/assets/icon/AvailabilityNot";
 import Gift from "@/shared/assets/icon/Gift";
 import { normalizeImageUrl } from "@/shared/lib/image";
@@ -7,22 +12,24 @@ import { Stars } from "@/shared/ui/Stars";
 import { Typography } from "@/shared/ui/Typography";
 import styles from "./ProductCard.module.css";
 
-export type ProductCardProps = {
-    availabilityStatus: string;
-    title: string;
-    price: number;
-    discountPercentage: number;
-    rating?: number;
-    images: string[];
-    id: number;
-    category: string;
-    description?:string;
-    brand? : string
-    reviews?: [],
-    sku?: string,
-};
+// export type ProductCardProps = {
+//     availabilityStatus: string;
+//     title: string;
+//     price: number;
+//     discountPercentage: number;
+//     rating?: number;
+//     images: string[];
+//     id: number;
+//     description?: string;
+//     brand?: string;
+//     reviews?: [];
+//     sku?: string;
+//     category?: string;
+// };
 
-export function ProductCard(props: ProductCardProps) {
+export function ProductCard(
+    props: ProductCard | ProductCardCategory,
+) {
     const {
         availabilityStatus,
         title,
@@ -51,7 +58,7 @@ export function ProductCard(props: ProductCardProps) {
                                 variant="default"
                                 className={styles["availability"]}
                             >
-                               In Stock
+                                In Stock
                             </Typography>
                         </div>
                     ) : (
@@ -88,7 +95,8 @@ export function ProductCard(props: ProductCardProps) {
                         variant="body-l"
                         className={styles["current-price"]}
                     >
-                        {Math.round(discountPercentage*price/100+price)}$
+                        {Math.round((discountPercentage * price) / 100 + price)}
+                        $
                     </Typography>
                 </div>
             </div>

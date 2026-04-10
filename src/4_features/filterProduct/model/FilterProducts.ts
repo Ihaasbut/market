@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { ProductCardProps } from "@/entities/products/ProductCard";
+import type { ProductCardCategory } from "@/shared/api/api.types";
 
 export type FilterItem = {
     id: number;
@@ -11,7 +11,7 @@ export type FilterList = {
 };
 
 export type FilterProductsProps = {
-    products: ProductCardProps[];
+    products: ProductCardCategory[];
     selectedBrands: string[];
     onToggleBrand: (brand: string) => void;
     inStock: boolean;
@@ -20,7 +20,9 @@ export type FilterProductsProps = {
 };
 
 // только логика вычисления брендов
-export function useFilterBrands(products: ProductCardProps[]): string[] {
+export function useFilterBrands(
+    products: ProductCardCategory[],
+): string[] {
     return useMemo(() => {
         const result: string[] = [];
 

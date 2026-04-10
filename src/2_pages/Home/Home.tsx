@@ -10,9 +10,11 @@ import { ProductSliderPopular } from "@/entities/products/ProductSliderPopular";
 
 import {
     useGetCategoriesQuery,
-    // useGetCategoriesHomeQuery,
+
     useGetPopularProductsQuery,
+    useGetProductsHomeHeroQuery,
 } from "@/shared/api/api";
+import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 
 export function Home() {
     const {
@@ -20,13 +22,13 @@ export function Home() {
         isLoading: popularLoading,
         isError: popularError,
     } = useGetPopularProductsQuery();
-    // const {
-    //     data: categories,
-    //     isLoading: categoriesLoading,
-    //     isError: categoriesError,
-    // } = useGetCategoriesHomeQuery();
 
-
+    const {
+        data: productHero,
+        isLoading: productHeroLoading,
+        isError: productHeroError,
+    } = useGetProductsHomeHeroQuery()
+    
     const {
         data: categories,
         isLoading: categoriesLoading,
@@ -34,17 +36,21 @@ export function Home() {
     } = useGetCategoriesQuery({isFull: true});
 
     const heroProducts = useMemo(
-        () => popular?.products.slice(9, 12) ?? [],
-        [popular?.products],
+        () => productHero?.products ?? [],
+        [productHero?.products],
     );
 
-    if (popularLoading || categoriesLoading) {
-        return <div className="container">грузится</div>;
+
+    if (popularLoading || categoriesLoading || productHeroLoading) {
+        return <ScreenBlue />;
     }
 
-    if (popularError || categoriesError || !popular || !categories) {
+    if (popularError || categoriesError || !popular || !categories || productHeroError || !productHero) {
         return null;
     }
+
+
+
     const mockDataStats: CompanyStatsProps = {
         stats: [
             {

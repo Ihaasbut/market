@@ -16,3 +16,11 @@ export const normalizeImageUrl = (
         return rawUrl.replace(/ /g, "%20").replace(/'/g, "%27");
     }
 };
+
+export const cssBackgroundImageUrl = (
+    rawUrl: string | undefined | null,
+): string => {
+    const u = normalizeImageUrl(rawUrl);
+    if (!u) return "none";
+    return `url(${JSON.stringify(u)})`;
+};

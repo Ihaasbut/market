@@ -1,5 +1,6 @@
 import { FilterProducts } from "@/features/filterProduct";
 import { ProductList } from "@/entities/products/ProductList";
+import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import { Select } from "@/shared/ui/Select";
 import { Typography } from "@/shared/ui/Typography";
 import {
@@ -7,6 +8,7 @@ import {
     useProductCategory,
 } from "../model/useProductCategory";
 import styles from "./ProductCategory.module.css";
+
 
 export function ProductCategory() {
     const {
@@ -26,7 +28,7 @@ export function ProductCategory() {
     } = useProductCategory();
 
     if (productsLoading) {
-        return <div className="container">грузится</div>;
+        return <ScreenBlue />;
     }
 
     if (productsError || !hasProducts) {

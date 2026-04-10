@@ -1,15 +1,27 @@
 .left-right {
     display: flex;
     gap: 30px;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-top: 80px;
+    margin-bottom: 40px;
 }
 
 .right {
-          width: 50%;
+    width: 50%;
 }
 
 .left {
-          flex: 1; 
+    flex: 1;
+}
+
+@media (max-width: 1023px) {
+    .left-right {
+        flex-direction: column;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+    }
 }

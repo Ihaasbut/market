@@ -1,9 +1,13 @@
 import { useParams } from "react-router-dom";
-import type { ProductCardProps } from "@/entities/products/ProductCard";
+
 import { ProductDetailHeroInfo } from "@/entities/products/ProductDetailComponents/ProductDetailHeroInfo";
 import { ProductDetailImages } from "@/entities/products/ProductDetailComponents/ProductDetailImages";
-import { useGetProductsAllQuery } from "@/shared/api/api";
+
+import { useGetProductDetailQuery } from "@/shared/api/api";
+import type { ProductDetail } from "@/shared/api/api.types";
+import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import styles from "./ProductDetail.module.css";
+
 
 type ProductRouteParams = {
     id: string;
@@ -11,44 +15,37 @@ type ProductRouteParams = {
 
 export function ProductDetail() {
     const { id } = useParams<ProductRouteParams>();
+
     const {
-        data: products,
-        isLoading: productsLoading,
-        isError: productsError,
-    } = useGetProductsAllQuery();
-    if (productsLoading) {
-        return <div className="container">грузится</div>;
+        data: product,
+        isLoading: productLoading,
+        isError: productError,
+    } = useGetProductDetailQuery(Number(id));
+
+    if (productLoading) {
+        return <ScreenBlue/>;
     }
-    if (!products) {
-        return [];
-    }
-    if (productsError) {
+
+    if (productError || !product) {
         return null;
-    }
-    if (productsLoading) {
-        return <div className="container">грузится</div>;
-    }
-
-    const productDetail = products.products.find(
-        (product: ProductCardProps) => product.id === Number(id),
-    );
-
-    if (!productDetail) {
-        return <div className="container">Товар не найден</div>;
     }
 
     return (
-   
-            <div className="container">
-                <div className={styles["left-right"]}>
-                    <div className={styles["left"]}>
-                        <ProductDetailImages images={productDetail.images} />
-                    </div>
-                    <div className={styles["right"]}>
-                        <ProductDetailHeroInfo {...productDetail} />
-                    </div>
+        <div className="container">
+            <section className={styles["left-right"]}>
+                <div className={styles["left"]}>
+                    <ProductDetailImages
+                        key={product.id}
+                        images={product.images}
+                    />
                 </div>
-            </div>
+                <div className={styles["right"]}>
+                    <ProductDetailHeroInfo {...product} />
+                </div>
+            </section>
+
+            <section className={styles["about"]}></section>
+        </div>
     );
 }
 

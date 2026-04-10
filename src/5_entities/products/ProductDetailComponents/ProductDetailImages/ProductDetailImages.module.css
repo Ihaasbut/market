@@ -27,8 +27,37 @@
     margin-top: 12px;
 }
 
+.images-list-mobile-slider {
+    display: none;
+}
+
 @media (hover: hover) {
     .other-image:hover {
-          background-color: var(--color-product-card);
+        background-color: var(--color-product-card);
+    }
+}
+
+@media (max-width: 1023px) {
+    .images-list {
+        display: none;
+    }
+
+    .images-list-mobile-slider {
+        display: block;
+        margin-top: 16px;
+    }  
+    
+    .main-image {
+        height: 400px;
+    }
+}
+
+@media (max-width: 535px) {
+    .main-image {
+        height: 250px;
+    }
+
+    .other-image  {
+        height: 110px;
     }
 }

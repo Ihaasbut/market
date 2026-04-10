@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import type { ProductsResponse } from "@/shared/api/api";
+import type {  ProductListHomeHero } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 
@@ -14,11 +14,9 @@ import { normalizeImageUrl } from "@/shared/lib/image";
 import { Button } from "@/shared/ui/Button";
 import { Typography } from "@/shared/ui/Typography";
 
-
 import styles from "./ProductSliderHero.module.css";
 
-
-export function ProductSliderHero({ products }: ProductsResponse) {
+export function ProductSliderHero({ products }: ProductListHomeHero) {
     const [activeIndex, setActiveIndex] = useState(0);
     const swiperRef = useRef<SwiperType>(null);
 
@@ -44,10 +42,10 @@ export function ProductSliderHero({ products }: ProductsResponse) {
                 {products.map((product, index) => {
                     const imgUrl = normalizeImageUrl(product.images[0]);
                     return (
-                        <SwiperSlide key={index+ product.title}
+                        <SwiperSlide
+                            key={index + product.title}
                             className={styles["swiper-slide"]}
                         >
-                
                             <div className={styles["image"]}>
                                 <img src={`${imgUrl}`} alt="product" />
                             </div>
@@ -92,7 +90,12 @@ export function ProductSliderHero({ products }: ProductsResponse) {
                 })}
             </Swiper>
             <div className={styles["btn-navigation"]}>
-                <button className={cn(styles["arrow-slider"], "arrow-left-slider-hero")}>
+                <button
+                    className={cn(
+                        styles["arrow-slider"],
+                        "arrow-left-slider-hero",
+                    )}
+                >
                     <ArrowSliderLeft />
                 </button>
                 <div className={styles["pagination"]}>
@@ -111,7 +114,12 @@ export function ProductSliderHero({ products }: ProductsResponse) {
                         />
                     ))}
                 </div>
-                <button className={cn(styles["arrow-slider"], "arrow-right-slider-hero")}>
+                <button
+                    className={cn(
+                        styles["arrow-slider"],
+                        "arrow-right-slider-hero",
+                    )}
+                >
                     <ArrowSliderRight />
                 </button>
             </div>

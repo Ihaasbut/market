@@ -4,15 +4,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import type { ProductsResponse } from "@/shared/api/api";
+import type {} from "@/shared/api/api";
+import type { ProductList } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 import { TitleSection } from "@/shared/ui/TitleSection";
-import ProductCard from "../../ProductCard/ui/ProductCard";
 
+import { ProductCard } from "../../ProductCard";
 import styles from "./ProductSliderPopular.module.css";
 
-export function ProductSliderPopular({ products }: ProductsResponse) {
+
+export function ProductSliderPopular({ products }: ProductList) {
     return (
         <section className={styles["product-slider"]}>
             <div className={styles["header-swiper"]}>

@@ -24,7 +24,7 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
         useNavLinks({ onToggle });
 
     if (categoriesLoading) {
-        return <div className="container">грузится</div>;
+        return;
     }
     if (categoriesError || !categories) {
         return null;

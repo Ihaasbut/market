@@ -1,1 +1,1 @@
-export { normalizeImageUrl } from "./normalizeUrl";
+export { cssBackgroundImageUrl, normalizeImageUrl } from "./normalizeUrl";

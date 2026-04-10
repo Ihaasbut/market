@@ -19,7 +19,7 @@ function NavLinksDesktop() {
     const { onOpen, isOpenCatalog, catalogRef, NAV_LINKS } = useNavLinks({});
 
     if (categoriesLoading) {
-        return <div className="container">грузится</div>;
+        return 
     }
     if (categoriesError || !categories) {
         return null;

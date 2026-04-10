@@ -1,6 +1,38 @@
-.hero-block {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 10px;
+.hero-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.head-info {
+    gap: 12px;
+    align-items: center;
+    display: flex;
+}
+
+.price {
+    display: flex;
+    gap: 12px;
+}
+
+.sale-price {
+    font-weight: 600;
+    color: var(--color-text-black);
+}
+
+.current-price {
+    text-decoration: line-through;
+    font-weight: 300;
+    color: var(--color-text-black-secondary);
+}
+
+.reviews {
+          color: var(--color-primary-blue);
+}
+
+@media (max-width: 535px) {
+    .head-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }

@@ -1,95 +1,107 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { ProductCardProps } from "@/entities/products/ProductCard";
+
+import type { ProductCategoriesProps } from "@/entities/products/ProductCategories";
+
+import type { ProductResponseFull, ProductsResponseFull } from "./api-response.types";
 import type {
-    ProductCategoriesProps,
-    ProductCategoryProps,
-} from "@/entities/products/ProductCategories";
+    CategoriesResponse,
+    ProductListCategoryResponse,
+    ProductList,
+    ProductListHomeHero,
+    ProductDetail,
+} from "./api.types";
 
-import type { ProductListProps } from "@/entities/products/ProductList";
-
-export type ProductsResponse = {
-    products: ProductCardProps[];
-};
-
-type CategoriesResponse = ProductCategoryProps[];
-type FilterResponse = {
-    brands: [{ id: number; brand: string }];
-};
+/** Seconds RTK Query keeps endpoint data after the last subscriber unmounts. Full page reload clears Redux (and this cache) unless you add persistence. */
+const KEEP_UNUSED_DATA_FOR_SEC = 60 * 60;
 
 export const api = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
         baseUrl: "https://dummyjson.com",
     }),
-    keepUnusedDataFor: 300,
+    keepUnusedDataFor: KEEP_UNUSED_DATA_FOR_SEC,
+    refetchOnMountOrArgChange: false,
     refetchOnFocus: false,
     refetchOnReconnect: false,
     endpoints: (builder) => ({
-        getPopularProducts: builder.query<ProductListProps, void>({
+        getProductsHomeHero: builder.query<ProductListHomeHero, void>({
+            query: () => "/products?limit=3&order=desc&sortBy=price",
+            transformResponse: (
+                response: ProductsResponseFull,
+            ): ProductListHomeHero => ({
+                products: response.products.map((product) => ({
+                    id: product.id,
+                    title: product.title,
+                    description: product.description,
+                    price: product.price,
+                    discountPercentage: product.discountPercentage,
+                    images: product.images,
+                })),
+            }),
+        }),
+
+        getPopularProducts: builder.query<ProductList, void>({
             query: () => "/products?limit=12&order=desc&sortBy=rating",
             transformResponse: (
-                response: ProductsResponse,
-            ): ProductListProps => ({
+                response: ProductsResponseFull,
+            ): ProductList => ({
                 products: response.products.map((product) => ({
-                    availabilityStatus: product.availabilityStatus,
+                    id: product.id,
                     title: product.title,
+                    description: product.description,
                     price: product.price,
                     discountPercentage: product.discountPercentage,
-                    rating: product.rating,
                     images: product.images,
-                    id: product.id,
+                    availabilityStatus: product.availabilityStatus,
+                    rating: product.rating,
                     category: product.category,
-                    description: product.description,
-                    brand: product.brand,
-                    sku: product.sku
                 })),
             }),
         }),
 
-        getProductsAll: builder.query<ProductListProps, void>({
-            query: () => "https://dummyjson.com/products?limit=0",
+        getProductsCategory: builder.query<
+            ProductListCategoryResponse,
+            string | undefined
+        >({
+            query: (slug) => `/products/category/${slug}`,
             transformResponse: (
-                response: ProductsResponse,
-            ): ProductListProps => ({
+                response: ProductsResponseFull,
+            ): ProductListCategoryResponse => ({
                 products: response.products.map((product) => ({
-                    availabilityStatus: product.availabilityStatus,
+                    id: product.id,
                     title: product.title,
+                    description: product.description,
                     price: product.price,
                     discountPercentage: product.discountPercentage,
-                    rating: product.rating,
                     images: product.images,
-                    id: product.id,
+                    availabilityStatus: product.availabilityStatus,
+                    rating: product.rating,
                     category: product.category,
-                    description: product.description,
                     brand: product.brand,
-                    reviews: product.reviews,
-                    sku: product.sku
                 })),
             }),
         }),
 
-        getBrands: builder.query<FilterResponse, void>({
-            query: () => "https://dummyjson.com/c/b66a-5f5c-4e1e-ae07",
+        getProductDetail: builder.query<ProductDetail, number>({
+            query: (id) => `/products/${id}`,
+            transformResponse: (
+                response: ProductResponseFull,
+            ): ProductDetail => ({
+                id: response.id,
+                title: response.title,
+                description: response.description,
+                price: response.price,
+                discountPercentage: response.discountPercentage,
+                images: response.images,
+                availabilityStatus: response.availabilityStatus,
+                rating: response.rating,
+                category: response.category,
+                brand: response.brand,
+                sku: response.sku,
+                reviews: response.reviews,
+            }),
         }),
 
-        // getCategoriesHome: builder.query<ProductCategoriesProps, void>({
-        //     query: () => "/products/categories",
-        //     transformResponse: (
-        //         response: CategoriesResponse,
-        //     ): ProductCategoriesProps => ({
-        //         categories: response.slice(0, 4),
-        //         isFull: true,
-        //     }),
-        // }),
-        // getCategoriesHeader: builder.query<ProductCategoriesProps, void>({
-        //     query: () => "/products/categories",
-        //     transformResponse: (
-        //         response: CategoriesResponse,
-        //     ): ProductCategoriesProps => ({
-        //         categories: response.slice(0, 7),
-        //         isFull: false,
-        //     }),
-        // }),
         getCategories: builder.query<
             ProductCategoriesProps,
             { isFull: boolean }
@@ -110,6 +122,7 @@ export const api = createApi({
 export const {
     useGetPopularProductsQuery,
     useGetCategoriesQuery,
-    useGetProductsAllQuery,
-    useGetBrandsQuery,
+    useGetProductsCategoryQuery,
+    useGetProductsHomeHeroQuery,
+    useGetProductDetailQuery,
 } = api;

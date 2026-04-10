@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useGetProductsAllQuery } from "@/shared/api/api";
+import { useGetProductsCategoryQuery } from "@/shared/api/api";
 import type { SelectOption } from "@/shared/ui/Select";
 
 type ProductRouteParams = {
@@ -14,10 +14,6 @@ export const testsOptions: SelectOption[] = [
     },
     {
         id: 2,
-        name: "Popularity",
-    },
-    {
-        id: 3,
         name: "Price",
     },
 ];
@@ -31,7 +27,7 @@ export function useProductCategory() {
         data: products,
         isLoading: productsLoading,
         isError: productsError,
-    } = useGetProductsAllQuery();
+    } = useGetProductsCategoryQuery(slug, { skip: !slug });
 
     const urlBrands = searchParams.getAll("brand");
     const inStock = searchParams.get("inStock") === "1";
@@ -63,8 +59,6 @@ export function useProductCategory() {
             switch (activeOption) {
                 case "Rating":
                     return (b.rating ?? 0) - (a.rating ?? 0);
-                case "Popularity":
-                    return (b.reviews?.length ?? 0) - (a.reviews?.length ?? 0);
                 case "Price":
                     return a.price - b.price;
                 default:
@@ -72,7 +66,7 @@ export function useProductCategory() {
             }
         });
     }, [filteredProducts, activeOption]);
-console.log(sortedProducts)
+
     const handleChange = (value: string) => {
         setActiveOption(value);
     };

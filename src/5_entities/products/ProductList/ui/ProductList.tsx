@@ -1,11 +1,15 @@
-import { ProductCard, type ProductCardProps } from "../../ProductCard";
+import type {} from "@/shared/api/api";
+import type {
+    ProductListCategoryResponse,
+    ProductList,
+} from "@/shared/api/api.types";
+
+import { ProductCard } from "../../ProductCard";
 import styles from "./ProductList.module.css";
 
-export type ProductListProps = {
-    products: ProductCardProps[];
-};
-
-export function ProductList({ products }: ProductListProps) {
+export function ProductList({
+    products,
+}: ProductList | ProductListCategoryResponse) {
     return (
         <div className={styles["product-list"]}>
             {products.map((product) => (
