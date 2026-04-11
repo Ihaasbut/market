@@ -1,7 +1,7 @@
 import successForm from "@/shared/assets/images/successForm.png";
 import { Button } from "@/shared/ui/Button";
 import { Typography } from "@/shared/ui/Typography";
-import styles from "./Success.module.css";
+import styles from "./Success.module.scss";
 
 export type SuccessProps = {
     title: string;

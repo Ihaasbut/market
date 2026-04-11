@@ -1,0 +1,11 @@
+.wrapper {
+    padding-top: 87px;
+
+    @media (max-width: 1023px) {
+        padding-top: 74px;
+    }
+}
+
+.root-layout {
+    width: 100%;
+}

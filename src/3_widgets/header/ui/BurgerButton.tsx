@@ -1,4 +1,4 @@
-import styles from "./BurgerButton.module.css";
+import styles from "./BurgerButton.module.scss";
 
 type BurgerButtonProps = {
     onToggle: () => void;

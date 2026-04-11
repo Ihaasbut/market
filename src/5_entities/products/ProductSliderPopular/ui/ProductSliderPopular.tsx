@@ -11,7 +11,7 @@ import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 import { TitleSection } from "@/shared/ui/TitleSection";
 
 import { ProductCard } from "../../ProductCard";
-import styles from "./ProductSliderPopular.module.css";
+import styles from "./ProductSliderPopular.module.scss";
 
 
 export function ProductSliderPopular({ products }: ProductList) {

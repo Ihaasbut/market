@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { cssBackgroundImageUrl } from "@/shared/lib/image";
-import styles from "./ProductDetailImages.module.css";
+import styles from "./ProductDetailImages.module.scss";
 
 export type ProductDetailImagesProps = {
     images: string[];

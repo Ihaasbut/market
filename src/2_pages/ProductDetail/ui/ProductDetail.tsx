@@ -6,7 +6,7 @@ import { ProductDetailImages } from "@/entities/products/ProductDetailComponents
 import { useGetProductDetailQuery } from "@/shared/api/api";
 import type { ProductDetail } from "@/shared/api/api.types";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
-import styles from "./ProductDetail.module.css";
+import styles from "./ProductDetail.module.scss";
 
 
 type ProductRouteParams = {

@@ -4,7 +4,7 @@ import { Input } from "@/shared/ui/Input";
 
 import { useCallbackForm } from "../../model/CallbackForm";
 import { Success } from "../Success";
-import styles from "./CallbackForm.module.css";
+import styles from "./CallbackForm.module.scss";
 
 export function CallbackForm() {
     const {

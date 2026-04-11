@@ -1,7 +1,7 @@
 import {
     useCommentForm,
 } from "@/entities/reviews/model/CommentForm";
-import styles from "./CommentForm.module.css";
+import styles from "./CommentForm.module.scss";
 
 export type ReplyToTheUser = { name: string; female: string } | null;
 

@@ -1,6 +1,6 @@
 import ArrowReply from "@/shared/assets/icon/ArrowReply";
 import { Typography } from "@/shared/ui/Typography";
-import styles from "./ReplyButton.module.css";
+import styles from "./ReplyButton.module.scss";
 
 export type ReplyButtonProps = {
     onClick: () => void;

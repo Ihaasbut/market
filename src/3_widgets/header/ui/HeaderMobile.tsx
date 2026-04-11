@@ -3,7 +3,7 @@ import CloseBurgerMenu from "@/shared/assets/icon/CloseBurgerMenu";
 import { useHeaderState } from "../model/useHeaderState";
 import BurgerButton from "./BurgerButton";
 
-import styles from "./HeaderMobile.module.css";
+import styles from "./HeaderMobile.module.scss";
 import HeaderUserButton from "./HeaderUserButton";
 import NavLinksMobile from "./NavLinksMobile";
 

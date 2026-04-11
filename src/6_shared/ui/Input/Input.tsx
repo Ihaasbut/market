@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import styles from "./Input.module.css";
+import styles from "./Input.module.scss";
 
 export type InputProps = {
     name: string;

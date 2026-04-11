@@ -1,0 +1,11 @@
+.burger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    span {
+        width: 24px;
+        height: 2px;
+        background: var(--color-text);
+    }
+}

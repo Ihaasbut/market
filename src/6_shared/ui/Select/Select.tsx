@@ -3,7 +3,7 @@ import { useState } from "react";
 import ArrowSelect from "@/shared/assets/icon/ArrowSelect";
 import { Typography } from "../Typography";
 
-import styles from "./Select.module.css";
+import styles from "./Select.module.scss";
 
 export type SelectOption = {
     id: number;

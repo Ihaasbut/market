@@ -6,7 +6,7 @@ import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Stars } from "@/shared/ui/Stars";
 import { Typography } from "@/shared/ui/Typography";
 
-import styles from "./ProductDetailHeroInfo.module.css";
+import styles from "./ProductDetailHeroInfo.module.scss";
 
 export function ProductDetailHeroInfo(props: ProductDetail) {
     const {

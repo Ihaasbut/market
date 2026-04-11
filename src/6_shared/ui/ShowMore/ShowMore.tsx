@@ -1,4 +1,4 @@
-import styles from "./ShowMore.module.css";
+import styles from "./ShowMore.module.scss";
 
 export type ShowMoreProps = {
     onClick: () => void;

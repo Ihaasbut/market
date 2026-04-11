@@ -1,5 +1,5 @@
 import { Typography } from "@/shared/ui/Typography";
-import styles from "./ProductDetailTabs.module.css";
+import styles from "./ProductDetailTabs.module.scss";
 
 export type ProductDetailTabsProps = {
     tabs: string[];

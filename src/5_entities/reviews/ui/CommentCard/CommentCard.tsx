@@ -1,6 +1,6 @@
 import { Typography } from "@/shared/ui/Typography";
 import { ReplyButton } from "../ReplyButton/ReplyButton";
-import styles from "./CommentCard.module.css";
+import styles from "./CommentCard.module.scss";
 
 export interface CommentData {
     firstName: string;

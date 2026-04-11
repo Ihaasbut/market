@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "@/shared/assets/images/Logo.png";
-import styles from "./HeaderDesktop.module.css";
+import styles from "./HeaderDesktop.module.scss";
 import HeaderUserButton from "./HeaderUserButton";
 import NavLinksDesktop from "./NavLinksDesktop";
 

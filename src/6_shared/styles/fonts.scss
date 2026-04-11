@@ -1,0 +1,14 @@
+@mixin sf-pro-text-face($weight, $file) {
+    @font-face {
+        font-family: "SF Pro Text";
+        src: url("./fonts/#{$file}.ttf") format("truetype");
+        font-weight: $weight;
+        font-display: swap;
+    }
+}
+
+@include sf-pro-text-face(400, SFProText-Regular);
+@include sf-pro-text-face(500, SFProText-Medium);
+@include sf-pro-text-face(600, SFProText-Semibold);
+@include sf-pro-text-face(700, SFProText-Bold);
+@include sf-pro-text-face(800, SFProText-Heavy);

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import { TitleSection } from "@/shared/ui/TitleSection";
 import { Typography } from "@/shared/ui/Typography";
-import styles from "./ProductCategories.module.css";
+import styles from "./ProductCategories.module.scss";
 
 export type ProductCategoryProps = {
     images: string[];

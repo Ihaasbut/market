@@ -3,7 +3,7 @@ import {
     ReviewList,
     type ReviewListProps,
 } from "@/entities/reviews/ui/ReviewList/ReviewList";
-import styles from "./ReviewPanel.module.css";
+import styles from "./ReviewPanel.module.scss";
 
 const testDataFull: ReviewListProps = {
     reviews: [

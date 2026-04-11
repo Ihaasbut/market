@@ -6,7 +6,7 @@ import ArrowBottom from "@/shared/assets/icon/ArrowBottom";
 import { Button } from "@/shared/ui/Button";
 import { Typography } from "@/shared/ui/Typography";
 import { useNavLinks } from "../model/useNavLinks";
-import styles from "./NavLinksMobile.module.css";
+import styles from "./NavLinksMobile.module.scss";
 
 type NavLinksProps = {
     onToggle: () => void;

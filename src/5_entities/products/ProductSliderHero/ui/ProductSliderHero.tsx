@@ -15,7 +15,7 @@ import { Button } from "@/shared/ui/Button";
 import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Typography } from "@/shared/ui/Typography";
 
-import styles from "./ProductSliderHero.module.css";
+import styles from "./ProductSliderHero.module.scss";
 
 export function ProductSliderHero({ products }: ProductListHomeHero) {
     const [activeIndex, setActiveIndex] = useState(0);

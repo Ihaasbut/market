@@ -1,5 +1,5 @@
 import { Typography } from "@/shared/ui/Typography";
-import styles from "./CompanyStats.module.css";
+import styles from "./CompanyStats.module.scss";
 
 export type CompanyStat = {
     description: string;

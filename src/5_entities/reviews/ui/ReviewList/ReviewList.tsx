@@ -5,7 +5,7 @@ import {  type CommentData } from "../CommentCard/CommentCard";
 // import { CommentForm } from "../CommentForm/CommentForm";
 import { ReviewCard, type ReviewData } from "../ReviewCard/ReviewCard";
 
-import styles from "./ReviewList.module.css";
+import styles from "./ReviewList.module.scss";
 
 export type ReviewComments = {
     review: ReviewData;

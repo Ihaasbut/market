@@ -1,7 +1,7 @@
 import type React from "react";
 import starsFill from "@/shared/assets/images/starsFill.png";
 import starsOutside from "@/shared/assets/images/starsOutside.png";
-import styles from "./Stars.module.css";
+import styles from "./Stars.module.scss";
 import type { StarsI } from "./stars.types";
 
 export function Stars({ rating }: StarsI) {

@@ -4,7 +4,7 @@ import ArrowBottom from "@/shared/assets/icon/ArrowBottom";
 import { Button } from "@/shared/ui/Button";
 import { Typography } from "@/shared/ui/Typography";
 import type { FilterProductsProps } from "../model/FilterProducts";
-import styles from "./FilterProducts.module.css";
+import styles from "./FilterProducts.module.scss";
 
 export function FilterProducts({
     sections,

@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    font-family: "SF Pro Text", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+a {
+    text-decoration: none;
+}
+
+a,
+button,
+svg {
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    padding: 0 40px;
+
+    @media (max-width: 767px) {
+        padding: 0 20px;
+    }
+
+    @media (max-width: 535px) {
+        padding: 0 10px;
+    }
+}
+
+input,
+textarea,
+button,
+select {
+    &:focus {
+        outline: none;
+    }
+}
+
+.swiper-pagination {
+    display: flex;
+    gap: 6px;
+}
+
+.swiper-pagination-bullet {
+    display: block;
+    height: 6px;
+    width: 6px;
+    background: red;
+}

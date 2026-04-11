@@ -1,7 +1,7 @@
 import CommentIcon from "@/shared/assets/icon/CommentIcon";
 import { Typography } from "@/shared/ui/Typography";
 import { useCommentsToggleButton } from "../../model/CommentsToggleButton";
-import styles from "./CommentsToggleButton.module.css";
+import styles from "./CommentsToggleButton.module.scss";
 
 export type CommentsToggleButtonProps = {
     fnToggle: () => void;

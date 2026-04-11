@@ -1,4 +1,4 @@
-import styles from "./ProductDetailCharacteristics.module.css";
+import styles from "./ProductDetailCharacteristics.module.scss";
 
 
 export type ProductCharacteristics = {

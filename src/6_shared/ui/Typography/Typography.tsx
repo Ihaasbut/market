@@ -1,5 +1,5 @@
 import cn from "classnames";
-import styles from "./Typography.module.css";
+import styles from "./Typography.module.scss";
 import type { TypographyPropsI } from "./typography.types";
 
 export function Typography({

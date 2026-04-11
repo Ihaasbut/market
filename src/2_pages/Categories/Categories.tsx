@@ -4,7 +4,7 @@ import { ProductCategories } from "@/entities/products/ProductCategories";
 import { useGetCategoriesQuery } from "@/shared/api/api";
 import { Button } from "@/shared/ui/Button";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
-import styles from "./Categories.module.css";
+import styles from "./Categories.module.scss";
 
 const PAGE_SIZE = 8;
 

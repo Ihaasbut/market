@@ -3,7 +3,7 @@ import cn from "classnames";
 import { useState } from "react";
 import ArrowBottom from "@/shared/assets/icon/ArrowBottom";
 import { Typography } from "../Typography";
-import styles from "./Accordion.module.css";
+import styles from "./Accordion.module.scss";
 
 export type AccordionItem = {
     title: string;

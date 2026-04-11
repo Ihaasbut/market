@@ -7,7 +7,7 @@ import laptops from "@/shared/assets/images/category/laptops.webp";
 import { Button } from "@/shared/ui/Button";
 import { Typography } from "@/shared/ui/Typography";
 import { useNavLinks } from "../model/useNavLinks";
-import styles from "./NavLinksDesktop.module.css";
+import styles from "./NavLinksDesktop.module.scss";
 
 function NavLinksDesktop() {
     const {

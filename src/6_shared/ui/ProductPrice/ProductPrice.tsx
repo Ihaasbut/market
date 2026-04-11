@@ -1,5 +1,5 @@
 import { Typography } from "../Typography";
-import styles from "./ProductPrice.module.css";
+import styles from "./ProductPrice.module.scss";
 
 type ProductPriceProps = {
     price: number;

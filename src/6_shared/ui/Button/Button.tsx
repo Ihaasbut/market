@@ -1,6 +1,6 @@
 import cn from "classnames";
 import type { ReactNode } from "react";
-import styles from "./Button.module.css";
+import styles from "./Button.module.scss";
 
 type ButtonProps = {
     variant: "fill" | "outside" | "filter";

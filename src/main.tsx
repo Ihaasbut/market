@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import "./6_shared/styles/colors.css";
-import "./6_shared/styles/fonts.css";
+import "./index.scss";
+import "./6_shared/styles/colors.scss";
+import "./6_shared/styles/fonts.scss";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./1_app/router/router";

@@ -1,4 +1,4 @@
-import styles from "./ScreenBlue.module.css";
+import styles from "./ScreenBlue.module.scss";
 
 export const ScreenBlue = () => {
     return (

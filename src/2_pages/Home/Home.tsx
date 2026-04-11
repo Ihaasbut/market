@@ -13,7 +13,7 @@ import {
 } from "@/shared/api/api";
 import { Button } from "@/shared/ui/Button";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
-import styles from "./Home.module.css";
+import styles from "./Home.module.scss";
 
 export function Home() {
     const {

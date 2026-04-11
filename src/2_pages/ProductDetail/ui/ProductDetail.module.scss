@@ -1,0 +1,28 @@
+.left-right {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 80px;
+    margin-bottom: 40px;
+
+    @media (max-width: 1023px) {
+        flex-direction: column;
+    }
+}
+
+.right {
+    width: 50%;
+
+    @media (max-width: 1023px) {
+        width: 100%;
+    }
+}
+
+.left {
+    flex: 1;
+
+    @media (max-width: 1023px) {
+        width: 100%;
+    }
+}

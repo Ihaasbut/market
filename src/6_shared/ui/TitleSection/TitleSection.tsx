@@ -1,7 +1,7 @@
 import cn from "classnames"
 import type { ReactNode } from "react";
 import { Typography } from "../Typography";
-import styles from "./TitleSection.module.css";
+import styles from "./TitleSection.module.scss";
 
 export type TitleSectionProps = {
     children: ReactNode;

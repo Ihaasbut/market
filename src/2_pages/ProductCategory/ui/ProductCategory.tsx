@@ -4,7 +4,7 @@ import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import { Select } from "@/shared/ui/Select";
 import { Typography } from "@/shared/ui/Typography";
 import { useProductCategory } from "../model/useProductCategory";
-import styles from "./ProductCategory.module.css";
+import styles from "./ProductCategory.module.scss";
 
 export function ProductCategory() {
     const {

@@ -1,7 +1,7 @@
 import { CallbackForm } from "@/features/forms/ui/CallbackForm";
 import { TitleSection } from "@/shared/ui/TitleSection";
 import { Typography } from "@/shared/ui/Typography";
-import styles from "./CallbackSection.module.css";
+import styles from "./CallbackSection.module.scss";
 
 export function CallbackSection() {
     return (

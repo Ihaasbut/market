@@ -1,5 +1,5 @@
 import { Stars } from "@/shared/ui/Stars";
-import styles from "./ReviewForm.module.css"
+import styles from "./ReviewForm.module.scss"
 
 export function ReviewForm() {
   return (

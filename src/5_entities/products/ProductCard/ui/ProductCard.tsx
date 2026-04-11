@@ -11,7 +11,7 @@ import { normalizeImageUrl } from "@/shared/lib/image";
 import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Stars } from "@/shared/ui/Stars";
 import { Typography } from "@/shared/ui/Typography";
-import styles from "./ProductCard.module.css";
+import styles from "./ProductCard.module.scss";
 
 // export type ProductCardProps = {
 //     availabilityStatus: string;

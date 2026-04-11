@@ -1,0 +1,58 @@
+.main-image {
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 500px;
+    background-color: var(--color-surface-neutral);
+    background-position: center center;
+
+    @media (max-width: 1023px) {
+        height: 400px;
+    }
+
+    @media (max-width: 535px) {
+        height: 250px;
+    }
+}
+
+.other-image {
+    width: 100%;
+    height: 140px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    border: 2px solid var(--color-border);
+    cursor: pointer;
+    background-color: var(--color-white);
+    transition: background-color 0.3s ease;
+
+    @include hover {
+        &:hover {
+            background-color: var(--color-surface-neutral);
+        }
+    }
+
+    @media (max-width: 535px) {
+        height: 110px;
+    }
+}
+
+.images-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+
+    @media (max-width: 1023px) {
+        display: none;
+    }
+}
+
+.images-list-mobile-slider {
+    display: none;
+
+    @media (max-width: 1023px) {
+        display: block;
+        margin-top: 16px;
+    }
+}

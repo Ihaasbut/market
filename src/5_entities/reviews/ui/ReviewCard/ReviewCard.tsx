@@ -3,7 +3,7 @@ import { Typography } from "@/shared/ui/Typography";
 
 // import { CommentsToggleButton } from "../CommentsToogleButton/CommentsToggleButton";
 // import { ReplyButton } from "../ReplyButton/ReplyButton";
-import styles from "./ReviewCard.module.css";
+import styles from "./ReviewCard.module.scss";
 
 export interface ReviewData {
     firstName: string;
