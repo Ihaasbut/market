@@ -1,6 +1,5 @@
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { Button } from "@/shared/ui/Button";
 import { TitleSection } from "@/shared/ui/TitleSection";
 import { Typography } from "@/shared/ui/Typography";
 import styles from "./ProductCategories.module.css";
@@ -14,10 +13,9 @@ export type ProductCategoryProps = {
 
 export type ProductCategoriesProps = {
     categories: ProductCategoryProps[];
-    isFull: boolean;
 };
 
-export function ProductCategories({ categories, isFull }: ProductCategoriesProps) {
+export function ProductCategories({ categories }: ProductCategoriesProps) {
     const getCategoryImageUrl = (slug: string): string => {
         try {
             return new URL(
@@ -58,8 +56,6 @@ export function ProductCategories({ categories, isFull }: ProductCategoriesProps
                     );
                 })}
             </div>
-            {isFull && ( <Link to={"categories"}><Button variant="fill">View all categories</Button></Link> )} 
-            {/* тут будет Link */}
         </section>
     );
 }

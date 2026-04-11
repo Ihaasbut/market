@@ -17,7 +17,6 @@ export function ProductDetailImages({ images }: ProductDetailImagesProps) {
         setActiveImage(image);
     };
 
-    
     return (
         <div className={styles["images"]}>
             <div
@@ -27,16 +26,17 @@ export function ProductDetailImages({ images }: ProductDetailImagesProps) {
                 }}
             ></div>
             <div className={styles["images-list"]}>
-                {images.map((image) => (
-                    <div
-                        key={image}
-                        className={styles["other-image"]}
-                        style={{
-                            backgroundImage: cssBackgroundImageUrl(image),
-                        }}
-                        onClick={() => onChangeImage(image)}
-                    ></div>
-                ))}
+                {images.length > 1 &&
+                    images.map((image) => (
+                        <div
+                            key={image}
+                            className={styles["other-image"]}
+                            style={{
+                                backgroundImage: cssBackgroundImageUrl(image),
+                            }}
+                            onClick={() => onChangeImage(image)}
+                        ></div>
+                    ))}
             </div>
 
             {images.length > 1 && (
@@ -59,7 +59,6 @@ export function ProductDetailImages({ images }: ProductDetailImagesProps) {
                             spaceBetween: 16,
                             slidesPerGroup: 1,
                         },
-
                     }}
                 >
                     {images.map((image) => (
@@ -67,7 +66,8 @@ export function ProductDetailImages({ images }: ProductDetailImagesProps) {
                             <div
                                 className={styles["other-image"]}
                                 style={{
-                                    backgroundImage: cssBackgroundImageUrl(image),
+                                    backgroundImage:
+                                        cssBackgroundImageUrl(image),
                                 }}
                                 onClick={() => onChangeImage(image)}
                             ></div>

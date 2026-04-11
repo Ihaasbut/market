@@ -8,6 +8,7 @@ import Availability from "@/shared/assets/icon/Availability";
 import AvailabilityNot from "@/shared/assets/icon/AvailabilityNot";
 import Gift from "@/shared/assets/icon/Gift";
 import { normalizeImageUrl } from "@/shared/lib/image";
+import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Stars } from "@/shared/ui/Stars";
 import { Typography } from "@/shared/ui/Typography";
 import styles from "./ProductCard.module.css";
@@ -47,7 +48,7 @@ export function ProductCard(
                 className={styles["image-bg"]}
                 style={{
                     backgroundImage: `url("${imgUrl}")`,
-                    backgroundColor: "var(--color-product-card)",
+                    backgroundColor: "var(--color-surface-neutral)",
                 }}
             >
                 <div className={styles["header"]}>
@@ -84,21 +85,10 @@ export function ProductCard(
             <div className={styles["footer"]}>
                 {rating && <Stars rating={rating} />}
                 <Typography variant="body-s">{title}</Typography>
-                <div className={styles["price"]}>
-                    <Typography
-                        variant="body-l"
-                        className={styles["sale-price"]}
-                    >
-                        {price}$
-                    </Typography>
-                    <Typography
-                        variant="body-l"
-                        className={styles["current-price"]}
-                    >
-                        {Math.round((discountPercentage * price) / 100 + price)}
-                        $
-                    </Typography>
-                </div>
+                <ProductPrice
+                    price={price}
+                    discountPercentage={discountPercentage}
+                />
             </div>
         </Link>
     );

@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import type { ProductCategoriesProps } from "@/entities/products/ProductCategories";
-
-import type { ProductResponseFull, ProductsResponseFull } from "./api-response.types";
+import type {
+    ProductResponseFull,
+    ProductsResponseFull,
+} from "./api-response.types";
 import type {
     CategoriesResponse,
     ProductListCategoryResponse,
@@ -85,36 +86,25 @@ export const api = createApi({
         getProductDetail: builder.query<ProductDetail, number>({
             query: (id) => `/products/${id}`,
             transformResponse: (
-                response: ProductResponseFull,
+                product: ProductResponseFull,
             ): ProductDetail => ({
-                id: response.id,
-                title: response.title,
-                description: response.description,
-                price: response.price,
-                discountPercentage: response.discountPercentage,
-                images: response.images,
-                availabilityStatus: response.availabilityStatus,
-                rating: response.rating,
-                category: response.category,
-                brand: response.brand,
-                sku: response.sku,
-                reviews: response.reviews,
+                id: product.id,
+                title: product.title,
+                description: product.description,
+                price: product.price,
+                discountPercentage: product.discountPercentage,
+                images: product.images,
+                availabilityStatus: product.availabilityStatus,
+                rating: product.rating,
+                category: product.category,
+                brand: product.brand,
+                sku: product.sku,
+                reviews: product.reviews,
             }),
         }),
 
-        getCategories: builder.query<
-            ProductCategoriesProps,
-            { isFull: boolean }
-        >({
+        getCategories: builder.query<CategoriesResponse, void>({
             query: () => "/products/categories",
-            transformResponse: (
-                response: CategoriesResponse,
-                _meta: unknown,
-                arg: { isFull: boolean },
-            ): ProductCategoriesProps => ({
-                categories: response,
-                isFull: arg.isFull,
-            }),
         }),
     }),
 });

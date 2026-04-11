@@ -6,7 +6,7 @@
 
 .nav-list-item-list-item.active,
 .nav-list-item.active p {
-    color: var(--color-primary-blue);
+    color: var(--color-accent);
 }
 .nav-list-item-block {
     padding: 32px;
@@ -43,11 +43,11 @@
 }
 
 .text-wrapper .text {
-    color: var(--color-text-black);
+    color: var(--color-text);
 }
 
 .nav-list-item .text {
-    color: var(--color-text-black);
+    color: var(--color-text);
     transition: color 0.4s ease;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .nav-list-item-list-item {
-    color: var(--color-text-black);
+    color: var(--color-text);
     transition: color 0.4s ease;
 }
 
@@ -74,7 +74,7 @@
 
 .image {
     width: 300px;
-    border: 1px solid var(--color-grey-border);
+    border: 1px solid var(--color-border);
 }
 
 .image img {
@@ -87,10 +87,10 @@
 
 @media (hover: hover) {
     .nav-list-item-list-item:hover {
-        color: var(--color-primary-blue);
+        color: var(--color-accent);
     }
 
     .nav-list-item .text:hover {
-        color: var(--color-primary-blue);
+        color: var(--color-accent);
     }
 }

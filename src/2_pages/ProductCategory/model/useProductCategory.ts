@@ -1,61 +1,58 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import { useFilterBrands, type FilterSection } from "@/features/filterProduct";
 import { useGetProductsCategoryQuery } from "@/shared/api/api";
+import type { ProductCardCategory } from "@/shared/api/api.types";
 import type { SelectOption } from "@/shared/ui/Select";
 
 type ProductRouteParams = {
     slug: string;
 };
 
-export const testsOptions: SelectOption[] = [
-    {
-        id: 1,
-        name: "Rating",
-    },
-    {
-        id: 2,
-        name: "Price",
-    },
+const sortOptions: SelectOption[] = [
+    { id: 1, name: "Rating" },
+    { id: 2, name: "Price" },
 ];
+
+const defaultSortOption = sortOptions[0]!.name;
+
+const EMPTY_CATEGORY_PRODUCTS: ProductCardCategory[] = [];
 
 export function useProductCategory() {
     const { slug } = useParams<ProductRouteParams>();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [activeOption, setActiveOption] = useState(testsOptions[1].name);
+    const [activeOption, setActiveOption] = useState(defaultSortOption);
 
     const {
         data: products,
         isLoading: productsLoading,
-        isError: productsError,
+        isSuccess: productsReady,
     } = useGetProductsCategoryQuery(slug, { skip: !slug });
 
-    const urlBrands = searchParams.getAll("brand");
+    const urlBrands = useMemo(
+        () => searchParams.getAll("brand"),
+        [searchParams],
+    );
     const inStock = searchParams.get("inStock") === "1";
 
-    const categoryProducts = useMemo(() => {
-        if (!products) {
-            return [];
-        }
-
-        return products.products.filter((product) => product.category === slug);
-    }, [products, slug]);
-
-    const filteredProducts = categoryProducts.filter((product) => {
-        if (urlBrands.length > 0) {
-            if (!product.brand || !urlBrands.includes(product.brand)) {
-                return false;
-            }
-        }
-
-        if (inStock && product.availabilityStatus !== "In Stock") {
-            return false;
-        }
-
-        return true;
-    });
+    const categoryProducts = products?.products ?? EMPTY_CATEGORY_PRODUCTS;
 
     const sortedProducts = useMemo(() => {
-        return [...filteredProducts].sort((a, b) => {
+        const filtered = categoryProducts.filter((product) => {
+            if (urlBrands.length > 0) {
+                if (!product.brand || !urlBrands.includes(product.brand)) {
+                    return false;
+                }
+            }
+
+            if (inStock && product.availabilityStatus !== "In Stock") {
+                return false;
+            }
+
+            return true;
+        });
+
+        return [...filtered].sort((a, b) => {
             switch (activeOption) {
                 case "Rating":
                     return (b.rating ?? 0) - (a.rating ?? 0);
@@ -65,33 +62,32 @@ export function useProductCategory() {
                     return 0;
             }
         });
-    }, [filteredProducts, activeOption]);
+    }, [categoryProducts, urlBrands, inStock, activeOption]);
 
-    const handleChange = (value: string) => {
-        setActiveOption(value);
-    };
+    const handleToggleBrand = useCallback(
+        (brand: string) => {
+            setSearchParams(
+                (params) => {
+                    const current = params.getAll("brand");
 
-    const handleToggleBrand = (brand: string) => {
-        setSearchParams(
-            (params) => {
-                const current = params.getAll("brand");
+                    const exists = current.includes(brand);
 
-                const exists = current.includes(brand);
+                    const next = exists
+                        ? current.filter((b) => b !== brand)
+                        : [...current, brand];
 
-                const next = exists
-                    ? current.filter((b) => b !== brand)
-                    : [...current, brand];
+                    params.delete("brand");
+                    next.forEach((b) => params.append("brand", b));
 
-                params.delete("brand");
-                next.forEach((b) => params.append("brand", b));
+                    return params;
+                },
+                { replace: true },
+            );
+        },
+        [setSearchParams],
+    );
 
-                return params;
-            },
-            { replace: true },
-        );
-    };
-
-    const handleToggleInStock = () => {
+    const handleToggleInStock = useCallback(() => {
         setSearchParams(
             (params) => {
                 const current = params.get("inStock") === "1";
@@ -106,9 +102,9 @@ export function useProductCategory() {
             },
             { replace: true },
         );
-    };
+    }, [setSearchParams]);
 
-    const handleResetFilters = () => {
+    const handleResetFilters = useCallback(() => {
         setSearchParams(
             (params) => {
                 params.delete("brand");
@@ -117,22 +113,62 @@ export function useProductCategory() {
             },
             { replace: true },
         );
-    };
+    }, [setSearchParams]);
 
-    return {
-        activeOption,
-        testsOptions,
-        productsLoading,
-        productsError,
-        hasProducts: Boolean(products),
-        categoryProducts,
-        filteredProducts,
-        sortedProducts,
-        selectedBrands: urlBrands,
+    const brands = useFilterBrands(categoryProducts);
+
+    const filterSections = useMemo((): FilterSection[] => {
+        const sections: FilterSection[] = [];
+
+        if (brands.length > 0) {
+            sections.push({
+                id: "brand",
+                title: "Brand",
+                titleCount: brands.length,
+                options: brands.map((brand) => ({
+                    key: brand,
+                    label: brand,
+                    checked: urlBrands.includes(brand),
+                    onChange: () => handleToggleBrand(brand),
+                })),
+            });
+        }
+
+        sections.push({
+            id: "stock",
+            title: "Stock",
+            options: [
+                {
+                    key: "in-stock",
+                    label: "in Stock",
+                    checked: inStock,
+                    onChange: handleToggleInStock,
+                },
+            ],
+        });
+
+        return sections;
+    }, [
+        brands,
+        urlBrands,
         inStock,
-        handleChange,
         handleToggleBrand,
         handleToggleInStock,
+    ]);
+
+    const categoryTitle = categoryProducts[0]?.category ?? slug ?? "";
+
+    return {
+        slug,
+        activeOption,
+        setActiveOption,
+        sortOptions,
+        productsLoading,
+        productsReady,
+        categoryTitle,
+        categoryProducts,
+        sortedProducts,
+        filterSections,
         handleResetFilters,
     };
 }

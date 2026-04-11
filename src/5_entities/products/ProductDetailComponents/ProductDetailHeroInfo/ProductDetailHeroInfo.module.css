@@ -10,24 +10,8 @@
     display: flex;
 }
 
-.price {
-    display: flex;
-    gap: 12px;
-}
-
-.sale-price {
-    font-weight: 600;
-    color: var(--color-text-black);
-}
-
-.current-price {
-    text-decoration: line-through;
-    font-weight: 300;
-    color: var(--color-text-black-secondary);
-}
-
 .reviews {
-          color: var(--color-primary-blue);
+          color: var(--color-accent);
 }
 
 @media (max-width: 535px) {

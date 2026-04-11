@@ -12,6 +12,7 @@ import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 
 import { normalizeImageUrl } from "@/shared/lib/image";
 import { Button } from "@/shared/ui/Button";
+import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Typography } from "@/shared/ui/Typography";
 
 import styles from "./ProductSliderHero.module.css";
@@ -63,26 +64,12 @@ export function ProductSliderHero({ products }: ProductListHomeHero) {
                                     {product.description}
                                 </Typography>
 
-                                <div className={styles["price"]}>
-                                    <Typography
-                                        variant="body-l"
-                                        className={styles["sale-price"]}
-                                    >
-                                        {product.price}$
-                                    </Typography>
-                                    <Typography
-                                        variant="body-l"
-                                        className={styles["current-price"]}
-                                    >
-                                        {Math.round(
-                                            (product.discountPercentage *
-                                                product.price) /
-                                                100 +
-                                                product.price,
-                                        )}
-                                        $
-                                    </Typography>
-                                </div>
+                                <ProductPrice
+                                    price={product.price}
+                                    discountPercentage={
+                                        product.discountPercentage
+                                    }
+                                />
                                 <Button variant="fill">Add to cart</Button>
                             </div>
                         </SwiperSlide>

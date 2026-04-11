@@ -1,25 +1,26 @@
 import { useMemo } from "react";
 import type { ProductCardCategory } from "@/shared/api/api.types";
 
-export type FilterItem = {
-    id: number;
-    brand: string;
+
+export type FilterCheckboxOption = {
+    key: string;
+    label: string;
+    checked: boolean;
+    onChange: () => void;
 };
 
-export type FilterList = {
-    brands: FilterItem[];
+export type FilterSection = {
+    id: string;
+    title: string;
+    titleCount?: number;
+    options: FilterCheckboxOption[];
 };
 
 export type FilterProductsProps = {
-    products: ProductCardCategory[];
-    selectedBrands: string[];
-    onToggleBrand: (brand: string) => void;
-    inStock: boolean;
-    onToggleInStock: () => void;
+    sections: FilterSection[];
     onResetFilters: () => void;
 };
 
-// только логика вычисления брендов
 export function useFilterBrands(
     products: ProductCardCategory[],
 ): string[] {

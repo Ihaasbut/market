@@ -3,27 +3,20 @@ import { ProductList } from "@/entities/products/ProductList";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import { Select } from "@/shared/ui/Select";
 import { Typography } from "@/shared/ui/Typography";
-import {
-    testsOptions,
-    useProductCategory,
-} from "../model/useProductCategory";
+import { useProductCategory } from "../model/useProductCategory";
 import styles from "./ProductCategory.module.css";
-
 
 export function ProductCategory() {
     const {
+        slug,
         activeOption,
+        setActiveOption,
+        sortOptions,
         productsLoading,
-        productsError,
-        hasProducts,
-        categoryProducts,
-        filteredProducts,
+        productsReady,
+        categoryTitle,
         sortedProducts,
-        selectedBrands,
-        inStock,
-        handleChange,
-        handleToggleBrand,
-        handleToggleInStock,
+        filterSections,
         handleResetFilters,
     } = useProductCategory();
 
@@ -31,7 +24,7 @@ export function ProductCategory() {
         return <ScreenBlue />;
     }
 
-    if (productsError || !hasProducts) {
+    if (!slug || !productsReady) {
         return null;
     }
 
@@ -43,24 +36,19 @@ export function ProductCategory() {
                         variant="body-xl"
                         className={styles["title-category"]}
                     >
-                        {categoryProducts[0]?.category} (
-                        {filteredProducts.length})
+                        {categoryTitle} ({sortedProducts.length})
                     </Typography>
                     <Select
                         activeOption={activeOption}
-                        onChange={handleChange}
-                        options={testsOptions}
+                        onChange={setActiveOption}
+                        options={sortOptions}
                         variant="cardFilter"
                     />
                 </div>
 
                 <div className={styles["filter-product"]}>
                     <FilterProducts
-                        products={categoryProducts}
-                        selectedBrands={selectedBrands}
-                        onToggleBrand={handleToggleBrand}
-                        inStock={inStock}
-                        onToggleInStock={handleToggleInStock}
+                        sections={filterSections}
                         onResetFilters={handleResetFilters}
                     />
                     <ProductList products={sortedProducts} />

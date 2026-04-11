@@ -3,117 +3,83 @@ import { useState } from "react";
 import ArrowBottom from "@/shared/assets/icon/ArrowBottom";
 import { Button } from "@/shared/ui/Button";
 import { Typography } from "@/shared/ui/Typography";
-import {
-    useFilterBrands,
-    type FilterProductsProps,
-} from "../model/FilterProducts";
+import type { FilterProductsProps } from "../model/FilterProducts";
 import styles from "./FilterProducts.module.css";
 
 export function FilterProducts({
-    products,
-    selectedBrands,
-    onToggleBrand,
-    inStock,
-    onToggleInStock,
+    sections,
     onResetFilters,
 }: FilterProductsProps) {
-    const [isOpen, setIsOpen] = useState(false);
-    const [isOpen2, setIsOpen2] = useState(false);
+    const [openById, setOpenById] = useState<Record<string, boolean>>({});
 
-    const handleToggleLabel = () => {
-        setIsOpen((prev) => !prev);
+    const toggleSection = (id: string) => {
+        setOpenById((prev) => ({ ...prev, [id]: !prev[id] }));
     };
 
-    const handleToggleLabel2 = () => {
-        setIsOpen2((prev) => !prev);
-    };
-
-    const brands = useFilterBrands(products);
     return (
         <div className={styles["filter-wrapper"]}>
             <div className={styles["filter"]}>
                 <Typography variant="body-l">Filters</Typography>
-                {brands.length > 0 && (
-                    <div className={styles["filter-item"]}>
+                {sections.map((section) => {
+                    const isOpen = Boolean(openById[section.id]);
+                    return (
                         <div
-                            className={styles["text-wrapper"]}
-                            onClick={handleToggleLabel}
+                            key={section.id}
+                            className={styles["filter-item"]}
                         >
-                            <Typography variant="body-s">
-                                Brand <span> ({brands.length}) </span>
-                            </Typography>
                             <div
-                                className={cn(styles["arrow-bottom"], {
+                                className={styles["text-wrapper"]}
+                                onClick={() => toggleSection(section.id)}
+                            >
+                                <Typography variant="body-s">
+                                    {section.title}
+                                    {section.titleCount != null && (
+                                        <span>
+                                            {" "}
+                                            ({section.titleCount}){" "}
+                                        </span>
+                                    )}
+                                </Typography>
+                                <div
+                                    className={cn(styles["arrow-bottom"], {
+                                        [styles["open"]]: isOpen,
+                                    })}
+                                >
+                                    <ArrowBottom />
+                                </div>
+                            </div>
+                            <div
+                                className={cn(styles["list"], {
                                     [styles["open"]]: isOpen,
                                 })}
                             >
-                                <ArrowBottom />
-                            </div>
-                        </div>
-                        <div
-                            className={cn(styles["list"], {
-                                [styles["open"]]: isOpen,
-                            })}
-                        >
-                            {brands.map((brand) => {
-                                const checked = selectedBrands.includes(brand);
-                                return (
+                                {section.options.map((row) => (
                                     <label
-                                        className={styles["label"]}
-                                        key={brand}
+                                        key={row.key}
+                                        className={cn(
+                                            styles.label,
+                                            styles["label-stock"],
+                                        )}
                                     >
                                         <input
                                             type="checkbox"
                                             className={styles["checkbox"]}
-                                            checked={checked}
-                                            onChange={() =>
-                                                onToggleBrand(brand)
-                                            }
+                                            checked={row.checked}
+                                            onChange={row.onChange}
                                         />
                                         <Typography variant="body-xs">
-                                            {brand}
+                                            {row.label}
                                         </Typography>
                                     </label>
-                                );
-                            })}
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                )}
-
-                <div className={styles["filter-item"]}>
-                    <div
-                        className={styles["text-wrapper"]}
-                        onClick={handleToggleLabel2}
-                    >
-                        <Typography variant="body-s">Stock</Typography>
-                        <div
-                            className={cn(styles["arrow-bottom"], {
-                                [styles["open"]]: isOpen2,
-                            })}
-                        >
-                            <ArrowBottom />
-                        </div>
-                    </div>
-                    <div
-                        className={cn(styles["list"], {
-                            [styles["open"]]: isOpen2,
-                        })}
-                    >
-                        <label className={styles["label-stock"]}>
-                            <input
-                                type="checkbox"
-                                className={styles["checkbox"]}
-                                checked={inStock}
-                                onChange={onToggleInStock}
-                            />
-                            <Typography variant="body-xs">in Stock</Typography>
-                        </label>
-                    </div>
-                </div>
+                    );
+                })}
             </div>
 
             <Button variant="fill" onclick={onResetFilters}>
-                Reset filters{" "}
+                Reset filters
             </Button>
         </div>
     );

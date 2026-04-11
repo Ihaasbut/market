@@ -27,7 +27,7 @@
 }
 
 .item.active-item {
-    background: var(--color-grey-light);
+    background: var(--color-surface-field);
 }
 
 .title {

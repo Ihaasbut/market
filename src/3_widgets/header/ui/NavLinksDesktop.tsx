@@ -14,12 +14,12 @@ function NavLinksDesktop() {
         data: categories,
         isLoading: categoriesLoading,
         isError: categoriesError,
-    } = useGetCategoriesQuery({isFull: false});
+    } = useGetCategoriesQuery();
 
     const { onOpen, isOpenCatalog, catalogRef, NAV_LINKS } = useNavLinks({});
 
     if (categoriesLoading) {
-        return 
+        return;
     }
     if (categoriesError || !categories) {
         return null;
@@ -70,21 +70,25 @@ function NavLinksDesktop() {
                                 className={styles["nav-list-item-list"]}
                                 onClick={onOpen}
                             >
-                                {categories.categories.slice(0,7).map((links, index) => (
-                                    <NavLink key={index + links.name}
-                                        to={`/categories/${links.slug}`}
-                                        className={({ isActive }) =>
-                                            cn(
-                                                styles[
-                                                    "nav-list-item-list-item"
-                                                ],
-                                                isActive && styles["active"],
-                                            )
-                                        }
-                                    >
-                                        {links.name}
-                                    </NavLink>
-                                ))}
+                                {categories
+                                    .slice(0, 7)
+                                    .map((links, index) => (
+                                        <NavLink
+                                            key={index + links.name}
+                                            to={`/categories/${links.slug}`}
+                                            className={({ isActive }) =>
+                                                cn(
+                                                    styles[
+                                                        "nav-list-item-list-item"
+                                                    ],
+                                                    isActive &&
+                                                        styles["active"],
+                                                )
+                                            }
+                                        >
+                                            {links.name}
+                                        </NavLink>
+                                    ))}
 
                                 <Link
                                     to={"categories"}

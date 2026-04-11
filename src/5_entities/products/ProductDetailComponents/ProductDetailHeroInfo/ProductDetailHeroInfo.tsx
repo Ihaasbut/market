@@ -2,6 +2,7 @@ import type {  ProductDetail } from "@/shared/api/api.types";
 import { Accordion } from "@/shared/ui/Accordion";
 import { Button } from "@/shared/ui/Button";
 
+import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Stars } from "@/shared/ui/Stars";
 import { Typography } from "@/shared/ui/Typography";
 
@@ -51,17 +52,10 @@ export function ProductDetailHeroInfo(props: ProductDetail) {
             <Typography variant="h4">{title}</Typography>
 
 
-            <div className={styles["price"]}>
-                <Typography variant="body-l" className={styles["sale-price"]}>
-                    {price}$
-                </Typography>
-                <Typography
-                    variant="body-l"
-                    className={styles["current-price"]}
-                >
-                    {Math.round((discountPercentage * price) / 100 + price)}$
-                </Typography>
-            </div>
+            <ProductPrice
+                price={price}
+                discountPercentage={discountPercentage}
+            />
             <div className={styles["buttons"]}>
                 <Button variant="fill"> Buy now</Button>
             </div>

@@ -1,7 +1,7 @@
 .filter {
     min-width: 288px;
     background-color: var(--color-white);
-    border: 1px solid var(--color-grey-border);
+    border: 1px solid var(--color-border);
     border-radius: 2px;
     padding: 24px;
     height: max-content;
@@ -32,11 +32,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 .label {
     display: flex;
     gap: 20px;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .checkbox {
@@ -53,7 +58,7 @@
     border-color: #0066ff;
     background:
         url(/src/6_shared/assets/images/checkbox-checked.svg),
-        var(--color-primary-blue);
+        var(--color-accent);
     background-repeat: no-repeat;
     background-position: center center;
 }

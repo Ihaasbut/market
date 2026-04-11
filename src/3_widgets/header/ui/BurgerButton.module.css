@@ -7,5 +7,5 @@
 .burger-menu span {
     width: 24px;
     height: 2px;
-    background: var(--color-text-black);
+    background: var(--color-text);
 }

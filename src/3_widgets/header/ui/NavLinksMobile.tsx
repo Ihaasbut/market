@@ -8,7 +8,6 @@ import { Typography } from "@/shared/ui/Typography";
 import { useNavLinks } from "../model/useNavLinks";
 import styles from "./NavLinksMobile.module.css";
 
-
 type NavLinksProps = {
     onToggle: () => void;
 };
@@ -18,7 +17,7 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
         data: categories,
         isLoading: categoriesLoading,
         isError: categoriesError,
-    } = useGetCategoriesQuery({isFull: false});
+    } = useGetCategoriesQuery();
 
     const { isOpenCatalog, catalogRef, onOpen, handleLinkClick, NAV_LINKS } =
         useNavLinks({ onToggle });
@@ -33,7 +32,8 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
         <div className={styles["nav-list"]}>
             {NAV_LINKS.map((link, index) =>
                 link.text !== "Catalog" ? (
-                    <NavLink key={index+link.link}
+                    <NavLink
+                        key={index + link.link}
                         to={link.link}
                         className={({ isActive }) =>
                             cn(
@@ -67,22 +67,26 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
                                 className={styles["nav-list-item-list"]}
                                 onClick={onOpen}
                             >
-                                {categories.categories.slice(0,7).map((links, index) => (
-                                    <NavLink key={index+links.name}
-                                        to={`/categories/${links.slug}`}
-                                        className={({ isActive }) =>
-                                            cn(
-                                                styles[
-                                                    "nav-list-item-list-item"
-                                                ],
-                                                isActive && styles["active"],
-                                            )
-                                        }
-                                        onClick={handleLinkClick}
-                                    >
-                                        {links.name}
-                                    </NavLink>
-                                ))}
+                                {categories
+                                    .slice(0, 7)
+                                    .map((links, index) => (
+                                        <NavLink
+                                            key={index + links.name}
+                                            to={`/categories/${links.slug}`}
+                                            className={({ isActive }) =>
+                                                cn(
+                                                    styles[
+                                                        "nav-list-item-list-item"
+                                                    ],
+                                                    isActive &&
+                                                        styles["active"],
+                                                )
+                                            }
+                                            onClick={handleLinkClick}
+                                        >
+                                            {links.name}
+                                        </NavLink>
+                                    ))}
                             </div>
 
                             <Link to={"categories"} onClick={handleLinkClick}>

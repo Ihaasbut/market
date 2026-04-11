@@ -12,7 +12,7 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    background: var(--color-product-card);
+    background: var(--color-surface-neutral);
 }
 .image {
     width: 55%;
@@ -41,22 +41,6 @@
     width: 70%;
 }
 
-.price {
-    display: flex;
-    gap: 12px;
-}
-
-.sale-price {
-    font-weight: 600;
-    color: var(--color-text-black);
-}
-
-.current-price {
-    text-decoration: line-through;
-    font-weight: 300;
-    color: var(--color-text-black-secondary);
-}
-
 .btn-navigation {
     position: absolute;
     bottom: 50px;
@@ -83,7 +67,7 @@
     width: 6px;
     height: 6px;
     border-radius: 999px;
-    background: var(--color-primary-light-blue);
+    background: var(--color-accent-soft);
     border: none;
     padding: 0;
     cursor: pointer;
@@ -94,7 +78,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--color-primary-light-blue);
+    background: var(--color-accent-soft);
     border: none;
     position: relative;
     padding: 0;
@@ -102,7 +86,7 @@
 }
 
 .bullet-active {
-    background: var(--color-primary-blue);
+    background: var(--color-accent);
 }
 
 .bullet-active::before {
@@ -113,7 +97,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1px solid var(--color-primary-light-blue);
+    border: 1px solid var(--color-accent-soft);
     transform: translate(-50%, -50%);
     box-sizing: border-box;
 }

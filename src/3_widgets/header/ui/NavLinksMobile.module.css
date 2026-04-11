@@ -39,10 +39,10 @@
 }
 
 .nav-list-item-list a {
-    color: var(--color-text-black-secondary);
+    color: var(--color-text-muted);
 }
 
 .nav-list-item-list-item.active,
 .nav-list-item.active p {
-    color: var(--color-primary-blue);
+    color: var(--color-accent);
 }
