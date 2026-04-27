@@ -1,5 +1,5 @@
 import type { ProductCategoryProps } from "@/entities/products/ProductCategories";
-import type { ProductReview } from "./api-response.types";
+import type { ProductDimensions, ProductReview } from "./api-response.types";
 
 export type ProductHomeHero = {
     title: string;
@@ -32,6 +32,7 @@ export type ProductList = {
 export type ProductCardCategory = ProductCard & {
     category: string;
     brand: string;
+    tags: string[];
 };
 
 export type ProductListCategoryResponse = {
@@ -49,8 +50,15 @@ export type ProductDetail = {
     category: string;
     description?: string;
     brand?: string;
+    tags: string[];
     reviews?: ProductReview[];
     sku?: string;
+    dimensions?: ProductDimensions;
+    weight?: number;
+    warrantyInformation?: string;
+    shippingInformation?: string;
+    returnPolicy?: string;
+    minimumOrderQuantity?: number;
 };
 
 export type ProductsDetail = {

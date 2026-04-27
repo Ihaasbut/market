@@ -4,8 +4,11 @@ import styles from "./HeaderDesktop.module.scss";
 import HeaderUserButton from "./HeaderUserButton";
 import NavLinksDesktop from "./NavLinksDesktop";
 
+type HeaderDesktopProps = {
+    onLogout?: () => void;
+};
 
-function HeaderDesktop() {
+function HeaderDesktop({ onLogout }: HeaderDesktopProps) {
     return (
         <div className={styles["desktop"]}>
             <div className={styles["wrapper"]}>
@@ -15,7 +18,7 @@ function HeaderDesktop() {
                             <img src={Logo} alt="Logo" />
                         </Link>
                         <NavLinksDesktop/>
-                        <HeaderUserButton />
+                        <HeaderUserButton onLogout={onLogout} />
                     </div>
                 </div>
             </div>

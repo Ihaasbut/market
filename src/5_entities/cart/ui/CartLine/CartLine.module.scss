@@ -1,0 +1,277 @@
+.row {
+    position: relative;
+    padding: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    transition: opacity 0.25s ease;
+}
+
+/* Full-line hit target; .rowBody uses pointer-events: none and passes through */
+.rowNavOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: 2px;
+    text-decoration: none;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-accent);
+    }
+}
+
+.rowBody {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+    justify-content: space-between;
+    width: 100%;
+    pointer-events: none;
+}
+
+.rowPointerAuto {
+    pointer-events: auto;
+}
+
+.media {
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.thumbWrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.includeOverlay {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 0;
+    padding: 0;
+    background: transparent;
+}
+
+
+$cartLineCheckSvg: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round' d='M4.5 10.1l3.2 3.1 7.8-7.3'/%3E%3C/svg%3E";
+
+.includeCheckbox {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    flex-shrink: 0;
+    border: 1.5px solid var(--color-text-muted);
+    border-radius: 5px;
+    background: var(--color-white);
+    cursor: pointer;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+    @include hover {
+        &:hover {
+            border-color: var(--color-text);
+        }
+
+        &:checked:hover {
+            background: var(--color-accent-hover);
+            border-color: var(--color-accent-hover);
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-accent);
+    }
+
+    &:checked {
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+    }
+
+    &:checked::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,#{$cartLineCheckSvg}") center / 12px
+            12px no-repeat;
+    }
+}
+
+.thumb {
+    width: 96px;
+    height: 96px;
+    border-radius: 2px;
+    background: var(--color-surface-soft) center / cover no-repeat;
+    border: 1px solid var(--color-border);
+}
+
+.thumbImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1px;
+    display: block;
+}
+
+.lineTotalCol {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 72px;
+    padding: 0 4px;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.titleCol {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: flex-start;
+    align-self: start;
+}
+
+.titleText {
+    min-width: 0;
+    color: var(--color-text);
+}
+
+.lineRemoveButton {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    margin-top: 2px;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    background: var(--color-white);
+    line-height: 0;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+        border-color 0.15s ease,
+        color 0.15s ease;
+
+    @include hover {
+        &:hover {
+            color: var(--color-accent);
+            border-color: var(--color-border);
+        }
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-accent);
+    }
+
+    :global(svg) {
+        display: block;
+        width: 17px;
+        height: 17px;
+    }
+}
+
+.lineTotal {
+    text-align: center;
+    color: var(--color-accent);
+    font-weight: 600;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.lineTotalPending {
+    text-align: center;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.quantityBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.unitPriceHint {
+    color: var(--color-text-muted);
+    text-align: right;
+    line-height: 1.3;
+    max-width: 200px;
+    text-align: center;
+}
+
+.actions {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+    .rowBody {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .media {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .thumbWrap {
+        width: 100%;
+    }
+
+    .thumb {
+        width: 100%;
+        height: 180px;
+    }
+
+    .lineTotalCol {
+        min-width: unset;
+        width: 100%;
+        padding: 4px 0;
+        justify-content: center;
+    }
+
+    .actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+}

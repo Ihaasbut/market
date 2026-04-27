@@ -1,0 +1,1 @@
+export { FavoriteProductTile } from "./FavoriteProductTile";

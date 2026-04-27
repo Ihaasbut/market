@@ -6,7 +6,7 @@ import "./6_shared/styles/fonts.scss";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./1_app/router/router";
-import { store } from "./1_app/store/store";
+import { store } from "./1_app/store";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>

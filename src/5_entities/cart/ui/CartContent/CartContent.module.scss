@@ -1,0 +1,32 @@
+.layout {
+    display: grid;
+    gap: 28px;
+    align-items: start;
+
+    @media (min-width: 900px) {
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+        gap: 40px;
+    }
+}
+
+.main {
+    min-width: 0;
+}
+
+.title {
+    margin-bottom: 24px;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.empty {
+    color: var(--color-text);
+    opacity: 0.8;
+}

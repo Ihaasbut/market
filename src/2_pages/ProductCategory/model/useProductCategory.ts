@@ -1,6 +1,11 @@
 import { useCallback, useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useFilterBrands, type FilterSection } from "@/features/filterProduct";
+import {
+    useFilterBrands,
+    useFilterTags,
+    usePriceBounds,
+    type FilterSection,
+} from "@/features/filterProduct";
 import { useGetProductsCategoryQuery } from "@/shared/api/api";
 import type { ProductCardCategory } from "@/shared/api/api.types";
 import type { SelectOption } from "@/shared/ui/Select";
@@ -18,6 +23,26 @@ const defaultSortOption = sortOptions[0]!.name;
 
 const EMPTY_CATEGORY_PRODUCTS: ProductCardCategory[] = [];
 
+function clamp(n: number, min: number, max: number) {
+    return Math.max(min, Math.min(max, n));
+}
+
+function commitPriceParams(
+    params: URLSearchParams,
+    boundsMin: number,
+    boundsMax: number,
+    valueMin: number,
+    valueMax: number,
+) {
+    params.delete("priceMin");
+    params.delete("priceMax");
+    const fullRange = valueMin <= boundsMin && valueMax >= boundsMax;
+    if (!fullRange) {
+        params.set("priceMin", String(valueMin));
+        params.set("priceMax", String(valueMax));
+    }
+}
+
 export function useProductCategory() {
     const { slug } = useParams<ProductRouteParams>();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -33,9 +58,40 @@ export function useProductCategory() {
         () => searchParams.getAll("brand"),
         [searchParams],
     );
+    const urlTags = useMemo(() => searchParams.getAll("tag"), [searchParams]);
     const inStock = searchParams.get("inStock") === "1";
+    const priceMinParam = searchParams.get("priceMin");
+    const priceMaxParam = searchParams.get("priceMax");
 
     const categoryProducts = products?.products ?? EMPTY_CATEGORY_PRODUCTS;
+    const priceBounds = usePriceBounds(categoryProducts);
+
+    const { priceFilterMin, priceFilterMax } = useMemo(() => {
+        const bMin = priceBounds.min;
+        const bMax = priceBounds.max;
+        if (categoryProducts.length === 0 || bMin > bMax) {
+            return { priceFilterMin: 0, priceFilterMax: 0 };
+        }
+        let vmin = bMin;
+        let vmax = bMax;
+        if (priceMinParam != null) {
+            const p = parseInt(priceMinParam, 10);
+            if (!Number.isNaN(p)) vmin = clamp(p, bMin, bMax);
+        }
+        if (priceMaxParam != null) {
+            const p = parseInt(priceMaxParam, 10);
+            if (!Number.isNaN(p)) vmax = clamp(p, bMin, bMax);
+        }
+        if (vmin > vmax) {
+            return { priceFilterMin: vmax, priceFilterMax: vmin };
+        }
+        return { priceFilterMin: vmin, priceFilterMax: vmax };
+    }, [
+        categoryProducts.length,
+        priceBounds,
+        priceMinParam,
+        priceMaxParam,
+    ]);
 
     const sortedProducts = useMemo(() => {
         const filtered = categoryProducts.filter((product) => {
@@ -45,8 +101,27 @@ export function useProductCategory() {
                 }
             }
 
+            if (categoryProducts.length > 0) {
+                const { min: bMin, max: bMax } = priceBounds;
+                if (bMin <= bMax) {
+                    if (
+                        product.price < priceFilterMin ||
+                        product.price > priceFilterMax
+                    ) {
+                        return false;
+                    }
+                }
+            }
+
             if (inStock && product.availabilityStatus !== "In Stock") {
                 return false;
+            }
+
+            if (urlTags.length > 0) {
+                const productTags = product.tags ?? [];
+                if (!urlTags.some((tag) => productTags.includes(tag))) {
+                    return false;
+                }
             }
 
             return true;
@@ -62,7 +137,16 @@ export function useProductCategory() {
                     return 0;
             }
         });
-    }, [categoryProducts, urlBrands, inStock, activeOption]);
+    }, [
+        categoryProducts,
+        urlBrands,
+        urlTags,
+        inStock,
+        activeOption,
+        priceBounds,
+        priceFilterMin,
+        priceFilterMax,
+    ]);
 
     const handleToggleBrand = useCallback(
         (brand: string) => {
@@ -78,6 +162,29 @@ export function useProductCategory() {
 
                     params.delete("brand");
                     next.forEach((b) => params.append("brand", b));
+
+                    return params;
+                },
+                { replace: true },
+            );
+        },
+        [setSearchParams],
+    );
+
+    const handleToggleTag = useCallback(
+        (tag: string) => {
+            setSearchParams(
+                (params) => {
+                    const current = params.getAll("tag");
+
+                    const exists = current.includes(tag);
+
+                    const next = exists
+                        ? current.filter((t) => t !== tag)
+                        : [...current, tag];
+
+                    params.delete("tag");
+                    next.forEach((t) => params.append("tag", t));
 
                     return params;
                 },
@@ -108,14 +215,66 @@ export function useProductCategory() {
         setSearchParams(
             (params) => {
                 params.delete("brand");
+                params.delete("tag");
                 params.delete("inStock");
+                params.delete("priceMin");
+                params.delete("priceMax");
                 return params;
             },
             { replace: true },
         );
     }, [setSearchParams]);
 
+    const handlePriceMinChange = useCallback(
+        (next: number) => {
+            setSearchParams(
+                (params) => {
+                    const bMin = priceBounds.min;
+                    const bMax = priceBounds.max;
+                    const vmin = clamp(next, bMin, bMax);
+                    const rawMax = params.get("priceMax");
+                    let vmax = bMax;
+                    if (rawMax != null) {
+                        const p = parseInt(rawMax, 10);
+                        if (!Number.isNaN(p)) vmax = clamp(p, bMin, bMax);
+                    }
+                    const nextMin = vmin;
+                    const nextMax = Math.max(vmin, vmax);
+                    commitPriceParams(params, bMin, bMax, nextMin, nextMax);
+                    return params;
+                },
+                { replace: true },
+            );
+        },
+        [setSearchParams, priceBounds],
+    );
+
+    const handlePriceMaxChange = useCallback(
+        (next: number) => {
+            setSearchParams(
+                (params) => {
+                    const bMin = priceBounds.min;
+                    const bMax = priceBounds.max;
+                    const vmax = clamp(next, bMin, bMax);
+                    const rawMin = params.get("priceMin");
+                    let vmin = bMin;
+                    if (rawMin != null) {
+                        const p = parseInt(rawMin, 10);
+                        if (!Number.isNaN(p)) vmin = clamp(p, bMin, bMax);
+                    }
+                    const nextMax = vmax;
+                    const nextMin = Math.min(vmin, nextMax);
+                    commitPriceParams(params, bMin, bMax, nextMin, nextMax);
+                    return params;
+                },
+                { replace: true },
+            );
+        },
+        [setSearchParams, priceBounds],
+    );
+
     const brands = useFilterBrands(categoryProducts);
+    const filterTagList = useFilterTags(categoryProducts);
 
     const filterSections = useMemo((): FilterSection[] => {
         const sections: FilterSection[] = [];
@@ -130,6 +289,38 @@ export function useProductCategory() {
                     label: brand,
                     checked: urlBrands.includes(brand),
                     onChange: () => handleToggleBrand(brand),
+                })),
+            });
+        }
+
+        if (categoryProducts.length > 0 && priceBounds.min <= priceBounds.max) {
+            sections.push({
+                id: "price",
+                title: "Price",
+                variant: "priceRange",
+                options: [],
+                priceRange: {
+                    min: priceBounds.min,
+                    max: priceBounds.max,
+                    valueMin: priceFilterMin,
+                    valueMax: priceFilterMax,
+                    onValueMinChange: handlePriceMinChange,
+                    onValueMaxChange: handlePriceMaxChange,
+                },
+            });
+        }
+
+        if (filterTagList.length > 0) {
+            sections.push({
+                id: "tags",
+                title: "Tags",
+                titleCount: filterTagList.length,
+                variant: "tags",
+                options: filterTagList.map((tag) => ({
+                    key: tag,
+                    label: tag,
+                    checked: urlTags.includes(tag),
+                    onChange: () => handleToggleTag(tag),
                 })),
             });
         }
@@ -150,10 +341,19 @@ export function useProductCategory() {
         return sections;
     }, [
         brands,
+        filterTagList,
+        categoryProducts.length,
+        priceBounds,
+        priceFilterMin,
+        priceFilterMax,
         urlBrands,
+        urlTags,
         inStock,
         handleToggleBrand,
+        handleToggleTag,
         handleToggleInStock,
+        handlePriceMinChange,
+        handlePriceMaxChange,
     ]);
 
     const categoryTitle = categoryProducts[0]?.category ?? slug ?? "";

@@ -1,6 +1,17 @@
-import type {  ProductDetail } from "@/shared/api/api.types";
+import cn from "classnames";
+import { Link } from "react-router-dom";
+import {
+    addToCart,
+    decrementCartItem,
+    incrementCartItem,
+    selectCartItemActiveCount,
+} from "@/entities/cart/model";
+import { selectIsFavorite, toggleFavorite } from "@/entities/favorite/model";
+import type { ProductDetail } from "@/shared/api/api.types";
+import { useAppDispatch, useAppSelector } from "@/shared/store";
 import { Accordion } from "@/shared/ui/Accordion";
 import { Button } from "@/shared/ui/Button";
+import { CartQuantityStepper } from "@/shared/ui/CartQuantityStepper";
 
 import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Stars } from "@/shared/ui/Stars";
@@ -10,16 +21,24 @@ import styles from "./ProductDetailHeroInfo.module.scss";
 
 export function ProductDetailHeroInfo(props: ProductDetail) {
     const {
+        id,
         sku,
         rating,
         reviews,
         title,
+        images,
         price,
         discountPercentage,
+        category,
+        tags,
     } = props;
-    if (rating == null) {
-        return <div>No rating</div>;
-    }
+    const dispatch = useAppDispatch();
+    const countInCart = useAppSelector((state) =>
+        selectCartItemActiveCount(state.cart, id),
+    );
+    const isFavorite = useAppSelector((state) =>
+        selectIsFavorite(state.favorite, id),
+    );
     const listItems = {
         list: [
             {
@@ -43,7 +62,11 @@ export function ProductDetailHeroInfo(props: ProductDetail) {
         <div className={styles["hero-wrapper"]}>
             <div className={styles["head-info"]}>
                 <Typography variant="default"> {sku} </Typography>
-                <Stars rating={rating} />
+                {rating != null ? (
+                    <Stars rating={rating} />
+                ) : (
+                    <Typography variant="body-xs">No rating</Typography>
+                )}
                 <Typography variant="body-xs" className={styles["reviews"]}>
                     Reviews ({reviews?.length ?? 0})
                 </Typography>
@@ -51,13 +74,80 @@ export function ProductDetailHeroInfo(props: ProductDetail) {
 
             <Typography variant="h4">{title}</Typography>
 
-
             <ProductPrice
                 price={price}
                 discountPercentage={discountPercentage}
             />
-            <div className={styles["buttons"]}>
-                <Button variant="fill"> Buy now</Button>
+
+            {tags.length > 0 && (
+                <div className={styles["tags"]}>
+                    {tags.map((tag) => (
+                        <Link
+                            key={tag}
+                            className={styles["tag-link"]}
+                            to={{
+                                pathname: `/categories/${category}`,
+                                search: new URLSearchParams({ tag }).toString(),
+                            }}
+                        >
+                            #{tag}
+                        </Link>
+                    ))}
+                </div>
+            )}
+
+            <div
+                className={cn(
+                    styles["actionsRow"],
+                    countInCart >= 1 && styles["actionsRowWithStepper"],
+                )}
+            >
+                <div className={styles["primaryAction"]}>
+                    {countInCart < 1 ? (
+                        <Button
+                            variant="fill"
+                            onclick={() =>
+                                dispatch(
+                                    addToCart({
+                                        id,
+                                        count: 1,
+                                        title,
+                                        image: images[0] ?? "",
+                                        price,
+                                        discountPercentage,
+                                    }),
+                                )
+                            }
+                        >
+                            Buy now
+                        </Button>
+                    ) : (
+                        <CartQuantityStepper
+                            layout="stretch"
+                            count={countInCart}
+                            onIncrement={() => dispatch(incrementCartItem(id))}
+                            onDecrement={() => dispatch(decrementCartItem(id))}
+                        />
+                    )}
+                </div>
+                <div className={styles["favoriteAction"]}>
+                    <Button
+                        variant="outside"
+                        onclick={() =>
+                            dispatch(
+                                toggleFavorite({
+                                    id,
+                                    title,
+                                    image: images[0] ?? "",
+                                }),
+                            )
+                        }
+                    >
+                        {isFavorite
+                            ? "Remove from favorites"
+                            : "Add to favorites"}
+                    </Button>
+                </div>
             </div>
 
             <Accordion list={listItems.list} />

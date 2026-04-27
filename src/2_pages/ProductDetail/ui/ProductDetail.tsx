@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
-
 import { ProductDetailHeroInfo } from "@/entities/products/ProductDetailComponents/ProductDetailHeroInfo";
 import { ProductDetailImages } from "@/entities/products/ProductDetailComponents/ProductDetailImages";
+import { ProductDetailTabs } from "@/entities/products/ProductDetailComponents/ProductDetailTabs";
 
 import { useGetProductDetailQuery } from "@/shared/api/api";
-import type { ProductDetail } from "@/shared/api/api.types";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import styles from "./ProductDetail.module.scss";
 
@@ -43,8 +42,7 @@ export function ProductDetail() {
                     <ProductDetailHeroInfo {...product} />
                 </div>
             </section>
-
-            <section className={styles["about"]}></section>
+            <ProductDetailTabs product={product} />
         </div>
     );
 }

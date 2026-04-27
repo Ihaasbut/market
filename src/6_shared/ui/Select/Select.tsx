@@ -56,8 +56,8 @@ export function Select({
                                 setIsOpen(!isOpen);
                                 onChange(option.name);
                             }}
-                            className={cn(styles.option, {
-                                [styles.active]: activeOption === option.name,
+                            className={cn(styles["option"], {
+                                [styles["active"]]: activeOption === option.name,
                             })}
                         >
                             {option.name}

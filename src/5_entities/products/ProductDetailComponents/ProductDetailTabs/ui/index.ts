@@ -1,1 +1,5 @@
-export { ProductDetailTabs } from "./ProductDetailTabs";
+export {
+    ProductDetailTabs,
+    type ProductDetailTabId,
+    type ProductDetailTabsProps,
+} from "./ProductDetailTabs";

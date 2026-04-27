@@ -1,0 +1,1 @@
+export { useFavoriteContent } from "./useFavoriteContent";

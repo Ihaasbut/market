@@ -51,7 +51,9 @@ export function ProductCategory() {
                         sections={filterSections}
                         onResetFilters={handleResetFilters}
                     />
-                    <ProductList products={sortedProducts} />
+                    <div className={styles["filter-product__main"]}>
+                        <ProductList products={sortedProducts} />
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,12 +1,15 @@
-
 import HeaderDesktop from "./HeaderDesktop";
 import HeaderMobile from "./HeaderMobile";
 
-export function Header() {
+type HeaderProps = {
+    onLogout?: () => void;
+};
+
+export function Header({ onLogout }: HeaderProps) {
     return (
         <>
-            <HeaderDesktop />
-            <HeaderMobile />
+            <HeaderDesktop onLogout={onLogout} />
+            <HeaderMobile onLogout={onLogout} />
         </>
     );
 }

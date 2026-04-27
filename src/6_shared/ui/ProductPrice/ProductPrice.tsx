@@ -1,4 +1,5 @@
 import { Typography } from "../Typography";
+import { payableUnitPrice } from "./payableUnitPrice";
 import styles from "./ProductPrice.module.scss";
 
 type ProductPriceProps = {
@@ -7,9 +8,7 @@ type ProductPriceProps = {
 };
 
 export function ProductPrice({ price, discountPercentage }: ProductPriceProps) {
-    const priceWithDiscount = Math.round(
-        (discountPercentage * price) / 100 + price,
-    );
+    const priceWithDiscount = payableUnitPrice(price, discountPercentage);
 
     return (
         <div className={styles["price"]}>

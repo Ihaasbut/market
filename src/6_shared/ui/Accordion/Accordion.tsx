@@ -44,14 +44,15 @@ export function Accordion({ list }: AccordionProps) {
                             <ArrowBottom />
                         </div>
                     </button>
-<div className={cn(styles["description-wrapper"], {
-                            [styles.open]: openIndex.includes(index),
-                        })}>
                     <div
-                        className={cn(styles["description"])}
+                        className={cn(styles["description-wrapper"], {
+                            [styles["open"]]: openIndex.includes(index),
+                        })}
                     >
-                        {item.description}
-                    </div></div>
+                        <div className={cn(styles["description"])}>
+                            {item.description}
+                        </div>
+                    </div>
                 </div>
             ))}
         </div>

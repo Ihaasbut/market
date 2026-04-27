@@ -21,7 +21,7 @@ export function CallbackForm() {
 
     return (
         <>
-            <form action="/" className={styles.form} onSubmit={onSubmit}>
+            <form action="/" className={styles["form"]} onSubmit={onSubmit}>
                 <Input
                     name="name"
                     placeholder="Your name"

@@ -1,0 +1,13 @@
+.root {
+    width: 100%;
+}
+
+.text {
+    white-space: pre-wrap;
+    color: var(--color-text);
+    line-height: 1.5;
+}
+
+.empty {
+    color: var(--color-text-muted);
+}
