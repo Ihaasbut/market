@@ -1,34 +1,42 @@
 import cn from "classnames";
-import type { ReactNode } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css";
-import "swiper/css/navigation";
+import { ProductCard } from "@/entities/products/ProductCard";
 import type { ProductList } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
+import { TitleSection } from "@/shared/ui/TitleSection";
 
-import { ProductCard } from "../ProductCard";
-import styles from "./ProductSlider.module.scss";
+import "swiper/css";
+import "swiper/css/navigation";
 
-export type ProductSliderProps = ProductList & {
-    headerLeft?: ReactNode;
-    name: string;
+import styles from "./ProductSliderSmall.module.scss";
+
+const SECTION_TITLES = {
+    popular: "Our popular products",
+    recent: "Recent products",
+} as const;
+
+export type ProductSliderVariant = keyof typeof SECTION_TITLES;
+
+export type ProductSliderSmallProps = ProductList & {
+    variant: ProductSliderVariant;
 };
 
-export function ProductSlider({ products, headerLeft, name }: ProductSliderProps) {
-    const prevClass = `${name}-product-slider-prev`;
-    const nextClass = `${name}-product-slider-next`;
+export function ProductSliderSmall({
+    products,
+    variant,
+}: ProductSliderSmallProps) {
+    const prevClass = `${variant}-product-slider-small-prev`;
+    const nextClass = `${variant}-product-slider-small-next`;
+
+    const headerLeft = (
+        <TitleSection>{SECTION_TITLES[variant]}</TitleSection>
+    );
 
     return (
-        <section className={styles["product-slider"]}>
-            <div
-                className={cn(
-                    styles["header-swiper"],
-                    !headerLeft && styles["header-swiper-controls-only"],
-                )}
-            >
+        <section className={styles["product-slider-small"]}>
+            <div className={styles["header-swiper"]}>
                 {headerLeft}
                 <div className={styles["btn-navigation"]}>
                     <button
@@ -97,4 +105,4 @@ export function ProductSlider({ products, headerLeft, name }: ProductSliderProps
     );
 }
 
-export default ProductSlider;
+export default ProductSliderSmall;

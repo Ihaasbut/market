@@ -3,7 +3,7 @@ import { CompanyFigures } from "@/widgets/CompanyFigures";
 import { SiteLeadForm } from "@/widgets/forms/SiteLeadForm";
 import { FeaturedCategories } from "@/widgets/products/FeaturedCategories";
 import { ProductSliderHero } from "@/widgets/products/ProductSliderHero";
-import { ProductSliderPopular } from "@/widgets/products/ProductSliderPopular";
+import { ProductSliderSmall } from "@/widgets/products/ProductSliderSmall";
 
 import {
     useGetCategoriesQuery,
@@ -65,7 +65,10 @@ export function Home() {
             <CompanyFigures />
             <div className="container">
                 <FeaturedCategories categories={categories.slice(0, 4)} />
-                <ProductSliderPopular products={popular.products} />
+                <ProductSliderSmall
+                    variant="popular"
+                    products={popular.products}
+                />
             </div>
             <SiteLeadForm />
         </>
