@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { useState } from "react";
 
-import type { ProductDetail } from "@/shared/api/api.types";
+import type { ProductDetailType } from "@/shared/api/api.types";
 import { ProductDetailCharacteristics } from "../../ProductDetailCharacteristics";
 import { ProductDetailDescription } from "../../ProductDetailDescription";
 import { ProductDetailReviews } from "../../ProductDetailReviews";
@@ -20,7 +20,7 @@ const TABS: { id: ProductDetailTabId; label: string }[] = [
 ];
 
 export type ProductDetailTabsProps = {
-    product: ProductDetail;
+    product: ProductDetailType;
 };
 
 export function ProductDetailTabs({ product }: ProductDetailTabsProps) {

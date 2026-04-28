@@ -2,7 +2,7 @@ import cn from "classnames";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductCard } from "@/entities/products/ProductCard";
-import type { ProductList } from "@/shared/api/api.types";
+import type { ProductListType } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 import { TitleSection } from "@/shared/ui/TitleSection";
@@ -19,7 +19,7 @@ const SECTION_TITLES = {
 
 export type ProductSliderVariant = keyof typeof SECTION_TITLES;
 
-export type ProductSliderSmallProps = ProductList & {
+export type ProductSliderSmallProps = ProductListType & {
     variant: ProductSliderVariant;
 };
 

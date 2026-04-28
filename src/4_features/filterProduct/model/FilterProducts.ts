@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { ProductCardCategory } from "@/shared/api/api.types";
+import type { ProductCardCategoryType } from "@/shared/api/api.types";
 
 export type FilterCheckboxOption = {
     key: string;
@@ -31,7 +31,7 @@ export type FilterProductsProps = {
     onResetFilters: () => void;
 };
 
-export function useFilterBrands(products: ProductCardCategory[]): string[] {
+export function useFilterBrands(products: ProductCardCategoryType[]): string[] {
     return useMemo(() => {
         const uniqueBrands: string[] = [];
         products.forEach((product) => {
@@ -44,7 +44,7 @@ export function useFilterBrands(products: ProductCardCategory[]): string[] {
     }, [products]);
 }
 
-export function usePriceBounds(products: ProductCardCategory[]): {
+export function usePriceBounds(products: ProductCardCategoryType[]): {
     min: number;
     max: number;
 } {
@@ -63,7 +63,7 @@ export function usePriceBounds(products: ProductCardCategory[]): {
     }, [products]);
 }
 
-export function useFilterTags(products: ProductCardCategory[]): string[] {
+export function useFilterTags(products: ProductCardCategoryType[]): string[] {
     return useMemo(() => {
         const uniqueTags: string[] = [];
         products.forEach((product) => {

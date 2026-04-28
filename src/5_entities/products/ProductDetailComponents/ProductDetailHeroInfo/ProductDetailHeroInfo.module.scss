@@ -103,7 +103,6 @@
     }
 }
 
-/* Match ProductList: one column width when actions stack on narrow viewports. */
 @media (max-width: 535px) {
     .actionsRow {
         flex-direction: row;

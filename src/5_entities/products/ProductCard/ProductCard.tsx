@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import type {
-    ProductCardCategory,
-    ProductCard,
+    ProductCardCategoryType,
+    ProductCardType,
 } from "@/shared/api/api.types";
 import Availability from "@/shared/assets/icon/Availability";
 
@@ -29,7 +29,7 @@ import styles from "./ProductCard.module.scss";
 // };
 
 export function ProductCard(
-    props: ProductCard | ProductCardCategory,
+    props: ProductCardType | ProductCardCategoryType,
 ) {
     const {
         availabilityStatus,
@@ -48,7 +48,6 @@ export function ProductCard(
                 className={styles["image-bg"]}
                 style={{
                     backgroundImage: `url("${imgUrl}")`,
-                    backgroundColor: "var(--color-surface-neutral)",
                 }}
             >
                 <div className={styles["header"]}>

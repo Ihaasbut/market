@@ -1,11 +1,47 @@
-.headline {
-    margin-bottom: 60px;
+.page {
+    padding-top: 64px;
+    padding-bottom: 32px;
 
     @media (max-width: 1023px) {
-        margin-bottom: 30px;
+        padding-top: 40px;
+        padding-bottom: 24px;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    gap: 30px;
+
+    @media (max-width: 1300px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1023px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    @media (max-width: 676px) {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 16px;
+    }
+}
+
+.headline {
+    margin-bottom: 48px;
+
+    @media (max-width: 1023px) {
+        margin-bottom: 28px;
     }
 }
 
 .button-container {
+    margin-top: 48px;
     text-align: center;
+
+    @media (max-width: 1023px) {
+        margin-top: 36px;
+    }
 }

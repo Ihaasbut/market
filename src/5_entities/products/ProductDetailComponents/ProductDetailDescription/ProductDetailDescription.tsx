@@ -1,10 +1,10 @@
-import type { ProductDetail } from "@/shared/api/api.types";
+import type { ProductDetailType } from "@/shared/api/api.types";
 import { Typography } from "@/shared/ui/Typography";
 
 import styles from "./ProductDetailDescription.module.scss";
 
 export type ProductDetailDescriptionProps = {
-    product: ProductDetail;
+    product: ProductDetailType;
 };
 
 export function ProductDetailDescription({

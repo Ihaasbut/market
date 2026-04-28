@@ -1,6 +1,8 @@
+import cn from "classnames";
 import { useState } from "react";
 
-import { ProductCategories } from "@/entities/products/ProductCategories";
+import { SiteLeadForm } from "@/widgets/forms/SiteLeadForm";
+import { ProductCategory } from "@/entities/products/ProductCategory";
 import { useGetCategoriesQuery } from "@/shared/api/api";
 import { Button } from "@/shared/ui/Button";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
@@ -28,19 +30,29 @@ export function Categories() {
     const canShowMore = visible < categories.length;
 
     return (
-        <div className="container">
-            <TitleSection className={styles.headline}>Categories</TitleSection>
-            <ProductCategories categories={categories.slice(0, visible)} />
-            {canShowMore && (
-                <div className={styles["button-container"]}>
-                    <Button
-                        variant="fill"
-                        onclick={() => setVisible((n) => n + PAGE_SIZE)}
-                    >
-                        Show more
-                    </Button>
+        <>
+            <div className={cn("container", styles.page)}>
+                <TitleSection className={styles.headline}>Categories</TitleSection>
+                <div className={styles.grid}>
+                    {categories.slice(0, visible).map((category) => (
+                        <ProductCategory
+                            key={category.slug}
+                            category={category}
+                        />
+                    ))}
                 </div>
-            )}
-        </div>
+                {canShowMore && (
+                    <div className={styles["button-container"]}>
+                        <Button
+                            variant="fill"
+                            onclick={() => setVisible((n) => n + PAGE_SIZE)}
+                        >
+                            Show more
+                        </Button>
+                    </div>
+                )}
+            </div>
+            <SiteLeadForm />
+        </>
     );
 }

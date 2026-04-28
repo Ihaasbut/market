@@ -19,6 +19,22 @@
     }
 }
 
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 40px;
+    width: 100%;
+
+    @media (max-width: 1230px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px 30px;
+    }
+
+    @media (max-width: 535px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
 .title-category {
     text-transform: capitalize;
     font-weight: 600;

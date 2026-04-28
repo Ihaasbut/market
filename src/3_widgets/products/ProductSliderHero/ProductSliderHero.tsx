@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import type { ProductListHomeHero } from "@/shared/api/api.types";
+import type { ProductListHomeHeroType } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 
@@ -21,7 +21,7 @@ const NAME = "hero";
 const PREV_CLASS = `${NAME}-product-slider-big-prev`;
 const NEXT_CLASS = `${NAME}-product-slider-big-next`;
 
-export function ProductSliderHero({ products }: ProductListHomeHero) {
+export function ProductSliderHero({ products }: ProductListHomeHeroType) {
     const [activeIndex, setActiveIndex] = useState(0);
     const swiperRef = useRef<SwiperType>(null);
 

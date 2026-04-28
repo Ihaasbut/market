@@ -1,10 +1,23 @@
+.wrapper {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
 
 .image-bg {
     height: 320px;
+    background-color: var(--color-surface-neutral);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
     padding: 12px;
+    transition: background-color 0.3s ease;
+
+    @include hover {
+        .wrapper:hover & {
+            background-color: var(--color-border);
+        }
+    }
 }
 
 .availability-group {

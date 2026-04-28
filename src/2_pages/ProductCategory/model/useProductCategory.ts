@@ -7,7 +7,7 @@ import {
     type FilterSection,
 } from "@/features/filterProduct";
 import { useGetProductsCategoryQuery } from "@/shared/api/api";
-import type { ProductCardCategory } from "@/shared/api/api.types";
+import type { ProductCardCategoryType } from "@/shared/api/api.types";
 import type { SelectOption } from "@/shared/ui/Select";
 
 type ProductRouteParams = {
@@ -21,7 +21,7 @@ const sortOptions: SelectOption[] = [
 
 const defaultSortOption = sortOptions[0]!.name;
 
-const EMPTY_CATEGORY_PRODUCTS: ProductCardCategory[] = [];
+const EMPTY_CATEGORY_PRODUCTS: ProductCardCategoryType[] = [];
 
 function clamp(n: number, min: number, max: number) {
     return Math.max(min, Math.min(max, n));

@@ -1,7 +1,6 @@
-import type { ProductCategoryProps } from "@/entities/products/ProductCategories";
 import type { ProductDimensions, ProductReview } from "./api-response.types";
 
-export type ProductHomeHero = {
+export type ProductHomeHeroType = {
     title: string;
     price: number;
     discountPercentage: number;
@@ -10,11 +9,11 @@ export type ProductHomeHero = {
     description: string;
 };
 
-export type ProductListHomeHero = {
-    products: ProductHomeHero[];
+export type ProductListHomeHeroType = {
+    products: ProductHomeHeroType[];
 };
 
-export type ProductCard = {
+export type ProductCardType = {
     id: number;
     title: string;
     description: string;
@@ -25,21 +24,21 @@ export type ProductCard = {
     images: string[];
 };
 
-export type ProductList = {
-    products: ProductCard[];
+export type ProductListType = {
+    products: ProductCardType[];
 };
 
-export type ProductCardCategory = ProductCard & {
+export type ProductCardCategoryType = ProductCardType & {
     category: string;
     brand: string;
     tags: string[];
 };
 
-export type ProductListCategoryResponse = {
-    products: ProductCardCategory[];
+export type ProductListCategoryResponseType = {
+    products: ProductCardCategoryType[];
 };
 
-export type ProductDetail = {
+export type ProductDetailType = {
     availabilityStatus: string;
     title: string;
     price: number;
@@ -61,8 +60,15 @@ export type ProductDetail = {
     minimumOrderQuantity?: number;
 };
 
-export type ProductsDetail = {
-    products: ProductDetail[];
+export type ProductsDetailType = {
+    products: ProductDetailType[];
 };
 
-export type CategoriesResponse = ProductCategoryProps[];
+export type ProductCategoryType = {
+    images: string[];
+    slug: string;
+    name: string;
+    url: string;
+};
+
+export type CategoriesResponseType = ProductCategoryType[];

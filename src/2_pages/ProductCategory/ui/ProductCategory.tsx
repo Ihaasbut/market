@@ -1,5 +1,5 @@
 import { FilterProducts } from "@/features/filterProduct";
-import { ProductList } from "@/entities/products/ProductList";
+import { ProductCard } from "@/entities/products/ProductCard";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import { Select } from "@/shared/ui/Select";
 import { Typography } from "@/shared/ui/Typography";
@@ -52,7 +52,11 @@ export function ProductCategory() {
                         onResetFilters={handleResetFilters}
                     />
                     <div className={styles["filter-product__main"]}>
-                        <ProductList products={sortedProducts} />
+                        <div className={styles["product-list"]}>
+                            {sortedProducts.map((product) => (
+                                <ProductCard key={product.id} {...product} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

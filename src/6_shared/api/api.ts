@@ -5,11 +5,11 @@ import type {
     ProductsResponseFull,
 } from "./api-response.types";
 import type {
-    CategoriesResponse,
-    ProductListCategoryResponse,
-    ProductList,
-    ProductListHomeHero,
-    ProductDetail,
+    CategoriesResponseType,
+    ProductListCategoryResponseType,
+    ProductListType,
+    ProductListHomeHeroType,
+    ProductDetailType,
 } from "./api.types";
 
 /** Seconds RTK Query keeps endpoint data after the last subscriber unmounts. Full page reload clears Redux (and this cache) unless you add persistence. */
@@ -25,11 +25,11 @@ export const api = createApi({
     refetchOnFocus: false,
     refetchOnReconnect: false,
     endpoints: (builder) => ({
-        getProductsHomeHero: builder.query<ProductListHomeHero, void>({
+        getProductsHomeHero: builder.query<ProductListHomeHeroType, void>({
             query: () => "/products?limit=3&order=desc&sortBy=price",
             transformResponse: (
                 response: ProductsResponseFull,
-            ): ProductListHomeHero => ({
+            ): ProductListHomeHeroType => ({
                 products: response.products.map((product) => ({
                     id: product.id,
                     title: product.title,
@@ -41,11 +41,11 @@ export const api = createApi({
             }),
         }),
 
-        getPopularProducts: builder.query<ProductList, void>({
+        getPopularProducts: builder.query<ProductListType, void>({
             query: () => "/products?limit=12&order=desc&sortBy=rating",
             transformResponse: (
                 response: ProductsResponseFull,
-            ): ProductList => ({
+            ): ProductListType => ({
                 products: response.products.map((product) => ({
                     id: product.id,
                     title: product.title,
@@ -61,13 +61,13 @@ export const api = createApi({
         }),
 
         getProductsCategory: builder.query<
-            ProductListCategoryResponse,
+            ProductListCategoryResponseType,
             string | undefined
         >({
             query: (slug) => `/products/category/${slug}`,
             transformResponse: (
                 response: ProductsResponseFull,
-            ): ProductListCategoryResponse => ({
+            ): ProductListCategoryResponseType => ({
                 products: response.products.map((product) => ({
                     id: product.id,
                     title: product.title,
@@ -84,11 +84,11 @@ export const api = createApi({
             }),
         }),
 
-        getProductDetail: builder.query<ProductDetail, number>({
+        getProductDetail: builder.query<ProductDetailType, number>({
             query: (id) => `/products/${id}`,
             transformResponse: (
                 product: ProductResponseFull,
-            ): ProductDetail => ({
+            ): ProductDetailType => ({
                 id: product.id,
                 title: product.title,
                 description: product.description,
@@ -111,7 +111,7 @@ export const api = createApi({
             }),
         }),
 
-        getCategories: builder.query<CategoriesResponse, void>({
+        getCategories: builder.query<CategoriesResponseType, void>({
             query: () => "/products/categories",
         }),
     }),

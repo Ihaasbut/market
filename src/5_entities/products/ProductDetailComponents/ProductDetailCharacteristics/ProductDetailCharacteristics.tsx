@@ -1,12 +1,12 @@
 import cn from "classnames";
 import { useMemo } from "react";
 
-import type { ProductDetail } from "@/shared/api/api.types";
+import type { ProductDetailType } from "@/shared/api/api.types";
 
 import styles from "./ProductDetailCharacteristics.module.scss";
 
 export type ProductDetailCharacteristicsProps = {
-    product: ProductDetail;
+    product: ProductDetailType;
 };
 
 type SpecItem = { label: string; value: string };

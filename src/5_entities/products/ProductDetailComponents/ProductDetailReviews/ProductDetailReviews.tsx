@@ -1,12 +1,12 @@
 import { ReviewForm } from "@/entities/reviews";
-import type { ProductDetail } from "@/shared/api/api.types";
+import type { ProductDetailType } from "@/shared/api/api.types";
 import { Stars } from "@/shared/ui/Stars";
 import { Typography } from "@/shared/ui/Typography";
 
 import styles from "./ProductDetailReviews.module.scss";
 
 export type ProductDetailReviewsProps = {
-    product: ProductDetail;
+    product: ProductDetailType;
 };
 
 export function ProductDetailReviews({ product }: ProductDetailReviewsProps) {

@@ -7,7 +7,7 @@ import {
     selectCartItemActiveCount,
 } from "@/entities/cart/model";
 import { selectIsFavorite, toggleFavorite } from "@/entities/favorite/model";
-import type { ProductDetail } from "@/shared/api/api.types";
+import type { ProductDetailType } from "@/shared/api/api.types";
 import Favorite from "@/shared/assets/icon/Favorite";
 import { useAppDispatch, useAppSelector } from "@/shared/store";
 import { Accordion } from "@/shared/ui/Accordion";
@@ -20,7 +20,7 @@ import { Typography } from "@/shared/ui/Typography";
 
 import styles from "./ProductDetailHeroInfo.module.scss";
 
-export function ProductDetailHeroInfo(props: ProductDetail) {
+export function ProductDetailHeroInfo(props: ProductDetailType) {
     const {
         id,
         sku,
