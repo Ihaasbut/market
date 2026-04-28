@@ -1,7 +1,7 @@
 .swiper-slide {
     transform: scale(1);
     transition: transform 0.3s ease;
-    padding: 15px;
+    padding: 15px 10px;
 
     @media (max-width: 1023px) {
         padding: 0;

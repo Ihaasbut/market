@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import type {  ProductListHomeHero } from "@/shared/api/api.types";
+import type { ProductListHomeHero } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 
@@ -15,11 +15,17 @@ import { Button } from "@/shared/ui/Button";
 import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Typography } from "@/shared/ui/Typography";
 
-import styles from "./ProductSliderHero.module.scss";
+import styles from "./ProductSliderBig.module.scss";
 
-export function ProductSliderHero({ products }: ProductListHomeHero) {
+export type ProductSliderBigProps = ProductListHomeHero & {
+    name: string;
+};
+
+export function ProductSliderBig({ products, name }: ProductSliderBigProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const swiperRef = useRef<SwiperType>(null);
+    const prevClass = `${name}-product-slider-big-prev`;
+    const nextClass = `${name}-product-slider-big-next`;
 
     return (
         <section className={styles["hero-slider"]}>
@@ -29,8 +35,8 @@ export function ProductSliderHero({ products }: ProductListHomeHero) {
                 slidesPerView={1}
                 slidesPerGroup={1}
                 navigation={{
-                    prevEl: ".arrow-left-slider-hero",
-                    nextEl: ".arrow-right-slider-hero",
+                    prevEl: `.${prevClass}`,
+                    nextEl: `.${nextClass}`,
                 }}
                 loop={true}
                 onSwiper={(swiper) => {
@@ -40,26 +46,26 @@ export function ProductSliderHero({ products }: ProductListHomeHero) {
                     setActiveIndex(swiper.realIndex);
                 }}
             >
-                {products.map((product, index) => {
+                {products.map((product) => {
                     const imgUrl = normalizeImageUrl(product.images[0]);
                     return (
                         <SwiperSlide
-                            key={index + product.title}
+                            key={product.id}
                             className={styles["swiper-slide"]}
                         >
-                            <div className={styles["image"]}>
+                            <div className={styles.image}>
                                 <img src={`${imgUrl}`} alt="product" />
                             </div>
-                            <div className={styles["inner"]}>
+                            <div className={styles.inner}>
                                 <Typography
                                     variant="h2"
-                                    className={styles["title"]}
+                                    className={styles.title}
                                 >
                                     {product.title}
                                 </Typography>
                                 <Typography
                                     variant="body-s"
-                                    className={styles["description"]}
+                                    className={styles.description}
                                 >
                                     {product.description}
                                 </Typography>
@@ -78,22 +84,19 @@ export function ProductSliderHero({ products }: ProductListHomeHero) {
             </Swiper>
             <div className={styles["btn-navigation"]}>
                 <button
-                    className={cn(
-                        styles["arrow-slider"],
-                        "arrow-left-slider-hero",
-                    )}
+                    type="button"
+                    className={cn(styles["arrow-slider"], prevClass)}
                 >
                     <ArrowSliderLeft />
                 </button>
-                <div className={styles["pagination"]}>
+                <div className={styles.pagination}>
                     {products.map((_, index) => (
                         <button
                             key={index}
                             type="button"
                             className={cn(
-                                styles["bullet"],
-                                index === activeIndex &&
-                                    styles["bullet-active"],
+                                styles.bullet,
+                                index === activeIndex && styles["bullet-active"],
                             )}
                             onClick={() =>
                                 swiperRef.current?.slideToLoop(index)
@@ -102,10 +105,8 @@ export function ProductSliderHero({ products }: ProductListHomeHero) {
                     ))}
                 </div>
                 <button
-                    className={cn(
-                        styles["arrow-slider"],
-                        "arrow-right-slider-hero",
-                    )}
+                    type="button"
+                    className={cn(styles["arrow-slider"], nextClass)}
                 >
                     <ArrowSliderRight />
                 </button>
@@ -114,4 +115,4 @@ export function ProductSliderHero({ products }: ProductListHomeHero) {
     );
 }
 
-export default ProductSliderHero;
+export default ProductSliderBig;

@@ -18,7 +18,7 @@ export function ProductCategories({ categories }: ProductCategoriesProps) {
     const getCategoryImageUrl = (slug: string): string => {
         try {
             return new URL(
-                `../../../../6_shared/assets/images/category/${slug}.webp`,
+                `../../../6_shared/assets/images/category/${slug}.webp`,
                 import.meta.url,
             ).href;
         } catch {

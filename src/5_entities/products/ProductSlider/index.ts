@@ -1,1 +1,1 @@
-export { ProductSlider, type ProductSliderProps } from "./ui/ProductSlider";
+export { ProductSlider, type ProductSliderProps } from "./ProductSlider";

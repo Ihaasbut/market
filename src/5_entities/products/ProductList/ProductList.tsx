@@ -4,7 +4,7 @@ import type {
     ProductList,
 } from "@/shared/api/api.types";
 
-import { ProductCard } from "../../ProductCard";
+import { ProductCard } from "../ProductCard";
 import styles from "./ProductList.module.scss";
 
 export function ProductList({

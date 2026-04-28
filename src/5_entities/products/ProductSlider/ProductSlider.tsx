@@ -9,7 +9,7 @@ import type { ProductList } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 
-import { ProductCard } from "../../ProductCard";
+import { ProductCard } from "../ProductCard";
 import styles from "./ProductSlider.module.scss";
 
 export type ProductSliderProps = ProductList & {

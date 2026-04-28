@@ -1,3 +1,3 @@
-export { ProductCategories } from "./ui/ProductCategories";
-export type { ProductCategoryProps } from "./ui/ProductCategories";
-export type { ProductCategoriesProps } from "./ui/ProductCategories";
+export { ProductCategories } from "./ProductCategories";
+export type { ProductCategoryProps } from "./ProductCategories";
+export type { ProductCategoriesProps } from "./ProductCategories";

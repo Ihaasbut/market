@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { CallbackSection } from "@/widgets/CallbackSection";
-import { CategoriesSection } from "@/widgets/CategoriesSection";
-import { CompanyStats, type CompanyStatsProps } from "@/widgets/CompanyStats";
-import { ProductSliderPopular } from "@/widgets/ProductSliderPopular";
-import { ProductSliderHero } from "@/entities/products/ProductSliderHero";
+import { CompanyFigures } from "@/widgets/CompanyFigures";
+import { SiteLeadForm } from "@/widgets/forms/SiteLeadForm";
+import { FeaturedCategories } from "@/widgets/products/FeaturedCategories";
+import { ProductSliderHero } from "@/widgets/products/ProductSliderHero";
+import { ProductSliderPopular } from "@/widgets/products/ProductSliderPopular";
 
 import {
     useGetCategoriesQuery,
@@ -59,36 +59,15 @@ export function Home() {
         );
     }
 
-    const mockDataStats: CompanyStatsProps = {
-        stats: [
-            {
-                description: "Happy customers",
-                number: "5,567",
-            },
-            {
-                description: "Products to choose from",
-                number: "1245",
-            },
-            {
-                description: "Sales per day",
-                number: "372",
-            },
-            {
-                description: "Years on the market",
-                number: "20",
-            },
-        ],
-    };
-
     return (
         <>
             <ProductSliderHero products={heroProducts} />
-            <CompanyStats stats={mockDataStats.stats} />
+            <CompanyFigures />
             <div className="container">
-                <CategoriesSection categories={categories.slice(0, 4)} />
+                <FeaturedCategories categories={categories.slice(0, 4)} />
                 <ProductSliderPopular products={popular.products} />
             </div>
-            <CallbackSection />
+            <SiteLeadForm />
         </>
     );
 }

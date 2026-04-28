@@ -5,15 +5,15 @@ import type { ProductCategoryProps } from "@/entities/products/ProductCategories
 import { Button } from "@/shared/ui/Button";
 import { TitleSection } from "@/shared/ui/TitleSection";
 
-import styles from "./CategoriesSection.module.scss";
+import styles from "./FeaturedCategories.module.scss";
 
-export type CategoriesSectionProps = {
+export type FeaturedCategoriesProps = {
     categories: ProductCategoryProps[];
 };
 
-export function CategoriesSection({ categories }: CategoriesSectionProps) {
+export function FeaturedCategories({ categories }: FeaturedCategoriesProps) {
     return (
-        <section className={styles.section}>
+        <section className={styles.layout}>
             <TitleSection>Categories</TitleSection>
             <ProductCategories categories={categories} />
             <div className={styles["button-container"]}>
@@ -25,4 +25,4 @@ export function CategoriesSection({ categories }: CategoriesSectionProps) {
     );
 }
 
-export default CategoriesSection;
+export default FeaturedCategories;
