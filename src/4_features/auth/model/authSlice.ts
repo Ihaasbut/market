@@ -1,15 +1,27 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+    createAsyncThunk,
+    createSlice,
+    type PayloadAction,
+} from "@reduxjs/toolkit";
 
 import {
     clearDemoUser,
     getDemoUser,
     saveDemoUser,
+    writeDemoUser,
     type DemoUser,
 } from "../lib/portfolioMockAuth";
 
 export type AuthState = {
     user: DemoUser | null;
     error: string | null;
+};
+
+type UserProfileUpdate = {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
 };
 
 const initialState: AuthState = {
@@ -62,6 +74,12 @@ const authSlice = createSlice({
         clearAuthError: (state) => {
             state.error = null;
         },
+        updateUserProfile: (state, action: PayloadAction<UserProfileUpdate>) => {
+            if (!state.user) return;
+            const next: DemoUser = { ...state.user, ...action.payload };
+            state.user = next;
+            writeDemoUser(next);
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -96,7 +114,7 @@ const authSlice = createSlice({
     },
 });
 
-export const { clearAuthError } = authSlice.actions;
+export const { clearAuthError, updateUserProfile } = authSlice.actions;
 export const authReducer = authSlice.reducer;
 
 export const selectAuthUser = (auth: AuthState) => auth.user;

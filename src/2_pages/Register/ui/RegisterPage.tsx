@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
     clearAuthError,
@@ -45,7 +45,7 @@ export function RegisterPage() {
         dispatch(clearAuthError());
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         let ok = true;
         if (!isValidEmail(email)) {

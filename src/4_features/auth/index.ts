@@ -3,6 +3,7 @@ export {
     clearDemoUser,
     getDemoUser,
     saveDemoUser,
+    writeDemoUser,
 } from "./lib/portfolioMockAuth";
 export { isValidEmail } from "./lib/isValidEmail";
 export * from "./model";

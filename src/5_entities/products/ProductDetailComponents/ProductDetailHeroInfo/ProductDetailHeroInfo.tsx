@@ -8,6 +8,7 @@ import {
 } from "@/entities/cart/model";
 import { selectIsFavorite, toggleFavorite } from "@/entities/favorite/model";
 import type { ProductDetail } from "@/shared/api/api.types";
+import Favorite from "@/shared/assets/icon/Favorite";
 import { useAppDispatch, useAppSelector } from "@/shared/store";
 import { Accordion } from "@/shared/ui/Accordion";
 import { Button } from "@/shared/ui/Button";
@@ -96,12 +97,7 @@ export function ProductDetailHeroInfo(props: ProductDetail) {
                 </div>
             )}
 
-            <div
-                className={cn(
-                    styles["actionsRow"],
-                    countInCart >= 1 && styles["actionsRowWithStepper"],
-                )}
-            >
+            <div className={styles["actionsRow"]}>
                 <div className={styles["primaryAction"]}>
                     {countInCart < 1 ? (
                         <Button
@@ -123,6 +119,7 @@ export function ProductDetailHeroInfo(props: ProductDetail) {
                         </Button>
                     ) : (
                         <CartQuantityStepper
+                            className={styles["primaryStepper"]}
                             layout="stretch"
                             count={countInCart}
                             onIncrement={() => dispatch(incrementCartItem(id))}
@@ -131,9 +128,13 @@ export function ProductDetailHeroInfo(props: ProductDetail) {
                     )}
                 </div>
                 <div className={styles["favoriteAction"]}>
-                    <Button
-                        variant="outside"
-                        onclick={() =>
+                    <button
+                        type="button"
+                        className={cn(
+                            styles["favoriteToggle"],
+                            isFavorite && styles["favoriteToggle_active"],
+                        )}
+                        onClick={() =>
                             dispatch(
                                 toggleFavorite({
                                     id,
@@ -142,11 +143,15 @@ export function ProductDetailHeroInfo(props: ProductDetail) {
                                 }),
                             )
                         }
+                        aria-label={
+                            isFavorite
+                                ? "Remove from favorites"
+                                : "Add to favorites"
+                        }
+                        aria-pressed={isFavorite}
                     >
-                        {isFavorite
-                            ? "Remove from favorites"
-                            : "Add to favorites"}
-                    </Button>
+                        <Favorite />
+                    </button>
                 </div>
             </div>
 

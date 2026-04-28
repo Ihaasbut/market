@@ -1,17 +1,15 @@
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
 import { CallbackSection } from "@/widgets/CallbackSection";
-import { CompanyStats, type CompanyStatsProps } from "@/widgets/CompanyStats ";
-import { ProductCategories } from "@/entities/products/ProductCategories";
+import { CategoriesSection } from "@/widgets/CategoriesSection";
+import { CompanyStats, type CompanyStatsProps } from "@/widgets/CompanyStats";
+import { ProductSliderPopular } from "@/widgets/ProductSliderPopular";
 import { ProductSliderHero } from "@/entities/products/ProductSliderHero";
-import { ProductSliderPopular } from "@/entities/products/ProductSliderPopular";
 
 import {
     useGetCategoriesQuery,
     useGetPopularProductsQuery,
     useGetProductsHomeHeroQuery,
 } from "@/shared/api/api";
-import { Button } from "@/shared/ui/Button";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import styles from "./Home.module.scss";
 
@@ -51,7 +49,14 @@ export function Home() {
         productHeroError ||
         !productHero
     ) {
-        return null;
+        return (
+            <div className="container">
+                <p className={styles["error-banner"]} role="alert">
+                    Could not load catalog. Check your connection and try again
+                    later.
+                </p>
+            </div>
+        );
     }
 
     const mockDataStats: CompanyStatsProps = {
@@ -80,12 +85,7 @@ export function Home() {
             <ProductSliderHero products={heroProducts} />
             <CompanyStats stats={mockDataStats.stats} />
             <div className="container">
-                <ProductCategories categories={categories.slice(0, 4)} />
-                <div className={styles["button-container"]}>
-                    <Link to="categories">
-                        <Button variant="fill">View all categories</Button>
-                    </Link>
-                </div>
+                <CategoriesSection categories={categories.slice(0, 4)} />
                 <ProductSliderPopular products={popular.products} />
             </div>
             <CallbackSection />

@@ -7,11 +7,7 @@ import styles from "./HeaderMobile.module.scss";
 import HeaderUserButton from "./HeaderUserButton";
 import NavLinksMobile from "./NavLinksMobile";
 
-type HeaderMobileProps = {
-    onLogout?: () => void;
-};
-
-function HeaderMobile({ onLogout }: HeaderMobileProps) {
+function HeaderMobile() {
     const { isMenuOpen, toggleMenu } = useHeaderState();
     return (
         <div className={styles["mobile"]}>
@@ -24,7 +20,7 @@ function HeaderMobile({ onLogout }: HeaderMobileProps) {
                             <BurgerButton onToggle={toggleMenu} />
                         )}
 
-                        <HeaderUserButton onLogout={onLogout} />
+                        <HeaderUserButton />
                     </div>
                 </div>
             </div>

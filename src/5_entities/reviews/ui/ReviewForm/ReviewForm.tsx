@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId, useState, type SubmitEvent } from "react";
 
 import { Stars } from "@/shared/ui/Stars";
 import { Typography } from "@/shared/ui/Typography";
@@ -12,7 +12,7 @@ export function ReviewForm() {
     const [email, setEmail] = useState("");
     const [comment, setComment] = useState("");
 
-    function handleSubmit(e: React.FormEvent) {
+    function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
     }
 

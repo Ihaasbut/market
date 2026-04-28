@@ -69,7 +69,5 @@ export const selectFavoriteItems = (s: FavoriteState) => s.items;
 export const selectFavoriteIds = (s: FavoriteState) =>
     s.items.map((item) => item.id);
 
-export const selectFavoritesCount = (s: FavoriteState) => s.items.length;
-
 export const selectIsFavorite = (s: FavoriteState, productId: number) =>
     s.items.some((item) => item.id === productId);

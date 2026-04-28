@@ -1,34 +1,45 @@
 import cn from "classnames";
+import type { ReactNode } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import type {} from "@/shared/api/api";
 import type { ProductList } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
-import { TitleSection } from "@/shared/ui/TitleSection";
 
 import { ProductCard } from "../../ProductCard";
-import styles from "./ProductSliderPopular.module.scss";
+import styles from "./ProductSlider.module.scss";
 
+export type ProductSliderProps = ProductList & {
+    headerLeft?: ReactNode;
+    name: string;
+};
 
-export function ProductSliderPopular({ products }: ProductList) {
+export function ProductSlider({ products, headerLeft, name }: ProductSliderProps) {
+    const prevClass = `${name}-product-slider-prev`;
+    const nextClass = `${name}-product-slider-next`;
+
     return (
         <section className={styles["product-slider"]}>
-            <div className={styles["header-swiper"]}>
-                <TitleSection className={styles["title"]}>
-                    Our popular products
-                </TitleSection>
+            <div
+                className={cn(
+                    styles["header-swiper"],
+                    !headerLeft && styles["header-swiper-controls-only"],
+                )}
+            >
+                {headerLeft}
                 <div className={styles["btn-navigation"]}>
                     <button
-                        className={cn(styles["arrow-slider"], "arrow-left")}
+                        type="button"
+                        className={cn(styles["arrow-slider"], prevClass)}
                     >
                         <ArrowSliderLeft />
                     </button>
                     <button
-                        className={cn(styles["arrow-slider"], "arrow-right")}
+                        type="button"
+                        className={cn(styles["arrow-slider"], nextClass)}
                     >
                         <ArrowSliderRight />
                     </button>
@@ -41,8 +52,8 @@ export function ProductSliderPopular({ products }: ProductList) {
                 slidesPerView={4}
                 slidesPerGroup={4}
                 navigation={{
-                    prevEl: ".arrow-left",
-                    nextEl: ".arrow-right",
+                    prevEl: `.${prevClass}`,
+                    nextEl: `.${nextClass}`,
                 }}
                 loop={true}
                 breakpoints={{
@@ -74,8 +85,11 @@ export function ProductSliderPopular({ products }: ProductList) {
                 }}
             >
                 {products.map((product) => (
-                    <SwiperSlide className={styles["swiper-slide"]}>
-                        <ProductCard key={product.title} {...product} />
+                    <SwiperSlide
+                        key={product.id}
+                        className={styles["swiper-slide"]}
+                    >
+                        <ProductCard {...product} />
                     </SwiperSlide>
                 ))}
             </Swiper>
@@ -83,4 +97,4 @@ export function ProductSliderPopular({ products }: ProductList) {
     );
 }
 
-export default ProductSliderPopular;
+export default ProductSlider;

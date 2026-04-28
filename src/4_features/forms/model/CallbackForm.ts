@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 
 export function useCallbackForm() {
     const [valueName, setValueName] = useState<string>("");
@@ -25,7 +25,7 @@ export function useCallbackForm() {
         setValueEmail(value);
     };
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSend(true);
     };

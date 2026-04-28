@@ -1,5 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import { MainLayout } from "@/app/layouts/MainLayout";
+import {
+    AccountLayout,
+    AddressesPage,
+    OrdersPage,
+    PaymentMethodsPage,
+    PersonalDetailsPage,
+} from "@/pages/Account";
 import { CartPage } from "@/pages/Cart";
 import { Categories } from "@/pages/Categories";
 import { FavoritePage } from "@/pages/Favorite";
@@ -61,6 +68,28 @@ export const router = createBrowserRouter([
             {
                 path: "categories/:slug",
                 element: <ProductCategory />,
+            },
+            {
+                path: "account",
+                element: <AccountLayout />,
+                children: [
+                    {
+                        index: true,
+                        element: <PersonalDetailsPage />,
+                    },
+                    {
+                        path: "orders",
+                        element: <OrdersPage />,
+                    },
+                    {
+                        path: "addresses",
+                        element: <AddressesPage />,
+                    },
+                    {
+                        path: "payment",
+                        element: <PaymentMethodsPage />,
+                    },
+                ],
             },
         ],
     },

@@ -1,0 +1,23 @@
+.text {
+    margin: 0;
+    max-width: 520px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-text);
+}
+
+.muted {
+    color: var(--color-text-muted, #6b6b6b);
+}
+
+.list {
+    margin: 20px 0 0;
+    padding: 0 0 0 1.1em;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+.item {
+    margin: 0 0 6px;
+}

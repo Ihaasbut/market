@@ -67,15 +67,3 @@
     width: max-content;
     border-radius: 5px;
 }
-
-.section-categories {
-    margin: 100px 0 50px 0;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 60px;
-
-    @media (max-width: 1023px) {
-        gap: 30px;
-    }
-}

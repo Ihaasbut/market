@@ -27,10 +27,10 @@ function NavLinksDesktop() {
 
     return (
         <div className={styles["nav-list"]}>
-            {NAV_LINKS.map((link, index) =>
+            {NAV_LINKS.map((link) =>
                 link.text !== "Catalog" ? (
                     <NavLink
-                        key={index + link.link}
+                        key={link.link}
                         to={link.link}
                         className={({ isActive }) =>
                             cn(
@@ -44,7 +44,7 @@ function NavLinksDesktop() {
                         </Typography>
                     </NavLink>
                 ) : (
-                    <div ref={catalogRef}>
+                    <div key={link.link} ref={catalogRef}>
                         <div
                             className={styles["text-wrapper"]}
                             onClick={onOpen}

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-import { TitleSection } from "@/shared/ui/TitleSection";
 import { Typography } from "@/shared/ui/Typography";
 import styles from "./ProductCategories.module.scss";
 
@@ -27,36 +26,31 @@ export function ProductCategories({ categories }: ProductCategoriesProps) {
         }
     };
 
-
-    
     return (
-        <section className={styles["section-categories"]}>
-            <TitleSection className={styles["title"]}> Categories </TitleSection>
-            <div className={styles["categories"]}>
-                {categories.map((category, index) => {
-                    const imgUrl = getCategoryImageUrl(category.slug);
-                    return (
-                        <Link
-                            to={`/categories/${category.slug}`}
-                            className={styles["category"]}
-                            style={{
-                              backgroundImage: imgUrl ? `url("${imgUrl}")` : "none",
-                            
-                            }}
-                            key={index + category.name}
+        <div className={styles.categories}>
+            {categories.map((category) => {
+                const imgUrl = getCategoryImageUrl(category.slug);
+                return (
+                    <Link
+                        to={`/categories/${category.slug}`}
+                        className={styles.category}
+                        style={{
+                            backgroundImage: imgUrl
+                                ? `url("${imgUrl}")`
+                                : "none",
+                        }}
+                        key={category.slug}
+                    >
+                        <Typography
+                            variant="body-l"
+                            className={styles["title-category"]}
                         >
-                            <Typography
-                                variant="body-l"
-                                className={styles["title-category"]}
-                            >
-                                {category.name}
-                            </Typography>
-
-                        </Link>
-                    );
-                })}
-            </div>
-        </section>
+                            {category.name}
+                        </Typography>
+                    </Link>
+                );
+            })}
+        </div>
     );
 }
 

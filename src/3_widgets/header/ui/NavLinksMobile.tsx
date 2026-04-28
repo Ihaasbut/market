@@ -30,10 +30,10 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
     }
     return (
         <div className={styles["nav-list"]}>
-            {NAV_LINKS.map((link, index) =>
+            {NAV_LINKS.map((link) =>
                 link.text !== "Catalog" ? (
                     <NavLink
-                        key={index + link.link}
+                        key={link.link}
                         to={link.link}
                         className={({ isActive }) =>
                             cn(
@@ -47,6 +47,7 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
                     </NavLink>
                 ) : (
                     <div
+                        key={link.link}
                         className={styles["nav-list-item-block"]}
                         ref={catalogRef}
                     >
