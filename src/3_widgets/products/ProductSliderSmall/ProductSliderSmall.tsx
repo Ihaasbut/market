@@ -15,6 +15,8 @@ import styles from "./ProductSliderSmall.module.scss";
 const SECTION_TITLES = {
     popular: "Our popular products",
     recent: "Recent products",
+    sameCategory: "Products from the same category",
+    alsoViewed: "You also viewed",
 } as const;
 
 export type ProductSliderVariant = keyof typeof SECTION_TITLES;

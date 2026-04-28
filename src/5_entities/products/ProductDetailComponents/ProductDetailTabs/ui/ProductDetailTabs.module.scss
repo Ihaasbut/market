@@ -46,6 +46,18 @@
     }
 }
 
-.panel {
+.panelStack {
+    display: grid;
     width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.panelLayer {
+    grid-area: 1 / 1;
+    min-width: 0;
+}
+
+.panelLayerHidden {
+    visibility: hidden;
+    pointer-events: none;
 }

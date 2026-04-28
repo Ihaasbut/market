@@ -25,7 +25,6 @@ export function ProductDetailHeroInfo(props: ProductDetailType) {
         id,
         sku,
         rating,
-        reviews,
         title,
         images,
         price,
@@ -68,9 +67,6 @@ export function ProductDetailHeroInfo(props: ProductDetailType) {
                 ) : (
                     <Typography variant="body-xs">No rating</Typography>
                 )}
-                <Typography variant="body-xs" className={styles["reviews"]}>
-                    Reviews ({reviews?.length ?? 0})
-                </Typography>
             </div>
 
             <Typography variant="h4">{title}</Typography>

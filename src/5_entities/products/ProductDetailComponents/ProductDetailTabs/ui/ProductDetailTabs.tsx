@@ -4,19 +4,14 @@ import { useState } from "react";
 import type { ProductDetailType } from "@/shared/api/api.types";
 import { ProductDetailCharacteristics } from "../../ProductDetailCharacteristics";
 import { ProductDetailDescription } from "../../ProductDetailDescription";
-import { ProductDetailReviews } from "../../ProductDetailReviews";
 
 import styles from "./ProductDetailTabs.module.scss";
 
-export type ProductDetailTabId =
-    | "characteristics"
-    | "description"
-    | "reviews";
+export type ProductDetailTabId = "characteristics" | "description";
 
 const TABS: { id: ProductDetailTabId; label: string }[] = [
     { id: "characteristics", label: "Specifications" },
     { id: "description", label: "Description" },
-    { id: "reviews", label: "Reviews" },
 ];
 
 export type ProductDetailTabsProps = {
@@ -56,21 +51,35 @@ export function ProductDetailTabs({ product }: ProductDetailTabsProps) {
                 })}
             </div>
 
-            <div
-                className={styles["panel"]}
-                role="tabpanel"
-                id={`product-panel-${activeTab}`}
-                aria-labelledby={`product-tab-${activeTab}`}
-            >
-                {activeTab === "characteristics" && (
+            <div className={styles["panelStack"]}>
+                <div
+                    className={cn(
+                        styles["panelLayer"],
+                        activeTab !== "characteristics" &&
+                            styles["panelLayerHidden"],
+                    )}
+                    role="tabpanel"
+                    id="product-panel-characteristics"
+                    aria-labelledby="product-tab-characteristics"
+                    aria-hidden={activeTab !== "characteristics"}
+                    inert={activeTab !== "characteristics" ? true : undefined}
+                >
                     <ProductDetailCharacteristics product={product} />
-                )}
-                {activeTab === "description" && (
+                </div>
+                <div
+                    className={cn(
+                        styles["panelLayer"],
+                        activeTab !== "description" &&
+                            styles["panelLayerHidden"],
+                    )}
+                    role="tabpanel"
+                    id="product-panel-description"
+                    aria-labelledby="product-tab-description"
+                    aria-hidden={activeTab !== "description"}
+                    inert={activeTab !== "description" ? true : undefined}
+                >
                     <ProductDetailDescription product={product} />
-                )}
-                {activeTab === "reviews" && (
-                    <ProductDetailReviews product={product} />
-                )}
+                </div>
             </div>
         </div>
     );

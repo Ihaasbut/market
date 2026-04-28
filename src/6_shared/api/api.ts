@@ -55,9 +55,36 @@ export const api = createApi({
                     images: product.images,
                     availabilityStatus: product.availabilityStatus,
                     rating: product.rating,
-                    category: product.category,
                 })),
             }),
+        }),
+
+        getProductsByIds: builder.query<ProductListType, number[]>({
+            async queryFn(ids, _api, _extraOptions, fetchWithBQ) {
+                const results = await Promise.all(
+                    [...new Set(ids)].map((id) =>
+                        fetchWithBQ(`/products/${id}`),
+                    ),
+                );
+
+                return {
+                    data: {
+                        products: results
+                            .map((result) => result.data as ProductResponseFull)
+                            .filter(Boolean)
+                            .map((product) => ({
+                                id: product.id,
+                                title: product.title,
+                                description: product.description,
+                                price: product.price,
+                                discountPercentage: product.discountPercentage,
+                                images: product.images,
+                                availabilityStatus: product.availabilityStatus,
+                                rating: product.rating,
+                            })),
+                    },
+                };
+            },
         }),
 
         getProductsCategory: builder.query<
@@ -123,4 +150,5 @@ export const {
     useGetProductsCategoryQuery,
     useGetProductsHomeHeroQuery,
     useGetProductDetailQuery,
+    useGetProductsByIdsQuery,
 } = api;

@@ -23,7 +23,6 @@ import styles from "./ProductCard.module.scss";
 //     id: number;
 //     description?: string;
 //     brand?: string;
-//     reviews?: [];
 //     sku?: string;
 //     category?: string;
 // };
@@ -83,7 +82,9 @@ export function ProductCard(
             </div>
             <div className={styles["footer"]}>
                 {rating && <Stars rating={rating} />}
-                <Typography variant="body-s">{title}</Typography>
+                <Typography variant="body-s" className={styles["title"]}>
+                    {title}
+                </Typography>
                 <ProductPrice
                     price={price}
                     discountPercentage={discountPercentage}
