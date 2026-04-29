@@ -26,7 +26,7 @@ export const api = createApi({
     refetchOnReconnect: false,
     endpoints: (builder) => ({
         getProductsHomeHero: builder.query<ProductListHomeHeroType, void>({
-            query: () => "/products?limit=3&order=desc&sortBy=price",
+            query: () => "/products?limit=10&order=desc&sortBy=price",
             transformResponse: (
                 response: ProductsResponseFull,
             ): ProductListHomeHeroType => ({

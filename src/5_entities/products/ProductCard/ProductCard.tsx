@@ -27,9 +27,7 @@ import styles from "./ProductCard.module.scss";
 //     category?: string;
 // };
 
-export function ProductCard(
-    props: ProductCardType | ProductCardCategoryType,
-) {
+export function ProductCard(props: ProductCardType | ProductCardCategoryType) {
     const {
         availabilityStatus,
         title,

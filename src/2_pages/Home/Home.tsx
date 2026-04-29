@@ -61,7 +61,7 @@ export function Home() {
 
     return (
         <>
-            <ProductSliderHero products={heroProducts} />
+            <ProductSliderHero products={heroProducts.slice(5, 8)} />
             <CompanyFigures />
             <div className="container">
                 <FeaturedCategories categories={categories.slice(0, 4)} />

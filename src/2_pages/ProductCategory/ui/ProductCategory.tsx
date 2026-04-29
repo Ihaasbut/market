@@ -1,14 +1,22 @@
+import { useState } from "react";
+
+import { SiteLeadForm } from "@/widgets/forms/SiteLeadForm";
+import { RecentlyViewedProductsSlider } from "@/widgets/products/RecentlyViewedProductsSlider";
 import { FilterProducts } from "@/features/filterProduct";
 import { ProductCard } from "@/entities/products/ProductCard";
+import { Button } from "@/shared/ui/Button";
 import { ScreenBlue } from "@/shared/ui/ScreenBlue/ScreenBlue";
 import { Select } from "@/shared/ui/Select";
 import { Typography } from "@/shared/ui/Typography";
 import { useProductCategory } from "../model/useProductCategory";
 import styles from "./ProductCategory.module.scss";
 
+const PAGE_SIZE = 6;
+
 export function ProductCategory() {
     const {
         slug,
+        productListResetKey,
         activeOption,
         setActiveOption,
         sortOptions,
@@ -20,6 +28,14 @@ export function ProductCategory() {
         handleResetFilters,
     } = useProductCategory();
 
+    const [visible, setVisible] = useState(PAGE_SIZE);
+    const [prevListResetKey, setPrevListResetKey] = useState(productListResetKey);
+
+    if (productListResetKey !== prevListResetKey) {
+        setPrevListResetKey(productListResetKey);
+        setVisible(PAGE_SIZE);
+    }
+
     if (productsLoading) {
         return <ScreenBlue />;
     }
@@ -28,39 +44,64 @@ export function ProductCategory() {
         return null;
     }
 
-    return (
-        <div className="container">
-            <div className="section-filter-product">
-                <div className={styles["head-filter"]}>
-                    <Typography
-                        variant="body-xl"
-                        className={styles["title-category"]}
-                    >
-                        {categoryTitle} ({sortedProducts.length})
-                    </Typography>
-                    <Select
-                        activeOption={activeOption}
-                        onChange={setActiveOption}
-                        options={sortOptions}
-                        variant="cardFilter"
-                    />
-                </div>
+    const canShowMore = visible < sortedProducts.length;
 
-                <div className={styles["filter-product"]}>
-                    <FilterProducts
-                        sections={filterSections}
-                        onResetFilters={handleResetFilters}
-                    />
-                    <div className={styles["filter-product__main"]}>
-                        <div className={styles["product-list"]}>
-                            {sortedProducts.map((product) => (
-                                <ProductCard key={product.id} {...product} />
-                            ))}
+    return (
+        <>
+            <div className="container">
+                <div className={styles["section-filter-product"]}>
+                    <div className={styles["head-filter"]}>
+                        <Typography
+                            variant="body-xl"
+                            className={styles["title-category"]}
+                        >
+                            {categoryTitle} ({sortedProducts.length})
+                        </Typography>
+                        <Select
+                            activeOption={activeOption}
+                            onChange={setActiveOption}
+                            options={sortOptions}
+                            variant="cardFilter"
+                        />
+                    </div>
+
+                    <div className={styles["filter-product"]}>
+                        <FilterProducts
+                            sections={filterSections}
+                            onResetFilters={handleResetFilters}
+                        />
+                        <div className={styles["filter-product__main"]}>
+                            <div className={styles["product-list"]}>
+                                {sortedProducts
+                                    .slice(0, visible)
+                                    .map((product) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            {...product}
+                                        />
+                                    ))}
+                            </div>
+                            {canShowMore && (
+                                <div className={styles["button-container"]}>
+                                    <Button
+                                        variant="fill"
+                                        onclick={() =>
+                                            setVisible((n) => n + PAGE_SIZE)
+                                        }
+                                    >
+                                        Show more
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <SiteLeadForm />
+            <div className="container">
+                <RecentlyViewedProductsSlider />
+            </div>
+        </>
     );
 }
 

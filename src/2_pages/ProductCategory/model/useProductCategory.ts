@@ -358,8 +358,14 @@ export function useProductCategory() {
 
     const categoryTitle = categoryProducts[0]?.category ?? slug ?? "";
 
+    const productListResetKey = useMemo(
+        () => `${slug ?? ""}|${activeOption}|${searchParams.toString()}`,
+        [slug, activeOption, searchParams],
+    );
+
     return {
         slug,
+        productListResetKey,
         activeOption,
         setActiveOption,
         sortOptions,

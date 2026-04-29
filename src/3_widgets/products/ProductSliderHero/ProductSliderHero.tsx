@@ -6,11 +6,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/navigation";
+import { addToCart } from "@/entities/cart/model";
 import type { ProductListHomeHeroType } from "@/shared/api/api.types";
 import ArrowSliderLeft from "@/shared/assets/icon/ArrowSliderLeft";
 import ArrowSliderRight from "@/shared/assets/icon/ArrowSliderRight";
 
 import { normalizeImageUrl } from "@/shared/lib/image";
+import { useAppDispatch } from "@/shared/store";
 import { Button } from "@/shared/ui/Button";
 import { ProductPrice } from "@/shared/ui/ProductPrice";
 import { Typography } from "@/shared/ui/Typography";
@@ -22,6 +24,7 @@ const PREV_CLASS = `${NAME}-product-slider-big-prev`;
 const NEXT_CLASS = `${NAME}-product-slider-big-next`;
 
 export function ProductSliderHero({ products }: ProductListHomeHeroType) {
+    const dispatch = useAppDispatch();
     const [activeIndex, setActiveIndex] = useState(0);
     const swiperRef = useRef<SwiperType>(null);
 
@@ -74,7 +77,27 @@ export function ProductSliderHero({ products }: ProductListHomeHeroType) {
                                         product.discountPercentage
                                     }
                                 />
-                                <Button variant="fill">Add to cart</Button>
+                                <Button
+                                    variant="fill"
+                                    onclick={() =>
+                                        dispatch(
+                                            addToCart({
+                                                id: product.id,
+                                                count: 1,
+                                                title: product.title,
+                                                image:
+                                                    normalizeImageUrl(
+                                                        product.images[0],
+                                                    ) || "",
+                                                price: product.price,
+                                                discountPercentage:
+                                                    product.discountPercentage,
+                                            }),
+                                        )
+                                    }
+                                >
+                                    Add to cart
+                                </Button>
                             </div>
                         </SwiperSlide>
                     );

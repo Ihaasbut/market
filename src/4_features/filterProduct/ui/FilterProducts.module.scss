@@ -38,6 +38,11 @@
         max-height: 600px;
     }
 
+    &--tags.open {
+        max-height: none;
+        overflow: visible;
+    }
+
     &--tags {
         flex-direction: row;
         flex-wrap: wrap;

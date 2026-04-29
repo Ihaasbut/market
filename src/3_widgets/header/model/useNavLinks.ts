@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { HEADER_NAV_LINKS } from "./headerNavLinks";
+
 type useHookProps = {
     onToggle?: () => void;
 };
@@ -7,24 +9,7 @@ type useHookProps = {
 export const useNavLinks = ({ onToggle }: useHookProps) => {
     const [isOpenCatalog, setIsOpenCatalog] = useState<boolean>(false);
     const catalogRef = useRef<HTMLDivElement>(null);
-    const NAV_LINKS = [
-        {
-            link: "/",
-            text: "Home",
-        },
-        {
-            link: "categories",
-            text: "Catalog",
-        },
-        {
-            link: "Wholesale",
-            text: "Wholesale",
-        },
-        {
-            link: "/aboutus",
-            text: "About Us",
-        },
-    ];
+    const NAV_LINKS = HEADER_NAV_LINKS;
 
     const handleLinkClick = () => {
         if (onToggle) {

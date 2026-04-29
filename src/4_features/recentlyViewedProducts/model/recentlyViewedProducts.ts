@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const STORAGE_KEY = "market_recently_viewed_product_ids_v1";
 const STORAGE_EVENT = "market_recently_viewed_product_ids_update";
-const DEFAULT_LIMIT = 8;
+const DEFAULT_LIMIT = 9;
 
 function normalizeIds(raw: unknown): number[] {
     if (!Array.isArray(raw)) {
