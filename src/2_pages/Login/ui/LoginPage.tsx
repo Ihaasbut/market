@@ -50,7 +50,7 @@ export function LoginPage() {
         if (!ok) return;
 
         try {
-            await dispatch(loginUser(email)).unwrap();
+            await dispatch(loginUser({ email, password })).unwrap();
             navigate("/");
         } catch {
             /* error shown via authError */

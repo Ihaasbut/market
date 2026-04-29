@@ -10,6 +10,7 @@ export type InputProps = {
     id?: string;
     type?: HTMLInputElement["type"];
     invalid?: boolean;
+    readOnly?: boolean;
 };
 
 export function Input({
@@ -20,6 +21,7 @@ export function Input({
     id,
     type = "text",
     invalid = false,
+    readOnly = false,
 }: InputProps) {
     return (
         <input
@@ -30,6 +32,7 @@ export function Input({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            readOnly={readOnly}
             aria-invalid={invalid}
         />
     );

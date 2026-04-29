@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { SubmitEventHandler } from "react";
-import { isValidEmail, updateUserProfile, type DemoUser } from "@/features/auth";
+import { updateUserProfile, type DemoUser } from "@/features/auth";
 import { useAppDispatch } from "@/shared/store";
 import { Button } from "@/shared/ui/Button";
 import { Input } from "@/shared/ui/Input";
@@ -14,22 +14,14 @@ export function PersonalDetailsForm({ user }: PersonalDetailsFormProps) {
     const dispatch = useAppDispatch();
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
-    const [email, setEmail] = useState(user.email);
     const [phone, setPhone] = useState(user.phone);
-    const [emailError, setEmailError] = useState<string | null>(null);
     const [saved, setSaved] = useState(false);
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
         setSaved(false);
-        if (!isValidEmail(email)) {
-            setEmailError("Please enter a valid email");
-            return;
-        }
-        setEmailError(null);
         dispatch(
             updateUserProfile({
-                email: email.trim(),
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
                 phone: phone.trim(),
@@ -41,7 +33,8 @@ export function PersonalDetailsForm({ user }: PersonalDetailsFormProps) {
     return (
         <form className={styles["form"]} onSubmit={handleSubmit}>
             <p className={styles["hint"]}>
-                This demo stores profile data in your browser only.
+                Profile data is stored in this browser only (localStorage), like
+                the cart and favorites.
             </p>
             <div className={styles["field"]}>
                 <label className={styles["label"]} htmlFor="profile-firstName">
@@ -76,18 +69,13 @@ export function PersonalDetailsForm({ user }: PersonalDetailsFormProps) {
                     name="email"
                     type="email"
                     placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => {
-                        setEmail(e.target.value);
-                        setEmailError(null);
-                    }}
-                    invalid={Boolean(emailError)}
+                    value={user.email}
+                    onChange={() => {}}
+                    readOnly
                 />
-                {emailError ? (
-                    <span className={styles["error"]} role="alert">
-                        {emailError}
-                    </span>
-                ) : null}
+                <span className={styles["fieldHint"]}>
+                    Sign-in email is fixed for this demo.
+                </span>
             </div>
             <div className={styles["field"]}>
                 <label className={styles["label"]} htmlFor="profile-phone">

@@ -13,7 +13,7 @@ import { Button } from "@/shared/ui/Button";
 import { Input } from "@/shared/ui/Input";
 import { Typography } from "@/shared/ui/Typography";
 
-const MIN_PASSWORD_LENGTH = 6;
+const MIN_PASSWORD_LENGTH = 1;
 
 export function RegisterPage() {
     const dispatch = useAppDispatch();

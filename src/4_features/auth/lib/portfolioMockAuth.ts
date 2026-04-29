@@ -4,6 +4,17 @@
  */
 const STORAGE_KEY = "portfolio_demo_user";
 
+/** Single allowed demo account (login only; profile still persists in localStorage). */
+export const DEMO_LOGIN_EMAIL = "123@gmail.com";
+export const DEMO_LOGIN_PASSWORD = "123";
+
+export function isDemoLoginCredentials(email: string, password: string): boolean {
+    return (
+        email.trim().toLowerCase() === DEMO_LOGIN_EMAIL.toLowerCase() &&
+        password === DEMO_LOGIN_PASSWORD
+    );
+}
+
 export type DemoUser = {
     email: string;
     firstName: string;
@@ -13,14 +24,30 @@ export type DemoUser = {
 };
 
 export function saveDemoUser(email: string): void {
-    const payload: DemoUser = {
-        email: email.trim(),
-        firstName: "",
-        lastName: "",
-        phone: "",
-        registeredAt: Date.now(),
-    };
+    const trimmed = email.trim();
+    const existing = getDemoUser();
+    const payload: DemoUser =
+        existing && existing.email.trim().toLowerCase() === trimmed.toLowerCase()
+            ? { ...existing, email: trimmed }
+            : {
+                  email: trimmed,
+                  firstName: "",
+                  lastName: "",
+                  phone: "",
+                  registeredAt: Date.now(),
+              };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+/** Restore session only for the demo account; clears leftover localStorage from other emails. */
+export function hydrateDemoUserFromStorage(): DemoUser | null {
+    const user = getDemoUser();
+    if (!user) return null;
+    if (user.email.trim().toLowerCase() !== DEMO_LOGIN_EMAIL.toLowerCase()) {
+        clearDemoUser();
+        return null;
+    }
+    return user;
 }
 
 function normalizeUser(data: unknown): DemoUser | null {

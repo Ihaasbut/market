@@ -5,12 +5,20 @@ import {
 } from "@reduxjs/toolkit";
 
 import {
+    DEMO_LOGIN_EMAIL,
     clearDemoUser,
     getDemoUser,
+    hydrateDemoUserFromStorage,
+    isDemoLoginCredentials,
     saveDemoUser,
     writeDemoUser,
     type DemoUser,
 } from "../lib/portfolioMockAuth";
+
+export type LoginCredentials = {
+    email: string;
+    password: string;
+};
 
 export type AuthState = {
     user: DemoUser | null;
@@ -25,14 +33,17 @@ type UserProfileUpdate = {
 };
 
 const initialState: AuthState = {
-    user: getDemoUser(),
+    user: hydrateDemoUserFromStorage(),
     error: null,
 };
 
 export const loginUser = createAsyncThunk(
     "auth/login",
-    async (email: string, { rejectWithValue }) => {
+    async ({ email, password }: LoginCredentials, { rejectWithValue }) => {
         const trimmed = email.trim();
+        if (!isDemoLoginCredentials(trimmed, password)) {
+            return rejectWithValue("Invalid email or password");
+        }
         try {
             saveDemoUser(trimmed);
             const user = getDemoUser();
@@ -48,18 +59,10 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
     "auth/register",
-    async (email: string, { rejectWithValue }) => {
-        const trimmed = email.trim();
-        try {
-            saveDemoUser(trimmed);
-            const user = getDemoUser();
-            if (!user) {
-                return rejectWithValue("Could not save session");
-            }
-            return user;
-        } catch {
-            return rejectWithValue("Sign-up failed");
-        }
+    async (_email: string, { rejectWithValue }) => {
+        return rejectWithValue(
+            "Registration is not available in this demo. Please sign in.",
+        );
     },
 );
 
@@ -76,7 +79,12 @@ const authSlice = createSlice({
         },
         updateUserProfile: (state, action: PayloadAction<UserProfileUpdate>) => {
             if (!state.user) return;
-            const next: DemoUser = { ...state.user, ...action.payload };
+            const { email: _ignored, ...rest } = action.payload;
+            const next: DemoUser = {
+                ...state.user,
+                ...rest,
+                email: DEMO_LOGIN_EMAIL,
+            };
             state.user = next;
             writeDemoUser(next);
         },
@@ -97,9 +105,6 @@ const authSlice = createSlice({
             })
             .addCase(registerUser.pending, (state) => {
                 state.error = null;
-            })
-            .addCase(registerUser.fulfilled, (state, action) => {
-                state.user = action.payload;
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.error =
