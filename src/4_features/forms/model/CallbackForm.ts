@@ -1,9 +1,21 @@
-import { useEffect, useState, type SubmitEvent } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+
+import { callbackFormSchema } from "./callbackFormSchema";
+import type { CallbackFormValues } from "./callbackFormSchema";
 
 export function useCallbackForm() {
-    const [valueName, setValueName] = useState<string>("");
-    const [valueEmail, setValueEmail] = useState<string>("");
-    const [send, setSend] = useState<boolean>(false);
+    const [send, setSend] = useState(false);
+
+    const { control, handleSubmit, reset } = useForm<CallbackFormValues>({
+        resolver: zodResolver(callbackFormSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+        },
+        mode: "onSubmit",
+    });
 
     useEffect(() => {
         if (send) {
@@ -17,26 +29,15 @@ export function useCallbackForm() {
         };
     }, [send]);
 
-    const onChangeValueName = (value: string) => {
-        setValueName(value);
-    };
-
-    const onChangeValueEmail = (value: string) => {
-        setValueEmail(value);
-    };
-
-    const onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = handleSubmit(() => {
+        reset();
         setSend(true);
-    };
+    });
 
     return {
-        valueName,
-        valueEmail,
-        setSend,
-        send,
-        onChangeValueName,
-        onChangeValueEmail,
+        control,
         onSubmit,
+        send,
+        setSend,
     };
 }

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { MainLayout } from "@/app/layouts/MainLayout";
+import { AboutUs } from "@/pages/AboutUs";
 import {
     AccountLayout,
     AddressesPage,
@@ -17,6 +18,7 @@ import { ProductCategory } from "@/pages/ProductCategory";
 import { ProductDetail } from "@/pages/ProductDetail";
 
 import { RegisterPage } from "@/pages/Register";
+import { Wholesale } from "@/pages/Wholesale";
 import { AuthPublicRoute } from "./AuthPublicRoute";
 import { ProtectedRoute } from "./ProtectedRoute";
 
@@ -68,6 +70,14 @@ export const router = createBrowserRouter([
             {
                 path: "categories/:slug",
                 element: <ProductCategory />,
+            },
+            {
+                path: "wholesale",
+                element: <Wholesale />,
+            },
+            {
+                path: "aboutus",
+                element: <AboutUs />,
             },
             {
                 path: "account",

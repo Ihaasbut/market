@@ -20,16 +20,26 @@ export const store = configureStore({
 
 let lastCartJson = JSON.stringify(store.getState().cart);
 let lastFavoriteJson = JSON.stringify(store.getState().favorite);
+
+/** Персист только при залогиненном пользователе (ключи LS вида …:<email>). Без сессии в LS корзина не пишется. */
 store.subscribe(() => {
-    const cart = store.getState().cart;
+    const state = store.getState();
+    const cart = state.cart;
+    const favorite = state.favorite;
     const cartJson = JSON.stringify(cart);
+    const favoriteJson = JSON.stringify(favorite);
+
+    if (!state.auth.user) {
+        lastCartJson = cartJson;
+        lastFavoriteJson = favoriteJson;
+        return;
+    }
+
     if (cartJson !== lastCartJson) {
         lastCartJson = cartJson;
         saveCartState(cart);
     }
 
-    const favorite = store.getState().favorite;
-    const favoriteJson = JSON.stringify(favorite);
     if (favoriteJson !== lastFavoriteJson) {
         lastFavoriteJson = favoriteJson;
         saveFavoriteState(favorite);

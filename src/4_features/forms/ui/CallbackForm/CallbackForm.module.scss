@@ -1,8 +1,27 @@
 .form {
     display: flex;
+    align-items: flex-start;
     gap: 24px;
 
     @media (max-width: 676px) {
         flex-wrap: wrap;
     }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+/* Фиксированная полоса под инпутом — текст ошибки не меняет высоту блока */
+.errorTrack {
+    min-height: calc(13px * 1.4);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.error {
+    color: #c62828;
 }

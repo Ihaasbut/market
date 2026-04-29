@@ -1,17 +1,43 @@
+import { readPersistedDemoUserEmail } from "@/shared/lib/demoAuthSession";
+import { DEMO_LEGACY_STORAGE_OWNER_EMAIL } from "@/shared/lib/demoLegacyMigration";
+
 import type { CartItem, CartState } from "./types";
 
-const STORAGE_KEY = "market_cart_v1";
+const LEGACY_STORAGE_KEY = "market_cart_v1";
+const STORAGE_PREFIX = "market_cart_v1:";
 
 type PersistedCartV1 = {
     itemsById?: CartItem[];
     excludedFromSummary?: unknown;
 };
 
-function readPersisted(): PersistedCartV1 | null {
+function cartStorageKey(email: string): string {
+    return `${STORAGE_PREFIX}${email.trim().toLowerCase()}`;
+}
+
+function readRawForEmail(email: string): string | null {
     if (typeof window === "undefined") {
         return null;
     }
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const key = cartStorageKey(email);
+    let raw = localStorage.getItem(key);
+    if (!raw) {
+        const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+        if (
+            legacy &&
+            email.trim().toLowerCase() ===
+                DEMO_LEGACY_STORAGE_OWNER_EMAIL.toLowerCase()
+        ) {
+            localStorage.setItem(key, legacy);
+            localStorage.removeItem(LEGACY_STORAGE_KEY);
+            raw = legacy;
+        }
+    }
+    return raw;
+}
+
+function readPersistedForEmail(email: string): PersistedCartV1 | null {
+    const raw = readRawForEmail(email);
     if (!raw) {
         return null;
     }
@@ -71,22 +97,26 @@ function normalizeItems(list: unknown): CartItem[] {
         );
 }
 
-function writePersisted(payload: {
-    itemsById: CartItem[];
-    excludedFromSummary: number[];
-}): void {
+function writePersistedForEmail(
+    email: string,
+    payload: {
+        itemsById: CartItem[];
+        excludedFromSummary: number[];
+    },
+): void {
     if (typeof window === "undefined") {
         return;
     }
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        localStorage.setItem(cartStorageKey(email), JSON.stringify(payload));
     } catch (error) {
         console.error(error);
     }
 }
 
-export function loadCartState(): CartState | null {
-    const parsed = readPersisted();
+/** Корзина для конкретного email (логин / смена пользователя). */
+export function loadCartStateForUser(email: string): CartState | null {
+    const parsed = readPersistedForEmail(email);
     if (!parsed) {
         return null;
     }
@@ -95,25 +125,42 @@ export function loadCartState(): CartState | null {
         itemsById: normalizeItems(parsed?.itemsById),
     };
 }
-/** Ids позиций, снятых с «учёта в сумме» (чекбоксы в корзине). */
-export function loadCartExcludedFromSummary(): number[] {
-    const parsed = readPersisted();
+
+export function loadCartState(): CartState | null {
+    const email = readPersistedDemoUserEmail();
+    if (!email) {
+        return null;
+    }
+    return loadCartStateForUser(email);
+}
+
+export function loadCartExcludedFromSummaryForUser(email: string): number[] {
+    const parsed = readPersistedForEmail(email);
 
     return normalizeExcludedIds(parsed?.excludedFromSummary);
 }
 
+export function loadCartExcludedFromSummary(): number[] {
+    const email = readPersistedDemoUserEmail();
+    if (!email) {
+        return [];
+    }
+    return loadCartExcludedFromSummaryForUser(email);
+}
+
 export function saveCartState(state: CartState): void {
-    if (typeof window === "undefined") {
+    const email = readPersistedDemoUserEmail();
+    if (!email) {
         return;
     }
     try {
-        const prev = readPersisted();
+        const prev = readPersistedForEmail(email);
         const itemIds = new Set(state.itemsById.map((item) => item.id));
         const excluded = normalizeExcludedIds(
             prev?.excludedFromSummary,
         ).filter((id) => itemIds.has(id));
 
-        writePersisted({
+        writePersistedForEmail(email, {
             itemsById: state.itemsById,
             excludedFromSummary: excluded,
         });
@@ -122,19 +169,19 @@ export function saveCartState(state: CartState): void {
     }
 }
 
-
 export function syncCartSummarySelectionToStorage(
     items: CartItem[],
     excludedFromSummary: number[],
 ): void {
-    if (typeof window === "undefined") {
+    const email = readPersistedDemoUserEmail();
+    if (!email) {
         return;
     }
     const itemIds = new Set(items.map((item) => item.id));
     const excluded = excludedFromSummary.filter((id) => itemIds.has(id));
 
     try {
-        writePersisted({
+        writePersistedForEmail(email, {
             itemsById: normalizeItems(items),
             excludedFromSummary: excluded,
         });
@@ -146,7 +193,12 @@ export function syncCartSummarySelectionToStorage(
 export function clearCartStorage(): void {
     if (typeof window === "undefined") return;
     try {
-        localStorage.removeItem(STORAGE_KEY);
+        const email = readPersistedDemoUserEmail();
+        if (email) {
+            localStorage.removeItem(cartStorageKey(email));
+        } else {
+            localStorage.removeItem(LEGACY_STORAGE_KEY);
+        }
     } catch (error) {
         console.error(error);
     }

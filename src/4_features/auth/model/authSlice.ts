@@ -5,7 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 
 import {
-    DEMO_LOGIN_EMAIL,
     clearDemoUser,
     getDemoUser,
     hydrateDemoUserFromStorage,
@@ -26,7 +25,6 @@ export type AuthState = {
 };
 
 type UserProfileUpdate = {
-    email?: string;
     firstName?: string;
     lastName?: string;
     phone?: string;
@@ -79,11 +77,10 @@ const authSlice = createSlice({
         },
         updateUserProfile: (state, action: PayloadAction<UserProfileUpdate>) => {
             if (!state.user) return;
-            const { email: _ignored, ...rest } = action.payload;
             const next: DemoUser = {
                 ...state.user,
-                ...rest,
-                email: DEMO_LOGIN_EMAIL,
+                ...action.payload,
+                email: state.user.email,
             };
             state.user = next;
             writeDemoUser(next);

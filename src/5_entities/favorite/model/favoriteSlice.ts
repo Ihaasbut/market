@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { loginUser, logoutUser } from "@/features/auth";
 
-import { loadFavoriteState } from "./favoriteStorage";
+import { loadFavoriteState, loadFavoriteStateForUser } from "./favoriteStorage";
 import type { FavoriteItem, FavoriteState } from "./types";
 
 export type { FavoriteItem, FavoriteState } from "./types";
@@ -51,6 +52,16 @@ const favoriteSlice = createSlice({
         clearFavorites: (state) => {
             state.items = [];
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(loginUser.fulfilled, (state, action) => {
+                const loaded = loadFavoriteStateForUser(action.payload.email);
+                state.items = loaded?.items ?? [];
+            })
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.items = [];
+            });
     },
 });
 

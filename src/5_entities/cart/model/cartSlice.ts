@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { loginUser, logoutUser } from "@/features/auth";
 
-import { loadCartState } from "./cartStorage";
+import { loadCartState, loadCartStateForUser } from "./cartStorage";
 import type { CartItem, CartState } from "./types";
 
 export type { CartItem, CartState } from "./types";
@@ -83,6 +84,16 @@ const cartSlice = createSlice({
         clearCart: (state) => {
             state.itemsById = [];
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(loginUser.fulfilled, (state, action) => {
+                const loaded = loadCartStateForUser(action.payload.email);
+                state.itemsById = loaded?.itemsById ?? [];
+            })
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.itemsById = [];
+            });
     },
 });
 

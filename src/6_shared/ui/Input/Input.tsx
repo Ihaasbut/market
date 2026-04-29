@@ -1,5 +1,5 @@
 import cn from "classnames";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, FocusEventHandler } from "react";
 import styles from "./Input.module.scss";
 
 export type InputProps = {
@@ -7,10 +7,12 @@ export type InputProps = {
     placeholder: string;
     value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: FocusEventHandler<HTMLInputElement>;
     id?: string;
     type?: HTMLInputElement["type"];
     invalid?: boolean;
-    readOnly?: boolean;
+    /** Connects validation message element for accessibility */
+    ariaDescribedBy?: string | undefined;
 };
 
 export function Input({
@@ -18,10 +20,11 @@ export function Input({
     placeholder,
     value,
     onChange,
+    onBlur,
     id,
     type = "text",
     invalid = false,
-    readOnly = false,
+    ariaDescribedBy,
 }: InputProps) {
     return (
         <input
@@ -32,8 +35,9 @@ export function Input({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
-            readOnly={readOnly}
+            onBlur={onBlur}
             aria-invalid={invalid}
+            aria-describedby={ariaDescribedBy}
         />
     );
 }

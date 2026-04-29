@@ -7,4 +7,5 @@ export type TypographyPropsI = {
       children: ReactNode;
       as?: ElementType;
       className?: string;
+      id?: string;
 }

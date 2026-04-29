@@ -1,0 +1,1 @@
+export { Wholesale } from "./Wholesale";

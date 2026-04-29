@@ -1,11 +1,15 @@
+.root-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
 .wrapper {
+    flex: 1 1 auto;
     padding-top: 87px;
 
     @media (max-width: 1023px) {
         padding-top: 74px;
     }
-}
-
-.root-layout {
-    width: 100%;
 }

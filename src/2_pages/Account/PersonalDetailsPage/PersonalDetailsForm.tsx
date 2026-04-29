@@ -64,15 +64,9 @@ export function PersonalDetailsForm({ user }: PersonalDetailsFormProps) {
                 <label className={styles["label"]} htmlFor="profile-email">
                     Email
                 </label>
-                <Input
-                    id="profile-email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={user.email}
-                    onChange={() => {}}
-                    readOnly
-                />
+                <p id="profile-email" className={styles["emailStatic"]}>
+                    {user.email}
+                </p>
                 <span className={styles["fieldHint"]}>
                     Sign-in email is fixed for this demo.
                 </span>

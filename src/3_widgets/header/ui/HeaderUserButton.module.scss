@@ -16,6 +16,24 @@
     color: inherit;
 }
 
+@media (min-width: 1024px) {
+    .favorite-link,
+    .cart-link,
+    .icon-button {
+        svg path {
+            transition: stroke 0.2s ease;
+        }
+    }
+
+    @include hover {
+        .favorite-link:hover svg path,
+        .cart-link:hover svg path,
+        .icon-button:hover svg path {
+            stroke: var(--color-accent);
+        }
+    }
+}
+
 .cart-wrap {
     position: relative;
 }

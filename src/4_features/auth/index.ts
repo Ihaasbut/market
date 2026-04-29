@@ -1,10 +1,10 @@
 export type { DemoUser } from "./lib/portfolioMockAuth";
 export {
     clearDemoUser,
-    DEMO_LOGIN_EMAIL,
-    DEMO_LOGIN_PASSWORD,
     getDemoUser,
+    DEMO_ACCOUNTS,
     hydrateDemoUserFromStorage,
+    isAllowedDemoSessionEmail,
     isDemoLoginCredentials,
     saveDemoUser,
     writeDemoUser,

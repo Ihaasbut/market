@@ -2,17 +2,28 @@
  * Demo auth for portfolio: no backend, localStorage only.
  * Replace with a real API and tokens in production.
  */
-const STORAGE_KEY = "portfolio_demo_user";
+import { PORTFOLIO_DEMO_USER_STORAGE_KEY } from "@/shared/lib/demoAuthSession";
 
-/** Single allowed demo account (login only; profile still persists in localStorage). */
-export const DEMO_LOGIN_EMAIL = "123@gmail.com";
-export const DEMO_LOGIN_PASSWORD = "123";
+export type DemoAccount = {
+    email: string;
+    password: string;
+};
+
+export const DEMO_ACCOUNTS: readonly DemoAccount[] = [
+    { email: "123@gmail.com", password: "123" },
+    { email: "456@gmail.com", password: "123" },
+] as const;
 
 export function isDemoLoginCredentials(email: string, password: string): boolean {
-    return (
-        email.trim().toLowerCase() === DEMO_LOGIN_EMAIL.toLowerCase() &&
-        password === DEMO_LOGIN_PASSWORD
+    const e = email.trim().toLowerCase();
+    return DEMO_ACCOUNTS.some(
+        (a) => a.email.toLowerCase() === e && a.password === password,
     );
+}
+
+export function isAllowedDemoSessionEmail(email: string): boolean {
+    const e = email.trim().toLowerCase();
+    return DEMO_ACCOUNTS.some((a) => a.email.toLowerCase() === e);
 }
 
 export type DemoUser = {
@@ -23,31 +34,94 @@ export type DemoUser = {
     registeredAt: number;
 };
 
-export function saveDemoUser(email: string): void {
-    const trimmed = email.trim();
-    const existing = getDemoUser();
-    const payload: DemoUser =
-        existing && existing.email.trim().toLowerCase() === trimmed.toLowerCase()
-            ? { ...existing, email: trimmed }
-            : {
-                  email: trimmed,
-                  firstName: "",
-                  lastName: "",
-                  phone: "",
-                  registeredAt: Date.now(),
-              };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+const PROFILE_STORAGE_PREFIX = "portfolio_demo_profile_v1:";
+
+function profileKey(email: string): string {
+    return `${PROFILE_STORAGE_PREFIX}${email.trim().toLowerCase()}`;
 }
 
-/** Restore session only for the demo account; clears leftover localStorage from other emails. */
+type PersistedProfile = {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    registeredAt: number;
+};
+
+function normalizeProfile(data: unknown): PersistedProfile | null {
+    if (!data || typeof data !== "object") return null;
+    const o = data as Record<string, unknown>;
+    return {
+        firstName: typeof o.firstName === "string" ? o.firstName : "",
+        lastName: typeof o.lastName === "string" ? o.lastName : "",
+        phone: typeof o.phone === "string" ? o.phone : "",
+        registeredAt: typeof o.registeredAt === "number" ? o.registeredAt : Date.now(),
+    };
+}
+
+function readPersistedProfileForEmail(email: string): PersistedProfile | null {
+    if (typeof window === "undefined") return null;
+    const raw = localStorage.getItem(profileKey(email));
+    if (!raw) return null;
+    try {
+        return normalizeProfile(JSON.parse(raw) as unknown);
+    } catch {
+        return null;
+    }
+}
+
+function writePersistedProfileForEmail(user: DemoUser): void {
+    if (typeof window === "undefined") return;
+    const payload: PersistedProfile = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        registeredAt: user.registeredAt,
+    };
+    localStorage.setItem(profileKey(user.email), JSON.stringify(payload));
+}
+
+/** Сессия: кто залогинен. Профильные поля при логине подмешиваются из ключа по email. */
+export function saveDemoUser(email: string): void {
+    const trimmed = email.trim();
+    const persisted = readPersistedProfileForEmail(trimmed);
+    const payload: DemoUser = {
+        email: trimmed,
+        firstName: persisted?.firstName ?? "",
+        lastName: persisted?.lastName ?? "",
+        phone: persisted?.phone ?? "",
+        registeredAt: persisted?.registeredAt ?? Date.now(),
+    };
+    localStorage.setItem(
+        PORTFOLIO_DEMO_USER_STORAGE_KEY,
+        JSON.stringify(payload),
+    );
+}
+
+function mergeSessionWithPersistedProfile(user: DemoUser): DemoUser {
+    const persisted = readPersistedProfileForEmail(user.email);
+    if (persisted) {
+        return {
+            ...user,
+            firstName: persisted.firstName,
+            lastName: persisted.lastName,
+            phone: persisted.phone,
+            registeredAt: persisted.registeredAt,
+        };
+    }
+    if (user.firstName || user.lastName || user.phone) {
+        writePersistedProfileForEmail(user);
+    }
+    return user;
+}
+
 export function hydrateDemoUserFromStorage(): DemoUser | null {
     const user = getDemoUser();
     if (!user) return null;
-    if (user.email.trim().toLowerCase() !== DEMO_LOGIN_EMAIL.toLowerCase()) {
+    if (!isAllowedDemoSessionEmail(user.email)) {
         clearDemoUser();
         return null;
     }
-    return user;
+    return mergeSessionWithPersistedProfile(user);
 }
 
 function normalizeUser(data: unknown): DemoUser | null {
@@ -64,7 +138,7 @@ function normalizeUser(data: unknown): DemoUser | null {
 }
 
 export function getDemoUser(): DemoUser | null {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(PORTFOLIO_DEMO_USER_STORAGE_KEY);
     if (!raw) return null;
     try {
         return normalizeUser(JSON.parse(raw) as unknown);
@@ -74,9 +148,10 @@ export function getDemoUser(): DemoUser | null {
 }
 
 export function writeDemoUser(user: DemoUser): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    localStorage.setItem(PORTFOLIO_DEMO_USER_STORAGE_KEY, JSON.stringify(user));
+    writePersistedProfileForEmail(user);
 }
 
 export function clearDemoUser(): void {
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(PORTFOLIO_DEMO_USER_STORAGE_KEY);
 }

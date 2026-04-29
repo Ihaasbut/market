@@ -7,9 +7,11 @@ export function Typography({
     children,
     className = "",
     as: Component = "p",
+    id,
 }: TypographyPropsI) {
     return (
         <Component
+            id={id}
             variant={variant}
             className={cn(styles["typography"], styles[variant], className)}
         >

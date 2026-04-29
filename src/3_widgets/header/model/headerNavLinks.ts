@@ -8,7 +8,7 @@ export const HEADER_NAV_LINKS = [
         text: "Catalog",
     },
     {
-        link: "Wholesale",
+        link: "wholesale",
         text: "Wholesale",
     },
     {
