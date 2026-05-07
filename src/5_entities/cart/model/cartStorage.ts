@@ -114,7 +114,6 @@ function writePersistedForEmail(
     }
 }
 
-/** Корзина для конкретного email (логин / смена пользователя). */
 export function loadCartStateForUser(email: string): CartState | null {
     const parsed = readPersistedForEmail(email);
     if (!parsed) {

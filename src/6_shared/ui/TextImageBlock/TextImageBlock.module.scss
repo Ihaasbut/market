@@ -47,7 +47,7 @@
     object-fit: cover;
     object-position: center;
 
-    /* Без «широкой полоски»: выше формат и без двойного ограничения высоты */
+    /* No wide band: tighter format without double height constraints */
     @media (max-width: 900px) {
         max-height: none;
         aspect-ratio: 4 / 3;

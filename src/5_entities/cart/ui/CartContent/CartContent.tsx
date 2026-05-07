@@ -9,7 +9,6 @@ import styles from "./CartContent.module.scss";
 
 export type CartContentProps = {
     items: CartItem[];
-    /** Снимок из `localStorage` при монтировании страницы корзины. */
     initialExcludedFromSummary: number[];
 };
 
@@ -25,6 +24,7 @@ export function CartContent({
         onRequestRemoveAllCartLines,
         subtotal,
         shippingUsd,
+        summaryItems,
     } = useCartContent(items, initialExcludedFromSummary);
 
     const isCartEmpty = items.length === 0;
@@ -75,6 +75,7 @@ export function CartContent({
                 <CartOrderSummary
                     subtotal={subtotal}
                     shippingUsd={shippingUsd}
+                    checkoutProductIds={summaryItems.map((item) => item.id)}
                 />
             ) : null}
         </div>

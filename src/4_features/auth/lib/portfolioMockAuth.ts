@@ -31,6 +31,8 @@ export type DemoUser = {
     firstName: string;
     lastName: string;
     phone: string;
+    /** Default delivery address (localStorage demo profile) */
+    address: string;
     registeredAt: number;
 };
 
@@ -44,6 +46,7 @@ type PersistedProfile = {
     firstName: string;
     lastName: string;
     phone: string;
+    address: string;
     registeredAt: number;
 };
 
@@ -54,6 +57,7 @@ function normalizeProfile(data: unknown): PersistedProfile | null {
         firstName: typeof o.firstName === "string" ? o.firstName : "",
         lastName: typeof o.lastName === "string" ? o.lastName : "",
         phone: typeof o.phone === "string" ? o.phone : "",
+        address: typeof o.address === "string" ? o.address : "",
         registeredAt: typeof o.registeredAt === "number" ? o.registeredAt : Date.now(),
     };
 }
@@ -75,12 +79,12 @@ function writePersistedProfileForEmail(user: DemoUser): void {
         firstName: user.firstName,
         lastName: user.lastName,
         phone: user.phone,
+        address: user.address,
         registeredAt: user.registeredAt,
     };
     localStorage.setItem(profileKey(user.email), JSON.stringify(payload));
 }
 
-/** Сессия: кто залогинен. Профильные поля при логине подмешиваются из ключа по email. */
 export function saveDemoUser(email: string): void {
     const trimmed = email.trim();
     const persisted = readPersistedProfileForEmail(trimmed);
@@ -89,6 +93,7 @@ export function saveDemoUser(email: string): void {
         firstName: persisted?.firstName ?? "",
         lastName: persisted?.lastName ?? "",
         phone: persisted?.phone ?? "",
+        address: persisted?.address ?? "",
         registeredAt: persisted?.registeredAt ?? Date.now(),
     };
     localStorage.setItem(
@@ -105,10 +110,11 @@ function mergeSessionWithPersistedProfile(user: DemoUser): DemoUser {
             firstName: persisted.firstName,
             lastName: persisted.lastName,
             phone: persisted.phone,
+            address: persisted.address,
             registeredAt: persisted.registeredAt,
         };
     }
-    if (user.firstName || user.lastName || user.phone) {
+    if (user.firstName || user.lastName || user.phone || user.address) {
         writePersistedProfileForEmail(user);
     }
     return user;
@@ -133,6 +139,7 @@ function normalizeUser(data: unknown): DemoUser | null {
         firstName: typeof o.firstName === "string" ? o.firstName : "",
         lastName: typeof o.lastName === "string" ? o.lastName : "",
         phone: typeof o.phone === "string" ? o.phone : "",
+        address: typeof o.address === "string" ? o.address : "",
         registeredAt: typeof o.registeredAt === "number" ? o.registeredAt : Date.now(),
     };
 }

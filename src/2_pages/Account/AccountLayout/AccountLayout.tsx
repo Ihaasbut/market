@@ -47,14 +47,6 @@ export function AccountLayout() {
                                     My addresses
                                 </NavLink>
                             </li>
-                            <li>
-                                <NavLink
-                                    to="/account/payment"
-                                    className={navLinkClass}
-                                >
-                                    Payment methods
-                                </NavLink>
-                            </li>
                         </ul>
                         <div className={styles["sidebar-foot"]}>
                             <button

@@ -1,0 +1,50 @@
+.page {
+    padding-top: 24px;
+    padding-bottom: 48px;
+    width: 100%;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: stretch;
+
+    @media (min-width: 900px) {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 24px;
+        width: 100%;
+    }
+}
+
+.main {
+    flex: 2 1 0;
+    min-width: 0;
+}
+
+.sidebar {
+    flex: 1 1 0;
+    min-width: 0;
+
+    @media (min-width: 900px) {
+        min-width: 260px;
+    }
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--color-text);
+        text-decoration: underline;
+    }
+}
+
+.title {
+    margin: 0 0 24px;
+}

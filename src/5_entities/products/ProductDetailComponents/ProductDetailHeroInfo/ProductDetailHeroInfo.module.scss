@@ -30,22 +30,26 @@
     row-gap: 12px;
 }
 
+/* Same width whether Button or CartQuantityStepper — avoids horizontal jitter on swap */
 .primaryAction {
-    flex: 0 1 auto;
-    width: 100%;
-    max-width: 200px;
-    min-width: 0;
-    display: flex;
-    align-items: stretch;
+    flex: 0 0 auto;
     align-self: stretch;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    width: min(100%, 200px);
+    min-width: 0;
 
     > button {
         box-sizing: border-box;
         width: 100%;
+        flex: 1 1 auto;
+        min-height: 52px;
     }
 }
 
 .primaryStepper {
+    flex: 1 1 auto;
     width: 100%;
     min-width: 0;
 }

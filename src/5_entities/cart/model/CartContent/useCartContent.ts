@@ -2,11 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppDispatch } from "@/shared/store";
 import { payableUnitPrice } from "@/shared/ui/ProductPrice";
 
+import { CART_DELIVERY_USD } from "../cartDelivery";
 import { clearCart } from "../cartSlice";
 import { syncCartSummarySelectionToStorage } from "../cartStorage";
 import type { CartItem } from "../types";
-
-const CART_DELIVERY_USD = 3;
 
 export function useCartContent(
     items: CartItem[],
@@ -112,6 +111,7 @@ export function useCartContent(
         someItemsSelectedForSummary,
         onSelectAllInSummaryChange,
         onRequestRemoveAllCartLines,
+        summaryItems,
         subtotal,
         shippingUsd: CART_DELIVERY_USD,
     };

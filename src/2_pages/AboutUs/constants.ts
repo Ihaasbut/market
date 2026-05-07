@@ -1,6 +1,4 @@
 import deliveryIllustration from "@/shared/assets/images/category/groceries.webp";
-
-/** Картинки блоков: часть с Unsplash, `delivery` — локальный ассет (стабильная загрузка). */
 export const ABOUT_IMAGES = {
     origins:
         "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=720&q=82",

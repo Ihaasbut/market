@@ -1,3 +1,7 @@
+import cn from "classnames";
+import { Link } from "react-router-dom";
+import type { CheckoutNavigateState } from "@/shared/lib/checkoutNavigateState";
+import buttonStyles from "@/shared/ui/Button/Button.module.scss";
 import { Typography } from "@/shared/ui/Typography";
 
 import styles from "./CartOrderSummary.module.scss";
@@ -5,11 +9,22 @@ import styles from "./CartOrderSummary.module.scss";
 export type CartOrderSummaryProps = {
     subtotal: number | null;
     shippingUsd: number;
+    /** Product IDs included in the order total (checkboxes). Only these go to checkout. */
+    checkoutProductIds: number[];
 };
 
-export function CartOrderSummary({ subtotal, shippingUsd }: CartOrderSummaryProps) {
+export function CartOrderSummary({
+    subtotal,
+    shippingUsd,
+    checkoutProductIds,
+}: CartOrderSummaryProps) {
     const total = subtotal !== null ? subtotal + shippingUsd : null;
     const pending = subtotal === null;
+    const canPlaceOrder = checkoutProductIds.length > 0;
+
+    const checkoutState: CheckoutNavigateState = {
+        checkoutProductIds,
+    };
 
     return (
         <aside
@@ -43,6 +58,32 @@ export function CartOrderSummary({ subtotal, shippingUsd }: CartOrderSummaryProp
                 <Typography variant="body-l" as="span" className={styles["summaryTotalValue"]}>
                     {total !== null ? `${total}$` : "—"}
                 </Typography>
+            </div>
+            <div className={styles["checkoutWrap"]}>
+                {canPlaceOrder ? (
+                    <Link
+                        to="/cart/checkout"
+                        state={checkoutState}
+                        className={cn(
+                            buttonStyles["button"],
+                            buttonStyles["button-fill"],
+                        )}
+                    >
+                        Place order
+                    </Link>
+                ) : (
+                    <span
+                        className={cn(
+                            buttonStyles["button"],
+                            buttonStyles["button-fill"],
+                            styles["placeOrderDisabled"],
+                        )}
+                        aria-disabled="true"
+                        title="Select at least one item for the order total"
+                    >
+                        Place order
+                    </span>
+                )}
             </div>
         </aside>
     );

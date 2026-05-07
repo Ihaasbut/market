@@ -91,7 +91,7 @@ function NavLinksMobile({ onToggle }: NavLinksProps) {
                             </div>
 
                             <Link to={"categories"} onClick={handleLinkClick}>
-                                <Button variant="fill">Сategories</Button>
+                                <Button variant="fill">Categories</Button>
                             </Link>
                         </div>
                     </div>

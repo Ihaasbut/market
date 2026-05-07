@@ -4,14 +4,20 @@ import { AboutUs } from "@/pages/AboutUs";
 import {
     AccountLayout,
     AddressesPage,
+    OrderDetailPage,
     OrdersPage,
-    PaymentMethodsPage,
     PersonalDetailsPage,
 } from "@/pages/Account";
 import { CartPage } from "@/pages/Cart";
 import { Categories } from "@/pages/Categories";
+import { CheckoutPage } from "@/pages/Checkout";
 import { FavoritePage } from "@/pages/Favorite";
 import { Home } from "@/pages/Home";
+import {
+    DeliveryPage,
+    ProductReturnsPage,
+    WarrantyPage,
+} from "@/pages/Information";
 import { LoginPage } from "@/pages/Login";
 
 import { ProductCategory } from "@/pages/ProductCategory";
@@ -60,6 +66,10 @@ export const router = createBrowserRouter([
                 element: <CartPage />,
             },
             {
+                path: "cart/checkout",
+                element: <CheckoutPage />,
+            },
+            {
                 path: "favorites",
                 element: <FavoritePage />,
             },
@@ -80,6 +90,18 @@ export const router = createBrowserRouter([
                 element: <AboutUs />,
             },
             {
+                path: "warranty",
+                element: <WarrantyPage />,
+            },
+            {
+                path: "delivery",
+                element: <DeliveryPage />,
+            },
+            {
+                path: "returns",
+                element: <ProductReturnsPage />,
+            },
+            {
                 path: "account",
                 element: <AccountLayout />,
                 children: [
@@ -92,12 +114,12 @@ export const router = createBrowserRouter([
                         element: <OrdersPage />,
                     },
                     {
-                        path: "addresses",
-                        element: <AddressesPage />,
+                        path: "orders/:orderId",
+                        element: <OrderDetailPage />,
                     },
                     {
-                        path: "payment",
-                        element: <PaymentMethodsPage />,
+                        path: "addresses",
+                        element: <AddressesPage />,
                     },
                 ],
             },

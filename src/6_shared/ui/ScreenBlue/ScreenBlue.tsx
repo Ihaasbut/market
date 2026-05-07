@@ -6,7 +6,7 @@ export const ScreenBlue = () => {
             className={styles["root"]}
             role="status"
             aria-live="polite"
-            aria-label="Загрузка"
+            aria-label="Loading"
         >
             <span className={styles["spinner"]} aria-hidden />
         </div>

@@ -1,6 +1,7 @@
 .burger-menu {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     gap: 6px;
 
     span {

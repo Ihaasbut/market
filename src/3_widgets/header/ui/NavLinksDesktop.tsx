@@ -94,7 +94,7 @@ function NavLinksDesktop() {
                                     to={"categories"}
                                     className={styles["button"]}
                                 >
-                                    <Button variant="fill">Сategories</Button>
+                                    <Button variant="fill">Categories</Button>
                                 </Link>
                             </div>
 

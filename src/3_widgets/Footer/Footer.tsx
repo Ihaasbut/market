@@ -65,9 +65,30 @@ export function Footer() {
                     <div className={styles["col"]}>
                         <h3 className={styles["title"]}>Information</h3>
                         <ul className={styles["infoList"]}>
-                            <li>Warranty</li>
-                            <li>Delivery</li>
-                            <li>Product returns</li>
+                            <li>
+                                <Link
+                                    to="/warranty"
+                                    className={styles["link"]}
+                                >
+                                    Warranty
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/delivery"
+                                    className={styles["link"]}
+                                >
+                                    Delivery
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/returns"
+                                    className={styles["link"]}
+                                >
+                                    Product returns
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -24,9 +24,9 @@ export default defineConfig({
         tsconfigPaths: true,
     },
     server: {
-        // WSL / LAN: слушать все интерфейсы (если заходите с Windows на IP WSL)
+
         host: true,
-        // Без localhost HMR (vite connect) ломается при открытии с 127.0.0.1 / localhost
+
         allowedHosts: [
             "localhost",
             ".localhost",

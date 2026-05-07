@@ -28,6 +28,7 @@ type UserProfileUpdate = {
     firstName?: string;
     lastName?: string;
     phone?: string;
+    address?: string;
 };
 
 const initialState: AuthState = {

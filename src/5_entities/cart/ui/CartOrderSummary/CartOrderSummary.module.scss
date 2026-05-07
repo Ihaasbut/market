@@ -56,3 +56,29 @@
     min-width: 4.5ch;
     text-align: right;
 }
+
+.checkoutWrap {
+    margin-top: 22px;
+    width: 100%;
+
+    a,
+    button {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-decoration: none;
+    }
+
+    .placeOrderDisabled {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        cursor: not-allowed;
+        opacity: 0.55;
+        pointer-events: none;
+    }
+}

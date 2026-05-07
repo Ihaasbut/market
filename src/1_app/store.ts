@@ -5,12 +5,14 @@ import { cartReducer } from "@/entities/cart/model/cartSlice";
 import { saveCartState } from "@/entities/cart/model/cartStorage";
 import { favoriteReducer } from "@/entities/favorite/model/favoriteSlice";
 import { saveFavoriteState } from "@/entities/favorite/model/favoriteStorage";
+import { orderReducer } from "@/entities/order/model/orderSlice";
 import { api } from "@/shared/api/api";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         cart: cartReducer,
+        order: orderReducer,
         favorite: favoriteReducer,
         [api.reducerPath]: api.reducer,
     },
@@ -21,7 +23,6 @@ export const store = configureStore({
 let lastCartJson = JSON.stringify(store.getState().cart);
 let lastFavoriteJson = JSON.stringify(store.getState().favorite);
 
-/** Персист только при залогиненном пользователе (ключи LS вида …:<email>). Без сессии в LS корзина не пишется. */
 store.subscribe(() => {
     const state = store.getState();
     const cart = state.cart;

@@ -7,9 +7,9 @@
 
 .wrapper {
     flex: 1 1 auto;
-    padding-top: 87px;
+    padding-top: calc(87px + env(safe-area-inset-top, 0px));
 
     @media (max-width: 1023px) {
-        padding-top: 74px;
+        padding-top: calc(74px + env(safe-area-inset-top, 0px));
     }
 }

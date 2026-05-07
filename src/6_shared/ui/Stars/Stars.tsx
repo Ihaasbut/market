@@ -49,7 +49,7 @@ export function Stars({ rating }: StarsI) {
         >
             <img
                 src={starsOutside}
-                alt="Звезды рейтинга"
+                alt="Rating stars"
                 className={styles["stars-default"]}
             />
         </div>

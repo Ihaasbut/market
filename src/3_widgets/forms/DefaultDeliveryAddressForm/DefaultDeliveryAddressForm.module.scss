@@ -1,0 +1,30 @@
+.form {
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.success {
+    font-size: 14px;
+    color: #1a6b1a;
+}
+
+.counter {
+    align-self: flex-end;
+    font-size: 13px;
+    color: var(--color-text-muted, #6b6b6b);
+    font-variant-numeric: tabular-nums;
+}

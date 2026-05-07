@@ -1,7 +1,12 @@
 .buttons {
     display: flex;
+    flex-shrink: 0;
     gap: 24px;
     align-items: center;
+
+    @media (max-width: 1023px) {
+        gap: 14px;
+    }
 }
 
 .icon-slot {

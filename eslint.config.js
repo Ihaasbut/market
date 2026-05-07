@@ -18,7 +18,6 @@ export default defineConfig([
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      // FSD правила через compat-обёртку
       ...fixupConfigRules(compat.extends('@feature-sliced')),
     ],
     languageOptions: {
