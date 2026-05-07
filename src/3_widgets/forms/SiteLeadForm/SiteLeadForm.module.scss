@@ -13,3 +13,10 @@
 .text {
     text-align: center;
 }
+
+.formWrap {
+    @media (max-width: 676px) {
+        align-self: stretch;
+        width: 100%;
+    }
+}

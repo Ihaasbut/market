@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import cn from "classnames";
+import { Link, NavLink } from "react-router-dom";
 
 import { HEADER_NAV_LINKS } from "@/widgets/header/model/headerNavLinks";
 import LogoBlack from "@/shared/assets/images/Logo-black.png";
@@ -22,13 +23,19 @@ export function Footer() {
                             aria-label="Footer navigation"
                         >
                             {HEADER_NAV_LINKS.map((item) => (
-                                <Link
+                                <NavLink
                                     key={`${item.link}-${item.text}`}
                                     to={item.link}
-                                    className={styles["link"]}
+                                    end={item.link === "/"}
+                                    className={({ isActive }) =>
+                                        cn(
+                                            styles["link"],
+                                            isActive && styles["linkActive"],
+                                        )
+                                    }
                                 >
                                     {item.text}
-                                </Link>
+                                </NavLink>
                             ))}
                         </nav>
                     </div>
@@ -66,26 +73,17 @@ export function Footer() {
                         <h3 className={styles["title"]}>Information</h3>
                         <ul className={styles["infoList"]}>
                             <li>
-                                <Link
-                                    to="/warranty"
-                                    className={styles["link"]}
-                                >
+                                <Link to="/warranty" className={styles["link"]}>
                                     Warranty
                                 </Link>
                             </li>
                             <li>
-                                <Link
-                                    to="/delivery"
-                                    className={styles["link"]}
-                                >
+                                <Link to="/delivery" className={styles["link"]}>
                                     Delivery
                                 </Link>
                             </li>
                             <li>
-                                <Link
-                                    to="/returns"
-                                    className={styles["link"]}
-                                >
+                                <Link to="/returns" className={styles["link"]}>
                                     Product returns
                                 </Link>
                             </li>

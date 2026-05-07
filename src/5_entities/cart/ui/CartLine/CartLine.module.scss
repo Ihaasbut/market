@@ -20,7 +20,9 @@
     }
 
     &:focus-visible {
-        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-accent);
+        box-shadow:
+            0 0 0 2px var(--color-white),
+            0 0 0 4px var(--color-accent);
     }
 }
 
@@ -66,7 +68,6 @@
     background: transparent;
 }
 
-
 $cartLineCheckSvg: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round' d='M4.5 10.1l3.2 3.1 7.8-7.3'/%3E%3C/svg%3E";
 
 .includeCheckbox {
@@ -102,7 +103,9 @@ $cartLineCheckSvg: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20
     }
 
     &:focus-visible {
-        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-accent);
+        box-shadow:
+            0 0 0 2px var(--color-white),
+            0 0 0 4px var(--color-accent);
     }
 
     &:checked {
@@ -194,7 +197,9 @@ $cartLineCheckSvg: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20
     }
 
     &:focus-visible {
-        box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-accent);
+        box-shadow:
+            0 0 0 2px var(--color-white),
+            0 0 0 4px var(--color-accent);
     }
 
     :global(svg) {
@@ -270,9 +275,14 @@ $cartLineCheckSvg: "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20
         min-width: unset;
         width: 100%;
         padding: 4px 0;
-        justify-content: center;
+        justify-content: flex-start;
         margin-left: 0;
         margin-right: 0;
+    }
+
+    .lineTotal,
+    .lineTotalPending {
+        text-align: left;
     }
 
     .actions {

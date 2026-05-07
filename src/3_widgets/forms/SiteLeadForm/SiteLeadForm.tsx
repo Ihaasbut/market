@@ -10,10 +10,12 @@ export function SiteLeadForm() {
                 <div className={styles.inner}>
                     <TitleSection>We'll call you back.</TitleSection>
                     <Typography variant="body-s" className={styles.text}>
-                        If you have any questions or problems, please fill out the
-                        form and we&apos;ll call you back.
+                        If you have any questions or problems, please fill out
+                        the form and we&apos;ll call you back.
                     </Typography>
-                    <CallbackForm />
+                    <div className={styles.formWrap}>
+                        <CallbackForm />
+                    </div>
                 </div>
             </div>
         </section>
