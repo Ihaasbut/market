@@ -50,3 +50,11 @@
 .product-slider-small {
     margin: 100px 0;
 }
+
+.same-category-slider {
+    h2 {
+        @media (max-width: 1023px) {
+            text-align: left;
+        }
+    }
+}

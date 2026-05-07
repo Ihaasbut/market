@@ -6,7 +6,7 @@ import { useAppSelector } from "@/shared/store";
 const LEGACY_STORAGE_KEY = "market_recently_viewed_product_ids_v1";
 const STORAGE_PREFIX = "market_recently_viewed_product_ids_v1:";
 const STORAGE_EVENT = "market_recently_viewed_product_ids_update";
-const DEFAULT_LIMIT = 9;
+const DEFAULT_LIMIT = 8;
 
 function scopedStorageKey(email: string): string {
     return `${STORAGE_PREFIX}${email.trim().toLowerCase()}`;
@@ -17,7 +17,9 @@ function normalizeIds(raw: unknown): number[] {
         return [];
     }
 
-    return [...new Set(raw.filter((id): id is number => typeof id === "number"))];
+    return [
+        ...new Set(raw.filter((id): id is number => typeof id === "number")),
+    ];
 }
 
 function readRawForUser(email: string): string | null {
@@ -58,10 +60,7 @@ function writeRecentlyViewedIdsForUser(email: string, ids: number[]): void {
         return;
     }
     try {
-        localStorage.setItem(
-            scopedStorageKey(email),
-            JSON.stringify(ids),
-        );
+        localStorage.setItem(scopedStorageKey(email), JSON.stringify(ids));
         window.dispatchEvent(new Event(STORAGE_EVENT));
     } catch {
         /* ignore quota */

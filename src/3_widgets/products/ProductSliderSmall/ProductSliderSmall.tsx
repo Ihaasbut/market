@@ -32,12 +32,14 @@ export function ProductSliderSmall({
     const prevClass = `${variant}-product-slider-small-prev`;
     const nextClass = `${variant}-product-slider-small-next`;
 
-    const headerLeft = (
-        <TitleSection>{SECTION_TITLES[variant]}</TitleSection>
-    );
+    const headerLeft = <TitleSection>{SECTION_TITLES[variant]}</TitleSection>;
 
     return (
-        <section className={styles["product-slider-small"]}>
+        <section
+            className={cn(styles["product-slider-small"], {
+                [styles["same-category-slider"]]: variant === "sameCategory",
+            })}
+        >
             <div className={styles["header-swiper"]}>
                 {headerLeft}
                 <div className={styles["btn-navigation"]}>
