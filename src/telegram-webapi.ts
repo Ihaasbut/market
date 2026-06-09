@@ -35,6 +35,11 @@ type TelegramWindow = Window & {
 };
 
 const FALLBACK_VIEWPORT_HEIGHT = "100vh";
+const TELEGRAM_WEBAPP_SCRIPT_ID = "telegram-webapp-sdk";
+const TELEGRAM_WEBAPP_SCRIPT_SRC =
+    "https://telegram.org/js/telegram-web-app.js?62";
+
+let isTelegramWebAppInitialized = false;
 
 function toCssPixels(value?: number) {
     return typeof value === "number" && Number.isFinite(value)
@@ -44,6 +49,28 @@ function toCssPixels(value?: number) {
 
 function getTelegramWebApp() {
     return (window as TelegramWindow).Telegram?.WebApp;
+}
+
+function loadTelegramWebAppScript() {
+    const existingScript = document.getElementById(
+        TELEGRAM_WEBAPP_SCRIPT_ID,
+    ) as HTMLScriptElement | null;
+
+    if (existingScript) {
+        return Promise.resolve(getTelegramWebApp());
+    }
+
+    return new Promise<TelegramWebApp | undefined>((resolve) => {
+        const script = document.createElement("script");
+
+        script.id = TELEGRAM_WEBAPP_SCRIPT_ID;
+        script.src = TELEGRAM_WEBAPP_SCRIPT_SRC;
+        script.async = true;
+        script.onload = () => resolve(getTelegramWebApp());
+        script.onerror = () => resolve(undefined);
+
+        document.head.append(script);
+    });
 }
 
 function syncViewportVars(webApp?: TelegramWebApp) {
@@ -61,22 +88,13 @@ function syncViewportVars(webApp?: TelegramWebApp) {
     root.style.setProperty("--tg-safe-top", `${safeTopInset}px`);
 }
 
-export function initTelegramWebApp() {
-    const webApp = getTelegramWebApp();
-    const handleBrowserResize = () => syncViewportVars(webApp);
-
-    document.documentElement.style.setProperty(
-        "--app-stable-height",
-        FALLBACK_VIEWPORT_HEIGHT,
-    );
-    document.documentElement.style.setProperty("--tg-safe-top", "0px");
-
-    window.addEventListener("resize", handleBrowserResize);
-
-    if (!webApp) {
-        syncViewportVars();
+function setupTelegramWebApp(webApp: TelegramWebApp) {
+    if (isTelegramWebAppInitialized) {
+        syncViewportVars(webApp);
         return;
     }
+
+    isTelegramWebAppInitialized = true;
 
     const handleViewportChange = (event: TelegramViewportEvent) => {
         if (!event.isStateStable) return;
@@ -96,4 +114,34 @@ export function initTelegramWebApp() {
     webApp.onEvent("viewportChanged", handleViewportChange);
     webApp.onEvent("safeAreaChanged", handleSafeAreaChange);
     webApp.onEvent("contentSafeAreaChanged", handleSafeAreaChange);
+}
+
+export function initTelegramWebApp() {
+    document.documentElement.style.setProperty(
+        "--app-stable-height",
+        FALLBACK_VIEWPORT_HEIGHT,
+    );
+    document.documentElement.style.setProperty("--tg-safe-top", "0px");
+
+    window.addEventListener("resize", () =>
+        syncViewportVars(getTelegramWebApp()),
+    );
+
+    const webApp = getTelegramWebApp();
+
+    if (webApp) {
+        setupTelegramWebApp(webApp);
+        return;
+    }
+
+    syncViewportVars();
+
+    void loadTelegramWebAppScript().then((loadedWebApp) => {
+        if (!loadedWebApp) {
+            syncViewportVars();
+            return;
+        }
+
+        setupTelegramWebApp(loadedWebApp);
+    });
 }
