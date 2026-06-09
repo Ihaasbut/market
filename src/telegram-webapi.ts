@@ -14,11 +14,14 @@ type TelegramSafeAreaInsets = {
 type TelegramWebApp = {
     viewportHeight?: number;
     viewportStableHeight?: number;
+    isFullscreen?: boolean;
     safeAreaInset?: TelegramSafeAreaInsets;
     contentSafeAreaInset?: TelegramSafeAreaInsets;
     ready: () => void;
     expand: () => void;
     disableVerticalSwipes?: () => void;
+    requestFullscreen?: () => void;
+    setHeaderColor?: (color: string) => void;
     onEvent: (
         eventType: TelegramEvent,
         handler: (event: TelegramViewportEvent) => void,
@@ -50,8 +53,9 @@ function syncViewportVars(webApp?: TelegramWebApp) {
         toCssPixels(webApp?.viewportStableHeight) ??
         toCssPixels(webApp?.viewportHeight) ??
         fallbackHeight;
-    const safeTopInset =
-        webApp?.contentSafeAreaInset?.top ?? webApp?.safeAreaInset?.top ?? 0;
+    const safeTopInset = webApp?.isFullscreen
+        ? (webApp?.contentSafeAreaInset?.top ?? webApp?.safeAreaInset?.top ?? 0)
+        : 0;
 
     root.style.setProperty("--app-stable-height", stableViewportHeight);
     root.style.setProperty("--tg-safe-top", `${safeTopInset}px`);
@@ -85,6 +89,8 @@ export function initTelegramWebApp() {
     webApp.ready();
     webApp.expand();
     webApp.disableVerticalSwipes?.();
+    webApp.setHeaderColor?.("bg_color");
+    webApp.requestFullscreen?.();
     syncViewportVars(webApp);
 
     webApp.onEvent("viewportChanged", handleViewportChange);

@@ -12,11 +12,12 @@
 
 html {
     scrollbar-gutter: stable;
+    overscroll-behavior: none;
 }
 
 :root {
     --app-stable-height: 100vh;
-    --tg-safe-top: env(safe-area-inset-top, 0px);
+    --tg-safe-top: 0px;
 }
 
 a {
@@ -32,6 +33,7 @@ svg {
 body {
     margin: 0;
     padding: 0;
+    overscroll-behavior-y: none;
 }
 
 .container {
