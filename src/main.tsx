@@ -7,9 +7,6 @@ import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./1_app/router/router";
 import { store } from "./1_app/store";
-import { initTelegramWebApp } from "./telegram-webapi";
-
-initTelegramWebApp();
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
